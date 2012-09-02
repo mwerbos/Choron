@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(:version => 20120902170128) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
-    t.integer  "chorons"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "chorons"
