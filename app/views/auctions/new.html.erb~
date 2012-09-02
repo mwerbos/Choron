@@ -1,0 +1,7 @@
+<h1>New auction</h1>
+<% if chore_id %>
+for chore <b><%= Chore.find(@chore_id).name %></b><br />
+<% end %>
+<%= render 'form' %>
+
+<%= link_to 'Back', auctions_path %>

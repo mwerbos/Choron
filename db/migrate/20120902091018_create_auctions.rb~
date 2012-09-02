@@ -1,0 +1,10 @@
+class CreateAuctions < ActiveRecord::Migration
+  def change
+    create_table :auctions do |t|
+      t.chore :prize
+      t.datetime :expiration_date
+
+      t.timestamps
+    end
+  end
+end

@@ -1,0 +1,28 @@
+<h1>Listing auctions</h1>
+
+<table>
+  <tr>
+    <th>Expiration date</th>
+    <th>Chore name</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @auctions.each do |auction| %>
+  <tr>
+    <td><%= auction.expiration_date %></td>
+    <td>
+    <% if auction.chore_id != nil %>
+    <%= Chore.find(auction.chore_id).name %>
+    <% end %>
+    </td>
+    <td><%= link_to 'Show', auction %></td>
+    <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
+    <td><%= link_to 'Destroy', auction, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Auction', new_auction_path %>

@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Expiration date:</b>
+  <%= @auction.expiration_date %>
+</p>
+
+<p><%= link_to 'Bid on this auction', "bids/new/for_auction/"+@auction.id.to_s %>
+
+<p>
+  <b>Bids:</b>
+  <%= @auction.bids %>
+</p>
+
+
+<%= link_to 'Edit', edit_auction_path(@auction) %> |
+<%= link_to 'Back', auctions_path %>

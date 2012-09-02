@@ -1,0 +1,9 @@
+<p>
+  <b>Name:</b>
+  <%= chore.name %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%= @hore.due_date %>
+</p>

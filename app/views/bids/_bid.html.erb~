@@ -1,0 +1,1 @@
+User <%= User.find(@bid.user_id).name %> bid <%= @bid.amount %>.
