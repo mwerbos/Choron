@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<% if @bid.auction_id %>
+<% if @bid.auction %>
 <p>
   <b>Chore:</b>
   <%= Chore.find(Auction.find(@bid.auction_id).chore_id).name %>

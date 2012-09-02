@@ -43,7 +43,8 @@ class AuctionsController < ApplicationController
   # POST /auctions.json
   def create
     @auction = Auction.new(params[:auction])
-    @auction.chore_id = @chore_id
+    @auction.chore_id = @chore_id if @chore_id
+    @auction.chore_id = params[:chore_id] if params[:chore_id]
 
     respond_to do |format|
       if @auction.save

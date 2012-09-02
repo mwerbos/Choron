@@ -26,7 +26,7 @@ class AuctionsController < ApplicationController
   # GET /auctions/new.json
   def new
     @auction = Auction.new
-    @chore_id = params[:chore_id]
+    @chore_id = params[:chore_id] if params[:chore_id]
 
     respond_to do |format|
       format.html # new.html.erb
