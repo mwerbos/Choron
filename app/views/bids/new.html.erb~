@@ -1,6 +1,6 @@
 <h1>New bid</h1>
 <%if @auction_id %>
-on the auction for <%= Chore.find(Auction.find(@auction_id.chore_id).name %>
+on the auction for <%= Auction.find(@auction_id).chore.name %>
 <%end%>
 
 <%= render 'form' %>

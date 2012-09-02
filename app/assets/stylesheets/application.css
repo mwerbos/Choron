@@ -46,11 +46,13 @@ table {
 
 #user {
   float: left;
+  color: #fff;
 }
 
 #chorons {
   float: right;
   clear: after;
+  color: #fff;
 }
 
 #nav {
