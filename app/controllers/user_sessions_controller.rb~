@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+    before_filter :require_user, :except => ['new', 'create']
 
   # GET /user_sessions/new
   # GET /user_sessions/new.json
@@ -6,8 +7,13 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @user_session }
+      if current_user
+        format.html { redirect_to :users }
+        format.json { redirect_to :users }
+      else
+        format.html # new.html.erb
+        format.json { render :json => @user_session }
+      end
     end
   end
 
@@ -34,7 +40,7 @@ class UserSessionsController < ApplicationController
     @user_session.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_sessions_url }
+      format.html { redirect_to(:users, :notice => 'Goodbye!') }
       format.json { head :no_content }
     end
   end

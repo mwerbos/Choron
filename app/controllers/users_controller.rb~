@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless current_user == @user
       #store_location
-      flash[:notice] = 'I\'m sorry I can\'t let you do that, Dave. '+ @user.username
+      flash[:notice] = 'I\'m sorry I can\'t let you do that, Dave.'
       redirect_to(:users)
       return false
     end

@@ -11,6 +11,8 @@ Choron::Application.routes.draw do
   match '/chores/take/:id' => 'chores#take_chore'
   match '/auctions/new/for_chore/:chore_id' => 'auctions#new'
   match '/bids/new/for_auction/:auction_id' => 'bids#new'
+  
+  root :to => 'user_sessions#new', :as => :login
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

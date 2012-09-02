@@ -10,6 +10,7 @@ Choron::Application.routes.draw do
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match '/chores/take/:id' => 'chores#take_chore'
   match '/auctions/new/for_chore/:chore_id' => 'auctions#new'
+  match '/bids/new/for_auction/:auction_id' => 'bids#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

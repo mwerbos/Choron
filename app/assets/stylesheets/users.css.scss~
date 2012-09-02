@@ -9,3 +9,7 @@ body {
 	font-family: 'Mate', serif;
 	font-size: 1em;
 }
+
+td {
+  padding-right: 0.5em;
+}

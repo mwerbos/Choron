@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user_session, :current_user
   
+  before_filter :require_user, :except=> [ 'user_sessions#new' ]
+  
   private
   
   def current_user_session
@@ -17,9 +19,8 @@ class ApplicationController < ActionController::Base
   
   def require_user
     unless current_user
-      store_location
       flash[:notice] = 'You must be logged in to access this page.'
-      redirect_to new_user_session_path
+      redirect_to :login
       return false
     end
   end
@@ -30,7 +31,6 @@ class ApplicationController < ActionController::Base
   
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
-    clear_return_to
   end
   
 end

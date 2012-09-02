@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  #before_filter :require_user, :only => ['edit', 'destroy']
+  before_filter :require_user, :except => ['new', 'create']
   before_filter :require_this_user, :only => ['edit', 'destroy']
   
   def require_this_user
