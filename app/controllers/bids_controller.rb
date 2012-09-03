@@ -27,6 +27,7 @@ class BidsController < ApplicationController
   def new
     @bid = Bid.new
     @auction_id = params[:auction_id] if params[:auction_id]
+    @user_id = current_user.id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @bid }
@@ -43,6 +44,7 @@ class BidsController < ApplicationController
   def create
     @bid = Bid.new(params[:bid])
     @bid.auction_id = @auction_id if @auction_id
+    @bid.user_id = @user_id if @user_id
 
     respond_to do |format|
       if @bid.save
