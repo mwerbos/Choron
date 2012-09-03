@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
   has_many :bids
   
   def give_chorons(recipient, chorons)
-    if(self.chorons >= chorons and chorons >= 0)
+    if(self.chorons >= chorons and chorons >= 0 and self != recipient)
       self.chorons = self.chorons - chorons
       recipient.chorons = recipient.chorons + chorons
-      return true if self.save and recipient.save
+      return true if recipient.save and self.save
     end
     return false
   end

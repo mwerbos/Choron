@@ -24,10 +24,13 @@ Now viewing <%= @view %> auctions. View:
     <td><%= link_to 'Show auction', chore.auction %></td>
     <td><%= link_to 'Chore details', chore %></td>
     <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
-    <td><%= link_to 'Edit auction', edit_auction_path(chore) %></td>
+    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
     <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
     <td><%= link_to 'Take', "chores/take/"+chore.id.to_s %></td>
   </tr>
   <% end %>
 <% end %>
 </table>
+
+<%= link_to 'New chore', new_chore_path %>
+<%= link_to 'New auction (from existing chore)', new_auction_path %>

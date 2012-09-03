@@ -16,7 +16,6 @@
     <div class="navtab" id="<%= 'current' if(params[:controller] == 'home' and params[:action] == 'my_chores')%>"><%= link_to "My Chores", controller: 'home', action: 'my_chores' %></div>
     <div class="navtab" id="<%= 'current' if(params[:controller] == 'home' and params[:action] == 'chore_market')%>"><%= link_to "Chore Market", controller: 'home', action: 'chore_market' %></div>
     <div class="navtab" id="<%= 'current' if(params[:controller] == 'users' and params[:action] == 'index')%>"><%= link_to "All users", :users %></div>
-    <div class="navtab" id="<%= 'current' if(params[:controller] == 'bids' and params[:action] == 'index')%>"><%= link_to "Bids", :bids %></div>
     <div class="navtab" id="<%= 'current' if(params[:controller] == 'users' and params[:action] == 'edit')%>"><%= link_to "Edit Profile", edit_user_path(current_user.id)%></div>
     <div class="navtab" id="<%= 'current' if(params[:controller] == 'user_sessions' and params[:action] == 'destroy')%>"><%= link_to "Logout", :logout%></div>
   <% else %>
