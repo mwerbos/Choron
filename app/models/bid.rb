@@ -10,7 +10,7 @@ class Bid < ActiveRecord::Base
     def lowest
         if auction
             lowest_bid=self.auction.lowest
-            if self.amount>=lowest_bid
+            if lowest_bid and self.amount>=lowest_bid
                 errors[:base] << "The bid must be less than #{lowest_bid}"
             end
         end
