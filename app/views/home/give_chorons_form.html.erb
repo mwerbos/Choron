@@ -1,0 +1,12 @@
+<%= form_for @user, :url => { :action => "give_chorons" } do |f| %>
+
+  <div class="field">
+    Chorons to give to <%= @user.username %>:<br />
+    <%= f.text_field :chorons %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Give Chorons" %>
+  </div>
+  
+<% end %>

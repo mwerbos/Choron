@@ -15,7 +15,12 @@
   <%= render @user.chores %>
 </p>
 
-<%= link_to 'Give chorons', "notfound" %>
+<p>
+  <b>Chorons:</b>
+  <%= @user.chorons %>
+</p>
+
+<%= link_to 'Give chorons', @user.id.to_s+"/give_chorons" %>
 <%= link_to 'Give chore', "notfound" %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

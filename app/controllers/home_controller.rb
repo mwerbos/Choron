@@ -21,14 +21,28 @@ class HomeController < ApplicationController
   
   def give_chorons_form
     #gets user id from url parameters
+    @user = User.find(params[:user_id])
     #displays form asking for amount of chorons
   end
   
   def give_chorons
     #uses parameters to find out
     #how many chorons were given and to whom
+    @chorons = params[:user][:chorons].to_i
+    @recipient = User.find(params[:user][:user_id])
+    @giver = current_user
     #processes request in database
+    success = @giver.give_chorons(@recipient, @chorons)
     #if both objects saved, display success
+    respond_to do |format|
+      if success
+        format.html { redirect_to(@recipient, :notice => 'Gift successful.') }
+        format.json { render :json }
+      else
+        format.html { redirect_to(@recipient, :notice => 'Gift could not be processed.') }
+        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+      end
+    end
   end
   
   def give_chore_form
