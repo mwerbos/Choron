@@ -12,10 +12,10 @@
 
 <p>
   <b>Chores:</b>
-  <% render @user.chores %>
-
+  <%= render @user.chores %>
 </p>
 
+<%= link_to 'Give chorons', "notfound" %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

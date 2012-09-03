@@ -15,11 +15,7 @@ class HomeController < ApplicationController
     #retrieves all chores in the view specified
     #(open, all, or closed)
     @view = params[:view] ? params[:view] : 'open'
-    @chores = []
     @chores = Chore.where(:auctions_count => 1)
-    @chores.each do |chore|
-      @chores.add(chore) #if(chore.auction.expiration_date > Time.now)
-    end
     #displays them with templatehere
   end
   
