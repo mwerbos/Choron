@@ -60,7 +60,6 @@ class ChoresController < ApplicationController
 
     respond_to do |format|
       if @chore.save
-        @auction.chore_id = @chore.id
         format.html { redirect_to :chores, :notice => 'Chore was successfully created.' }
         format.json { render :json => @chore, :status => :created, :location => @chore }
       else

@@ -43,11 +43,10 @@ class BidsController < ApplicationController
   def create
     @bid = Bid.new(params[:bid])
     @bid.auction_id = @auction_id if @auction_id
-    @bid.auction_id = params[:auction_id] if params[:auction_id]
 
     respond_to do |format|
       if @bid.save
-        format.html { redirect_to @bid, :notice => 'Bid was successfully created. '+@bid.auction_id.to_s+' '+@auction_id.to_s+' '+params[:auction_id].to_s }
+        format.html { redirect_to @bid, :notice => "Bid was successfully created."}
         format.json { render :json => @bid, :status => :created, :location => @bid }
       else
         format.html { render :action => "new" }
