@@ -1,0 +1,34 @@
+<h1>Chore market</h1>
+Now viewing <%= @view %> bids.
+<div id="views">
+  <%= link_to 'Open', :controller => "home", :action => "chore_market", :view => 'open' %>
+  <%= link_to 'Closed', :controller => "home", :action => "chore_market", :view => 'closed' %>
+  <%= link_to 'All', :controller => "home", :action => "chore_market", :view => 'all' %>
+</div>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Due date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @chores.each do |chore| %>
+  <% if (@view=='open' and chore.auction.expiration_date.future?) or (@view=='closed' and chore.auction.expiration_date.past?) or (@view=='all') %>
+  <tr>
+    <td><%= chore.name %></td>
+    <td><%= chore.due_date %></td>
+    <td><%= link_to 'Show', chore %></td>
+    <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
+    <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Take', "chores/take/"+chore.id.to_s %></td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chore', new_chore_path %>

@@ -36,17 +36,6 @@ class ChoresController < ApplicationController
       end
     end
   end
-  
-  #Lets you make an auction for this chore
-  def make_auction
-    respond_to do |format|
-      if params[:id]
-        format.html { redirect_to :new_auction(params[:id]), :notice => 'Making an auction for this chore.' }
-      else
-        format.json { render :json => @chore.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
 
   # GET /chores/new
   # GET /chores/new.json

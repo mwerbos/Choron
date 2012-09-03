@@ -11,6 +11,9 @@ Choron::Application.routes.draw do
   match '/chores/take/:id' => 'chores#take_chore'
   match '/auctions/new/for_chore/:chore_id' => 'auctions#new'
   match '/auctions/new_bid/:auction_id' => 'bids#new'
+  match '/home' => 'home#my_chores'
+  match '/home/chore_market' => 'home#chore_market'
+  match '/home/chore_market/:view' => 'home#chore_market'
   
   root :to => 'user_sessions#new', :as => :login
 
