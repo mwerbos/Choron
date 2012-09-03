@@ -8,8 +8,11 @@
 <p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s %>
 
 <p>
-  <b>Bids:</b>
-  <%= @auction.bids %>
+<b>Bids:</b><br/>
+  <%(@auction.bids.sort {|a,b| bid_sorter(a,b)}).each do |bid| %>
+      <%= bid.user.username %> bid <%= bid.amount %> at <%= bid.created_at %>
+      <br/>
+  <% end %>
 </p>
 
 
