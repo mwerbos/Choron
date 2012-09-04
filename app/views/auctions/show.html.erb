@@ -8,8 +8,13 @@
 <p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s %>
 
 <p>
-<b>Bids:</b><br/>
-  <%(@auction.bids.sort {|a,b| bid_sorter(a,b)}).each do |bid| %>
+<%sorted_bids=@auction.bids.sort {|a,b| bid_sorter(a,b)}%>
+<%top=sorted_bids[0]%>
+<b>Top bid:</b><br/>
+<%= top.user.username %> bid at most
+<%= [top.amount,sorted_bids[1].amount-1].max %> at <%= top.created_at %><br>
+<b>Past bids:</b><br/>
+  <%sorted_bids[1,sorted_bids.length].each do |bid| %>
       <%= bid.user.username %> bid <%= bid.amount %> at <%= bid.created_at %>
       <br/>
   <% end %>
