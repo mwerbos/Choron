@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     if(self.chorons >= chorons and chorons >= 0)
       self.chorons = self.chorons - chorons
       recipient.chorons = recipient.chorons + chorons
-      return true if this.save and recipient.save
+      return true if recipient.save and self.save
     end
     return false
   end

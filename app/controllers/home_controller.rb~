@@ -28,7 +28,7 @@ class HomeController < ApplicationController
   def give_chorons
     #uses parameters to find out
     #how many chorons were given and to whom
-    @chorons = params[:user][:chorons]
+    @chorons = params[:user][:chorons].to_i
     @recipient = User.find(params[:user][:user_id])
     @giver = current_user
     #processes request in database
