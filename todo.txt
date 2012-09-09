@@ -1,0 +1,15 @@
+NECESSARY THINGS
+Taxation mechanism with The Collective
+
+SEMI-NECESSARY THINGS
+Remove buttons:
+  Edit auction expiration date
+  Make auction next to each chore (or fix)
+Figure out "Make chore and auction at same time" form
+
+NICE THINGS
+Set up helper script to run app and DelayedJob worker with one command
+Fix all the gross Back buttons
+Write validator for auctions to make sure there is an expiration job
+Write validator for delayed jobs to make sure it can do stuff? (idk, maybe when you do Object.delay.function() put that in? not sure how to do this)
+Make logout button not a tab

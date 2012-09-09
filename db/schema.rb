@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120909105929) do
+ActiveRecord::Schema.define(:version => 20120909110253) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -30,8 +31,8 @@ ActiveRecord::Schema.define(:version => 20120909105929) do
   create_table "chores", :force => true do |t|
     t.string   "name"
     t.datetime "due_date"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "user_id"
     t.integer  "auctions_count"
     t.integer  "value"
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20120909105929) do
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
     t.text     "handler"
-    t.text     "last_error"
+    t.string   "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
