@@ -25,9 +25,11 @@ class BidsController < ApplicationController
   # GET /bids/new
   # GET /bids/new.json
   def new
-    @bid = Bid.new
-    @auction_id = params[:auction_id] if params[:auction_id]
-    @user_id = current_user.id
+    if not defined? @bid
+        @bid = Bid.new
+        @auction_id = params[:auction_id] if params[:auction_id]
+        @user_id = current_user.id
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @bid }
@@ -51,7 +53,9 @@ class BidsController < ApplicationController
         format.html { redirect_to @bid, :notice => "Bid was successfully created."}
         format.json { render :json => @bid, :status => :created, :location => @bid }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to :back}
+        #format.html { redirect_to :back,flash: {error: "ERROR" }}
+        #format.html { render :action => "edit"}
         format.json { render :json => @bid.errors, :status => :unprocessable_entity }
       end
     end
