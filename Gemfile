@@ -9,7 +9,7 @@ gem 'sqlite3'
 
 gem 'json'
 
-gem 'rails-settings'
+gem 'rails-settings-cached'
 
 # Gems used only for assets and not required
 # in production environments by default.
