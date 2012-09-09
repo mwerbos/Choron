@@ -4,6 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Due date</th>
+    <th>Value</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,6 +14,7 @@
   <tr>
     <td><%= chore.name %></td>
     <td><%= chore.due_date %></td>
+    <td><%= chore.value %></td>
     <td><%= link_to 'Show', chore %></td>
     <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
     <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>

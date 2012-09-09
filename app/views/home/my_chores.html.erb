@@ -4,15 +4,30 @@
   <tr>
     <th>Name</th>
     <th>Due date</th>
+    <th>Value</th>
+    <th>Done?</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
-
-<% @user.chores.each do |chore| %>
-  <tr>
-    <td><%= chore.name %></td>
-    <td><%= chore.due_date %></td>
+  <% sorted_undone=@user.chores.find_all{|chore| not chore.done}.sort{|a,b| a.due_date <=> b.due_date}%>
+  <% sorted_done=@user.chores.find_all{|chore| chore.done}.sort{|b,a| a.due_date <=> b.due_date}%>
+  <%sorted_chores=sorted_undone+sorted_done%>
+  <% sorted_chores.each do |chore| %>
+    <tr>
+      <% overdue = chore.done == false and chore.due_date.past?  %>
+      <td class=<%= overdue ? 'overdue' : '' %>><%= chore.name %></td>
+      <td class=<%= overdue ? 'overdue' : '' %>><%= chore.due_date %></td>
+      <td class=<%= overdue ? 'overdue' : '' %>><%= chore.value %></td>
+      <td class=<%= overdue ? 'overdue' : '' %>><%= chore.done %></td>
+      <td>
+        <%if chore.done%>
+          <%= link_to 'I didn\'t do it :(', "/chores/undo/#{chore.id}", method: :put %>
+      <%else%>
+          <%= link_to 'I did it!', "/chores/complete/#{chore.id}", method: :put %>
+      <%end%>
+    </td>
     <td><%= link_to 'Show', chore %></td>
     <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
     <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
