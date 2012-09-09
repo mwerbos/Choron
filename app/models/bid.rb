@@ -21,6 +21,4 @@ class Bid < ActiveRecord::Base
         errors[:base] << "This auction is closed."
       end
     end
-
-
 end
