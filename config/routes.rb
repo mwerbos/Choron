@@ -9,6 +9,8 @@ Choron::Application.routes.draw do
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match '/chores/take/:id' => 'chores#take_chore'
+  put   '/chores/complete/:id' => 'chores#complete'
+  match '/chores/undo/:id' => 'chores#undo'
   match '/auctions/new/for_chore/:chore_id' => 'auctions#new'
   match '/auctions/new_bid/:auction_id' => 'bids#new'
   match '/home' => 'home#my_chores'

@@ -1,11 +1,12 @@
 class Bid < ActiveRecord::Base
-    attr_accessible :amount, :auction_id, :user_id
+    attr_accessible :amount, :auction_id, :user_id, :expiration_date
     belongs_to :auction
     belongs_to :user
     validates :amount, numericality: {only_integer: true}
     validates :user, presence: true
     validates :auction, presence: true
     validate :lowest
+    validate :isOpen
 
     def lowest
         if auction
@@ -15,4 +16,9 @@ class Bid < ActiveRecord::Base
             end
         end
     end
+    def isOpen
+      if auction and auction.expiration_date.past?
+        errors[:base] << "This auction is closed."
+
+
 end

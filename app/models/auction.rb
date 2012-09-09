@@ -16,8 +16,8 @@ class Auction < ActiveRecord::Base
   def close()
     winner=self.bids.min {|a,b| bid_sorter(a,b)}.user
     value=self.lowest()
-    winner.chorons+=value
-    winner.save
-    #TAXATION GOES HERE
+    self.chore.user=winner
+    self.chore.value=value
+    self.chore.save
   end
 end

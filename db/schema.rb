@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120902170128) do
+ActiveRecord::Schema.define(:version => 20120909105929) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -31,10 +31,12 @@ ActiveRecord::Schema.define(:version => 20120902170128) do
   create_table "chores", :force => true do |t|
     t.string   "name"
     t.datetime "due_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "user_id"
     t.integer  "auctions_count"
+    t.integer  "value"
+    t.boolean  "done",           :default => false
   end
 
   create_table "users", :force => true do |t|
