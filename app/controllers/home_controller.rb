@@ -19,10 +19,41 @@ class HomeController < ApplicationController
     #displays them with templatehere
   end
   
+  def make_chore_auction_form
+    #makes new chore object for form structure
+    @chore = Chore.new
+    #makes auction object and attaches it
+    @auction = Auction.new
+    @auction.chore = @chore
+    respond_to do |format|
+      format.html # make_chore_auction_form.html.erb
+      format.json { render :json => @user }
+    end
+  end
+  
+  def make_chore_auction
+    @chore = Chore.create(params[:chore])
+    @auction = Auction.create(params[:auction])
+    @auction.chore = @chore
+    respond_to do |format|
+      if @auction.save and @chore.save
+        format.html { redirect_to('chore_market', :notice => 'Chore auction created.') }
+        format.json { render :json }
+      else
+        format.html { redirect_to('chore_market', :notice => 'Could not create chore auction.') }
+        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
   def give_chorons_form
     #gets user id from url parameters
     @user = User.find(params[:user_id])
     #displays form asking for amount of chorons
+    respond_to do |format|
+      format.html # give_chorons_form.html.erb
+      format.json { render :json => @user }
+    end
   end
   
   def give_chorons

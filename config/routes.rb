@@ -18,6 +18,8 @@ Choron::Application.routes.draw do
   match '/home/chore_market/:view' => 'home#chore_market'
   match '/users/:user_id/give_chorons' => 'home#give_chorons_form'
   match 'home/give_chorons' => 'home#give_chorons'
+  match 'home/new_chore_auction' => 'home#make_chore_auction_form'
+  match 'home/make_chore_auction' => 'home#make_chore_auction'
   
   root :to => 'user_sessions#new', :as => :login
 
