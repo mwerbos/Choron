@@ -40,7 +40,7 @@ class ChoresController < ApplicationController
   def complete
     current_chore =Chore.find(params[:id])
     if not current_chore.done
-      current_chore.user.chorons+=current_chore.value
+      current_chore.user.take_tax(current_chore.value)
       current_chore.done=true
       if current_chore.save and current_chore.user.save
           #format.html { redirect_to(:back), :notice => 'Chore was compleated.' }
@@ -54,7 +54,7 @@ class ChoresController < ApplicationController
   def undo
     current_chore =Chore.find(params[:id])
     if current_chore.done
-      current_chore.user.chorons-=current_chore.value
+      current_chore.user.take_tax(-current_chore.value)
       current_chore.done=false
       if current_chore.save and current_chore.user.save
           #format.html { redirect_to(:back), :notice => 'Chore was compleated.' }

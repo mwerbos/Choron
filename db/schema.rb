@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120909110253) do
+ActiveRecord::Schema.define(:version => 20120909215029) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(:version => 20120909110253) do
     t.integer  "value"
     t.boolean  "done",           :default => false
   end
+
+  create_table "settings", :force => true do |t|
+    t.string   "var",                      :null => false
+    t.text     "value"
+    t.integer  "thing_id"
+    t.string   "thing_type", :limit => 30
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "settings", ["thing_type", "thing_id", "var"], :name => "index_settings_on_thing_type_and_thing_id_and_var", :unique => true
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

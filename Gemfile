@@ -13,7 +13,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
-gem 'rails-settings'
+gem 'rails-settings-cached'
 
 # Gems used only for assets and not required
 # in production environments by default.
