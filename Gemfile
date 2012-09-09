@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
+#ruby '1.9.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,6 +9,9 @@ gem 'rails', '3.2.8'
 gem 'sqlite3'
 
 gem 'json'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 gem "rufus-scheduler", "~> 2.0.17"
 

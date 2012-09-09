@@ -1,0 +1,160 @@
+have_library: checking for tgetnum() in -lncurses... -------------------- yes
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic     -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic     -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:53: error: ‘tgetnum’ undeclared (first use in this function)
+conftest.c:5:53: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { void ((*volatile p)()); p = (void ((*)()))tgetnum; return 0; }
+/* end */
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic     -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:1: warning: implicit declaration of function ‘tgetnum’ [-Wimplicit-function-declaration]
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { tgetnum(); return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for readline/readline.h... -------------------- yes
+
+"gcc -E -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC  conftest.c -o conftest.i"
+In file included from /home/maia/.rvm/usr/include/readline/keymaps.h:35:0,
+                 from /home/maia/.rvm/usr/include/readline/readline.h:37,
+                 from conftest.c:3:
+/home/maia/.rvm/usr/include/readline/chardefs.h:90:0: warning: "ISALNUM" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1455:0: note: this is the location of the previous definition
+/home/maia/.rvm/usr/include/readline/chardefs.h:91:0: warning: "ISALPHA" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1456:0: note: this is the location of the previous definition
+/home/maia/.rvm/usr/include/readline/chardefs.h:92:0: warning: "ISDIGIT" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1457:0: note: this is the location of the previous definition
+/home/maia/.rvm/usr/include/readline/chardefs.h:93:0: warning: "ISLOWER" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1454:0: note: this is the location of the previous definition
+/home/maia/.rvm/usr/include/readline/chardefs.h:95:0: warning: "ISUPPER" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1453:0: note: this is the location of the previous definition
+/home/maia/.rvm/usr/include/readline/chardefs.h:96:0: warning: "ISXDIGIT" redefined [enabled by default]
+/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/ruby.h:1458:0: note: this is the location of the previous definition
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <readline/readline.h>
+/* end */
+
+--------------------
+
+have_header: checking for readline/history.h... -------------------- yes
+
+"gcc -E -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <readline/history.h>
+/* end */
+
+--------------------
+
+have_library: checking for readline() in -lreadline... -------------------- no
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic    -lncurses  -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -lreadline -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:53: error: ‘readline’ undeclared (first use in this function)
+conftest.c:5:53: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { void ((*volatile p)()); p = (void ((*)()))readline; return 0; }
+/* end */
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic    -lncurses  -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -lreadline -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:1: warning: implicit declaration of function ‘readline’ [-Wimplicit-function-declaration]
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tputs'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tgoto'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tgetflag'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `UP'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tgetent'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tgetnum'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `PC'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `tgetstr'
+/home/maia/.rvm/usr/lib/libreadline.so: undefined reference to `BC'
+collect2: ld returned 1 exit status
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { readline(); return 0; }
+/* end */
+
+--------------------
+
+have_library: checking for readline() in -ledit... -------------------- no
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic    -lncurses  -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -ledit -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:53: error: ‘readline’ undeclared (first use in this function)
+conftest.c:5:53: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { void ((*volatile p)()); p = (void ((*)()))readline; return 0; }
+/* end */
+
+"gcc -o conftest -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC conftest.c  -L. -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -Wl,-R/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/usr/lib -Wl,-R/home/maia/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic    -lncurses  -Wl,-R -Wl,/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -L/home/maia/.rvm/rubies/ruby-1.9.3-p194/lib -lruby -ledit -lncurses  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:1: warning: implicit declaration of function ‘readline’ [-Wimplicit-function-declaration]
+/usr/bin/ld: cannot find -ledit
+collect2: ld returned 1 exit status
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { readline(); return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for editline/readline.h... -------------------- no
+
+"gcc -E -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/x86_64-linux -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1/ruby/backward -I/home/maia/.rvm/rubies/ruby-1.9.3-p194/include/ruby-1.9.1 -I/home/maia/.rvm/src/ruby-1.9.3-p194/ext/readline -I/home/maia/.rvm/usr/include     -O3 -ggdb -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC  conftest.c -o conftest.i"
+conftest.c:3:31: fatal error: editline/readline.h: No such file or directory
+compilation terminated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <editline/readline.h>
+/* end */
+
+--------------------
+

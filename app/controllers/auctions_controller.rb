@@ -48,9 +48,7 @@ class AuctionsController < ApplicationController
 
     respond_to do |format|
       if @auction.save
-        Rufus::Scheduler.start_new.at @auction.expiration_date.to_i do
-          @auction.close()
-        end
+        @auction.delay(:run_at => @auction.expiration_date).close
         format.html { redirect_to @auction, :notice => 'Auction was successfully created.' }
         format.json { render :json => @auction, :status => :created, :location => @auction }
       else
