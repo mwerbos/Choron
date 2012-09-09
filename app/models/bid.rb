@@ -19,6 +19,8 @@ class Bid < ActiveRecord::Base
     def isOpen
       if auction and auction.expiration_date.past?
         errors[:base] << "This auction is closed."
+      end
+    end
 
 
 end
