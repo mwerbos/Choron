@@ -15,3 +15,4 @@ Write validator for auctions to make sure there is an expiration job
   Delete related expiration jobs on deletion?
 Write validator for delayed jobs to make sure it can do stuff? (idk, maybe when you do Object.delay.function() put that in? not sure how to do this)
 Make logout button not a tab
+Setup 'delete excess expired chores' functionality
