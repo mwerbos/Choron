@@ -1,5 +1,4 @@
 NECESSARY THINGS
-Taxation mechanism with The Collective
 Make chore scheduler
   Respawn chore every ... ?
 
