@@ -32,10 +32,10 @@ class HomeController < ApplicationController
   end
   
   def make_chore_auction
-    @auction = Auction.create(params[:chore][:auction])
+    @auction = Auction.new(params[:chore][:auction])
     chore_params=params[:chore]
     chore_params[:auction]=@auction
-    @chore = Chore.create(chore_params)
+    @chore = Chore.new(chore_params)
     @auction.chore = @chore
     Auction.transaction do
       respond_to do |format|
