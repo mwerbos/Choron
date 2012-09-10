@@ -40,10 +40,10 @@ class HomeController < ApplicationController
     Auction.transaction do
       respond_to do |format|
         if @auction.save and @chore.save
-          format.html { redirect_to('home/chore_market', :notice => 'Chore auction created.') }
+          format.html { redirect_to('/home/chore_market', :notice => 'Chore auction created.') }
           format.json { render :json }
         else
-          format.html { redirect_to('home/chore_market', :notice => 'Could not create chore auction.') }
+          format.html { redirect_to('/home/chore_market', :notice => 'Could not create chore auction.') }
           format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
         end
       end
