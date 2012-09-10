@@ -1,5 +1,5 @@
 NECESSARY THINGS
-Taxation mechanism with The Collective
+
 
 SEMI-NECESSARY THINGS
 Remove buttons:
