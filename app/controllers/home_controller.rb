@@ -32,16 +32,20 @@ class HomeController < ApplicationController
   end
   
   def make_chore_auction
-    @chore = Chore.create(params[:chore])
-    @auction = Auction.create(params[:auction])
+    @auction = Auction.create(params[:chore][:auction])
+    chore_params=params[:chore]
+    chore_params[:auction]=@auction
+    @chore = Chore.create(chore_params)
     @auction.chore = @chore
-    respond_to do |format|
-      if @auction.save and @chore.save
-        format.html { redirect_to('chore_market', :notice => 'Chore auction created.') }
-        format.json { render :json }
-      else
-        format.html { redirect_to('chore_market', :notice => 'Could not create chore auction.') }
-        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+    Auction.transaction do
+      respond_to do |format|
+        if @auction.save and @chore.save
+          format.html { redirect_to('home/chore_market', :notice => 'Chore auction created.') }
+          format.json { render :json }
+        else
+          format.html { redirect_to('home/chore_market', :notice => 'Could not create chore auction.') }
+          format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

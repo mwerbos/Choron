@@ -9,7 +9,7 @@
     <%= chore_form.datetime_select :due_date %>
   </div>
   
-  <%= chore_form.fields_for :auction do |auction_fields| %>
+  <%= chore_form.fields_for @auction do |auction_fields| %>
     <div class="field">
       <%= auction_fields.label :expiration_date %><br />
       <%= auction_fields.datetime_select :expiration_date %>
