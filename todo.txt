@@ -1,6 +1,6 @@
 NECESSARY THINGS
 Taxation mechanism with The Collective
-Make chore rescheduler
+Make chore scheduler
   Respawn chore every ... ?
 
 SEMI-NECESSARY THINGS
