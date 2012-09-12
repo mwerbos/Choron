@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Due date</th>
+    <th>Value</th>
+    <th>Done?</th>
+  </tr>
+  <% chores_list.each do |chore| %>
+    <%= render "layouts/chore_row", chore: chore %>
+  <% end %>
+</table>

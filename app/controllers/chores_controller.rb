@@ -39,29 +39,27 @@ class ChoresController < ApplicationController
 
   def complete
     current_chore =Chore.find(params[:id])
-    if not current_chore.done
-      current_chore.user.take_tax(current_chore.value)
-      current_chore.done=true
-      if current_chore.save and current_chore.user.save
-          #format.html { redirect_to(:back), :notice => 'Chore was compleated.' }
-        else
-          #format.html { render :action => "take" }
+    if current_chore.user==current_user
+      if not current_chore.done
+        current_chore.user.take_tax(current_chore.value)
+        current_chore.done=true
+        unless current_chore.save and current_chore.user.save
           format.json { render :json => @chore.errors, :status => :unprocessable_entity }
         end
+      end
     end
     redirect_to(:back)
   end
   def undo
     current_chore =Chore.find(params[:id])
-    if current_chore.done
-      current_chore.user.take_tax(-current_chore.value)
-      current_chore.done=false
-      if current_chore.save and current_chore.user.save
-          #format.html { redirect_to(:back), :notice => 'Chore was compleated.' }
-        else
-          #format.html { render :action => "take" }
+    if current_chore.user==current_user
+      if current_chore.done
+        current_chore.user.take_tax(-current_chore.value)
+        current_chore.done=false
+        unless current_chore.save and current_chore.user.save
           format.json { render :json => @chore.errors, :status => :unprocessable_entity }
-        end
+          end
+      end
     end
     redirect_to(:back)
   end

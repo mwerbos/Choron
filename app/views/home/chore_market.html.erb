@@ -17,17 +17,7 @@ Now viewing <%= @view %> auctions. View:
 
 <% @chores.each do |chore| %>
   <% if (@view=='open' and chore.auction.expiration_date.future?) or (@view=='closed' and chore.auction.expiration_date.past?) or (@view=='all') %>
-  <tr>
-    <td><%= chore.name %></td>
-    <td><%= chore.auction.expiration_date %></td>
-    <td><%= chore.due_date %></td>
-    <td><%= link_to 'Show auction', chore.auction %></td>
-    <td><%= link_to 'Chore details', chore %></td>
-    <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
-    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
-    <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-    <td><%= link_to 'Take', "chores/take/"+chore.id.to_s %></td>
-  </tr>
+    <%= render 'market_row',chore: chore %>
   <% end %>
 <% end %>
 </table>

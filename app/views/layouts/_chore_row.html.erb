@@ -1,0 +1,20 @@
+<tr>
+  <% overdue = chore.done == false and chore.due_date.past?  %>
+  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.name %></td>
+  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.due_date %></td>
+  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.value %></td>
+  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.done %></td>
+  <%if current_user==chore.user%>
+    <td>
+      <%if chore.done%>
+        <%= link_to 'I didn\'t do it :(', "/chores/undo/#{chore.id}", method: :put %>
+      <%else%>
+          <%= link_to 'I did it!', "/chores/complete/#{chore.id}", method: :put %>
+      <%end%>
+    </td>
+    <td><%= link_to 'Show', chore %></td>
+    <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
+    <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    <td><%= link_to 'Give away', 'nosuchpage' %></td>
+  <%end%>
+</tr>

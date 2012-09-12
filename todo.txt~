@@ -7,7 +7,6 @@ Remove buttons:
   Edit auction expiration date
   Make auction next to each chore (or fix)
 Figure out "Make chore and auction at same time" form
-Refactor chore market list into a partial
 
 NICE THINGS
 Set up helper script to run app and DelayedJob worker with one command
