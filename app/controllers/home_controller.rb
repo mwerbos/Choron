@@ -15,7 +15,8 @@ class HomeController < ApplicationController
     #retrieves all chores in the view specified
     #(open, all, or closed)
     @view = params[:view] ? params[:view] : 'all'
-    @chores = Chore.where(:auctions_count => 1)
+    #@chores = Chore.where(:auctions_count => 1)
+    @chores = Chore.where("bounties_count=1 OR auctions_count=1")
     #displays them with templatehere
   end
   

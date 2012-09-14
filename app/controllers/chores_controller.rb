@@ -39,26 +39,47 @@ class ChoresController < ApplicationController
 
   def complete
     current_chore =Chore.find(params[:id])
-    if current_chore.user==current_user
-      if not current_chore.done
-        current_chore.user.take_tax(current_chore.value)
-        current_chore.done=true
-        unless current_chore.save and current_chore.user.save
-          format.json { render :json => @chore.errors, :status => :unprocessable_entity }
+    if not current_chore.done
+      if current_chore.auction
+        if current_chore.user==current_user
+          current_chore.user.take_tax(current_chore.value)
+          current_chore.done=true
+          Chore.transaction{current_chore.save and current_chore.user.save}
         end
+      elsif current_chore.bounty and current_chore.due_date.future?
+       current_chore.user=current_user
+       current_chore.done=true
+       current_user.chorons+=current_chore.value
+       current_chore.bounty.user.chorons-=current_chore.value
+       Chore.transaction do
+         current_user.save
+         current_chore.save
+         current_chore.bounty.user.save
+       end
       end
     end
     redirect_to(:back)
   end
   def undo
     current_chore =Chore.find(params[:id])
-    if current_chore.user==current_user
-      if current_chore.done
+    if current_chore.user==current_user and current_chore.done
+      if current_chore.auction
         current_chore.user.take_tax(-current_chore.value)
         current_chore.done=false
-        unless current_chore.save and current_chore.user.save
-          format.json { render :json => @chore.errors, :status => :unprocessable_entity }
-          end
+        Chore.transaction do
+          current_chore.save
+          current_chore.user.save
+        end
+      elsif current_chore.bounty
+       current_chore.user=nil
+       current_chore.done=false
+       current_user.chorons-=current_chore.value
+       current_chore.bounty.user.chorons+=current_chore.value
+       Chore.transaction do
+         current_user.save
+         current_chore.save
+         current_chore.bounty.user.save
+       end
       end
     end
     redirect_to(:back)

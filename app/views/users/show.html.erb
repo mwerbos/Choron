@@ -17,7 +17,7 @@
 
 <p>
   <b>Chores:</b>
-  <%= render @user.chores %>
+  <%= render "layouts/chore_table", chores_list: @user.prioratized_chores %>
 </p>
 
 <%= link_to 'Give chorons', @user.id.to_s+"/give_chorons" %>

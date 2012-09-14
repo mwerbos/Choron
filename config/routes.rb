@@ -1,5 +1,9 @@
 Choron::Application.routes.draw do
+  get "bounty/show"
+
   resources :auctions
+
+  resources :bounties
 
   resources :bids
 

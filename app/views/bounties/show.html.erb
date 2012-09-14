@@ -1,0 +1,30 @@
+<h1>Bounty</h1>
+<p>
+Bounty issued by <%=@bounty.user.username%>
+</p>
+<p>
+Chore: <%=link_to(@bounty.chore.name,@bounty.chore)%>
+</p>
+<p>
+<%if @bounty.chore.due_date.future?%>
+  Expires at: <%=@bounty.chore.due_date%>
+<%else%>
+  Expired at: <%=@bounty.chore.due_date%>
+<%end%>
+
+</p>
+Fee: <%=@bounty.chore.value%>
+</p>
+<p>
+<%if not @bounty.chore.done%>
+  <%if @bounty.chore.due_date.future?%>
+    <%= link_to 'I did it!', "/chores/complete/#{@bounty.chore.id}", method: :put %>
+  <%else%>
+    Sorry, this bounty is expired
+  <%end%>
+<% elsif @bounty.chore.user==current_user%>
+  <%= link_to "I didn't do it", "/chores/undo/#{@bounty.chore.id}", method: :put %>
+<% else %>
+  <%= "#{@bounty.chore.user.username} completed this chore already." %>
+<%end%>
+</p>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910011031) do
+ActiveRecord::Schema.define(:version => 20120913155759) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20120910011031) do
     t.integer  "auction_id"
   end
 
-  create_table "chore_schedulers", :force => true do |t|
-    t.text     "default_bids"
-    t.integer  "respawn_time"
+  create_table "bounties", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "chore_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120910011031) do
     t.integer  "auctions_count"
     t.integer  "value"
     t.boolean  "done",           :default => false
+    t.integer  "bounties_count", :default => 0,     :null => false
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -76,9 +77,9 @@ ActiveRecord::Schema.define(:version => 20120910011031) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
-    t.integer  "chorons"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "chorons"
   end
 
 end

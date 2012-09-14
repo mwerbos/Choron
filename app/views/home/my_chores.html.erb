@@ -1,8 +1,5 @@
 <h1> My chores </h1>
-<% sorted_undone=@user.chores.find_all{|chore| not chore.done}.sort{|a,b| a.due_date <=> b.due_date}%>
-<% sorted_done=@user.chores.find_all{|chore| chore.done}.sort{|b,a| a.due_date <=> b.due_date}%>
-<%sorted_chores=sorted_undone+sorted_done%>
-<%= render "layouts/chore_table", chores_list: sorted_chores %>
+<%= render "layouts/chore_table", chores_list: @user.prioratized_chores %>
 
 <br />
 
