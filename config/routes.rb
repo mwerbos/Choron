@@ -24,6 +24,9 @@ Choron::Application.routes.draw do
   match 'home/give_chorons' => 'home#give_chorons'
   match 'home/new_chore_auction' => 'home#make_chore_auction_form'
   match 'home/make_chore_auction' => 'home#make_chore_auction'
+  get   'home/preferences' => 'home#get_preferences_list'
+  get   'home/preferences/:chore_id' => 'home#show_preference'
+# put   'home/preferences/:chore_id' => 'home#edit_preference'
   
   root :to => 'user_sessions#new', :as => :login
 

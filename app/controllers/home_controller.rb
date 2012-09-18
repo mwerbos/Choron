@@ -80,6 +80,35 @@ class HomeController < ApplicationController
       end
     end
   end
+  def get_preferences_list
+    @prefs = current_user.bid_prefs
+  end
+  def show_preference
+    @user= current_user
+    respond_to do |format|
+      format.html # make_chore_auction_form.html.erb
+      format.json { render :json => @user }
+    end
+
+  end
+  def edit_preference
+    @user=current_user
+    @user.bid_prefs[Integer(params[:chore_id])]=
+        {value: params[:value],manual: params[:manual]}
+    unless params[:manual]
+      @user.auto_preferences([Chore.find(params[:chore_id])])
+    end
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to('/home/preferences', :notice => 'Preferences edited.') }
+        format.json { render :json }
+      else
+        format.html { redirect_to('/home/preferences', :notice => 'Could not create chore auction.') }
+        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+     
   
   def give_chore_form
     #gets user id from url parameters
