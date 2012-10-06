@@ -1,0 +1,8 @@
+<!--This file is not currently used, and likely will never be --!>
+<%= form_tag(params[:chore_id] ,method: "put") do %>
+  <%=label_tag(:value, "Value:")%>
+  <%initial_value=current_user.bid_prefs[Integer(params[:chore_id])][:value]%>
+  <%=text_field_tag(:value, initial_value)%>
+  <br/>
+  <%=submit_tag("Update Preference")%> 
+<% end %>

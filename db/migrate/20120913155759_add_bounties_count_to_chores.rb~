@@ -1,0 +1,14 @@
+class AddCommentsCountToNominations < ActiveRecord::Migration
+  def self.up
+    add_column :nominations, :comments_count, :integer, null:false, default: 0
+    # reset cached counts for nominations with comments only
+    ids = Set.new
+            Comment.all.each {|c| ids << c.nomination_id}
+                ids.each do |nomination_id|
+                      Nomination.reset_counters(nomination_id, :comments)
+                end
+ end
+ def self.down
+     remove_column :nominations, :comments_count
+  end
+end

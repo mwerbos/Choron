@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20120910012851) do
+=======
+ActiveRecord::Schema.define(:version => 20120914150419) do
+>>>>>>> b3d4f5a969903af83e367da3da6ac9f22f2f68b2
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -28,12 +32,20 @@ ActiveRecord::Schema.define(:version => 20120910012851) do
     t.integer  "auction_id"
   end
 
+<<<<<<< HEAD
   create_table "chore_schedulers", :force => true do |t|
     t.text     "default_bids"
     t.integer  "respawn_time"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "chore_id"
+=======
+  create_table "bounties", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "chore_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+>>>>>>> b3d4f5a969903af83e367da3da6ac9f22f2f68b2
   end
 
   create_table "chores", :force => true do |t|
@@ -45,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20120910012851) do
     t.integer  "auctions_count"
     t.integer  "value"
     t.boolean  "done",           :default => false
+    t.integer  "bounties_count", :default => 0,     :null => false
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -77,9 +90,10 @@ ActiveRecord::Schema.define(:version => 20120910012851) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
-    t.integer  "chorons"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "chorons"
+    t.string   "bid_prefs"
   end
 
 end

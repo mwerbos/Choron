@@ -9,14 +9,16 @@ Now viewing <%= @view %> auctions. View:
 <table>
   <tr>
     <th>Chore name</th>
-    <th>Auction expires</th>
+    <th>Current Value</th>
+    <th>Expires</th>
     <th>Chore due</th>
-    <th></th>
     <th></th>
   </tr>
 
 <% @chores.each do |chore| %>
-  <% if (@view=='open' and chore.auction.expiration_date.future?) or (@view=='closed' and chore.auction.expiration_date.past?) or (@view=='all') %>
+  <% if (@view=='open' and chore.open?) or
+        (@view=='closed' and (not chore.open?)) or
+        (@view=='all') %>
     <%= render 'market_row',chore: chore %>
   <% end %>
 <% end %>
@@ -24,4 +26,4 @@ Now viewing <%= @view %> auctions. View:
 
 <%= link_to 'New chore', new_chore_path %> |
 <%= link_to 'New auction (from existing chore)', new_auction_path %>
-<%= link_to 'New chore auction', 'new_chore_auction' %>
+<%= link_to 'New chore auction', '/home/new_chore_auction' %>

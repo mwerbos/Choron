@@ -1,11 +1,25 @@
 <tr>
   <td><%= chore.name %></td>
-  <td><%= chore.auction.expiration_date %></td>
+  <%if chore.auction %>
+    <td><%= chore.auction.lowest %></td>
+    <td><%= chore.auction.expiration_date %></td>
+  <%else%>
+    <td><%= chore.value %></td>
+    <td><%= chore.due_date %></td>
+  <%end%>
   <td><%= chore.due_date %></td>
-  <td><%= link_to 'Show auction', chore.auction %></td>
+  <%if chore.auction %>
+    <td><%= link_to 'Show auction', chore.auction %></td>
+  <%else%>
+    <td><%= link_to 'Show bounty', chore.bounty%></td>
+  <%end%>
   <td><%= link_to 'Chore details', chore %></td>
   <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
-  <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
+  <%if chore.auction %>
+    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
+  <%else%>
+    <td><%= link_to 'Edit bounty', edit_bounty_path(chore.bounty) %></td>
+  <%end%>
   <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   <td><%= link_to 'Take', "chores/take/"+chore.id.to_s %></td>
 </tr>

@@ -1,3 +1,5 @@
 New chore auction page only lets you select times 11 days into the future
 Chore scheduler overwrites previous chore when it schedules a new chore
   Maybe doing @chore = assigns the chore OBJECT to being the new one?
+at auctions/new:
+The back button doesn't work; yields a broken page

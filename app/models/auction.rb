@@ -20,4 +20,7 @@ class Auction < ActiveRecord::Base
     self.chore.value=value
     self.chore.save
   end
+  def user_best(user)
+    self.bids.find_all{|bid| bid.user==user}.min {|a,b| bid_sorter(a,b)}
+  end
 end
