@@ -1,18 +1,15 @@
 NECESSARY THINGS
 Make chore scheduler
   Respawn chore every ... ?
-<<<<<<< HEAD
 Make bounties work
 Make 'admin access' or require user to type 'I solemnly swear I am not about to be a dick' before doing certain tasks
 Make user-friendly way to delete chore schedulers (delete them when you delete the chore, for example)
 
-=======
 Add a function to sort bids from least objectionable to most objectionable
   When you're in debt, it will bid on the least objectionable at the  amount required to turn it to second least objectionable.
   Needs some scheduling stuff; maybe 1 day after you go into debt, if you're still in debt, it will force your EV positive?
   Whenever a bid is placed and there are debtors, it should re-evaluate their status and make sure to keep their EV positive.
   Add a system for creating bounties
->>>>>>> b3d4f5a969903af83e367da3da6ac9f22f2f68b2
 SEMI-NECESSARY THINGS
 Remove buttons:
   Edit auction expiration date
