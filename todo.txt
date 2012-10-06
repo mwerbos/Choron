@@ -1,6 +1,9 @@
 NECESSARY THINGS
 Make chore scheduler
   Respawn chore every ... ?
+Make bounties work
+Make 'admin access' or require user to type 'I solemnly swear I am not about to be a dick' before doing certain tasks
+Make user-friendly way to delete chore schedulers (delete them when you delete the chore, for example)
 
 SEMI-NECESSARY THINGS
 Remove buttons:
@@ -10,6 +13,7 @@ Figure out "Make chore and auction at same time" form
 Refactor chore market list into a partial
 
 NICE THINGS
+Remove 'new chore' button from My Chores
 Set up helper script to run app and DelayedJob worker with one command
 Fix all the gross Back buttons
 Write validator for auctions to make sure there is an expiration job
