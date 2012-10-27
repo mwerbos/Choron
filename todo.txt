@@ -1,22 +1,32 @@
 NECESSARY THINGS
 Make chore scheduler
-  Respawn chore every ... ?
+  Make a form to access and delete recurring chores
+  Change chore scheduler to update run time when it changes stuff
 Make bounties work
-Make 'admin access' or require user to type 'I solemnly swear I am not about to be a dick' before doing certain tasks
+Make 'admin access' or require user to type 'I solemnly swear I am not about to be a dick' 
+  before doing certain tasks
 Make user-friendly way to delete chore schedulers (delete them when you delete the chore, for example)
-
+Make 'Back' buttons not go to stupid places
 Add a function to sort bids from least objectionable to most objectionable
-  When you're in debt, it will bid on the least objectionable at the  amount required to turn it to second least objectionable.
-  Needs some scheduling stuff; maybe 1 day after you go into debt, if you're still in debt, it will force your EV positive?
-  Whenever a bid is placed and there are debtors, it should re-evaluate their status and make sure to keep their EV positive.
-  Add a system for creating bounties
+  When you're in debt, it will bid on the least objectionable 
+  at the  amount required to turn it to second least objectionable.
+Needs some scheduling stuff; 
+  maybe 1 day after you go into debt, if you're still in debt, it will force your EV positive?
+  Whenever a bid is placed and there are debtors, 
+  it should re-evaluate their status and make sure to keep their EV positive.
+Add a system for creating bounties
+
 SEMI-NECESSARY THINGS
+Descriptions of chores
 Remove buttons:
   Edit auction expiration date
   Make auction next to each chore (or fix)
+  New chore without an auction
+  New auction from existing chore
 Figure out "Make chore and auction at same time" form
 Refactor chore market list into a partial
 Add something that cleans out a user's bid preferences
+Delete stupid pages (chores list etc.)
 
 NICE THINGS
 Remove 'new chore' button from My Chores
@@ -27,3 +37,7 @@ Write validator for auctions to make sure there is an expiration job
 Write validator for delayed jobs to make sure it can do stuff? (idk, maybe when you do Object.delay.function() put that in? not sure how to do this)
 Make logout button not a tab
 Setup 'delete excess expired chores' functionality
+Add validators to everything
+
+Feature req: Persisting chore name/description after deletion
+  (i.e. "Do you want to use one of these previous chore names?")

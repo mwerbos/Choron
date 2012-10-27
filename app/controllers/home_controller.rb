@@ -26,8 +26,6 @@ class HomeController < ApplicationController
     #makes auction object and attaches it
     @auction = Auction.new
     @auction.chore = @chore
-    #also makes chore scheduler for persistent chores
-    @scheduler = ChoreScheduler.new
     respond_to do |format|
       format.html # make_chore_auction_form.html.erb
       format.json { render :json => @user }
@@ -51,12 +49,12 @@ class HomeController < ApplicationController
         end
       end
     end
-    #make a scheduler if necessary
     if params[:respawn] != 0
       @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
       @scheduler.chore = @chore
       @scheduler.save
-      @scheduler.delay(run_at: Time.now + @scheduler.respawn_time).schedule_next
+      run_at = Time.now + @scheduler.respawn_time
+      @scheduler.delay(run_at: run_at).schedule_next(run_at)
     end
   end
   

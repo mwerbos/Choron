@@ -1,5 +1,5 @@
 class Chore < ActiveRecord::Base
-  attr_accessible :due_date, :name, :value, :done, :auction, :bounty
+  attr_accessible :due_date, :name, :value, :done, :auction, :bounty, :auctions_count
   belongs_to :user
   has_one :auction
   has_one :bounty

@@ -116,11 +116,9 @@ class ChoresController < ApplicationController
     end
   end
 
-  def backend_create(chore_params, respawn_time)
+  def backend_create(chore_params)
     @chore = Chore.new(chore_params)
     if @chore.save
-      #make an auction for it?
-      #make a delayed job to re-create it in respawn_time
       return true
     else
       return false
