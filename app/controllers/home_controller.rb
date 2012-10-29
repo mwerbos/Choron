@@ -128,10 +128,6 @@ class HomeController < ApplicationController
     #processes request in database
     #if both objects saved, display success
   end
-  
-  def new_chore_auction
-    #has a form that creates both a chore and auction
-    #and associates them
-  end
+
   
 end

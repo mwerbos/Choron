@@ -12,11 +12,15 @@ Choron::Application.routes.draw do
   resources :users, :user_sessions
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
+
   match '/chores/take/:id' => 'chores#take_chore'
   put   '/chores/complete/:id' => 'chores#complete'
   match '/chores/undo/:id' => 'chores#undo'
+  match 'chores/destroy_repeating_chore/:id' => 'chores#destroy_repeating_chore'
+
   match '/auctions/new/for_chore/:chore_id' => 'auctions#new'
   match '/auctions/new_bid/:auction_id' => 'bids#new'
+
   match '/home' => 'home#my_chores'
   match '/home/chore_market' => 'home#chore_market'
   match '/home/chore_market/:view' => 'home#chore_market'
