@@ -14,13 +14,22 @@ class Auction < ActiveRecord::Base
     end
   end
   def close()
-    winner=self.bids.min {|a,b| bid_sorter(a,b)}.user
-    value=self.lowest()
-    self.chore.user=winner
-    self.chore.value=value
-    self.chore.save
+    unless self.bids.empty?
+      winner=self.bids.min {|a,b| bid_sorter(a,b)}.user
+      value=self.lowest()
+      self.chore.user=winner
+      self.chore.value=value
+      self.chore.save
+      return true
+    else
+      #TODO: figure out what to do if noone bids on anything
+      return false
+    end
   end
   def user_best(user)
     self.bids.find_all{|bid| bid.user==user}.min {|a,b| bid_sorter(a,b)}
+  end
+  def open?()
+    return self.expiration_date.future?
   end
 end

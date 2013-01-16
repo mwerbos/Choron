@@ -105,7 +105,7 @@ class HomeController < ApplicationController
   def edit_preference
     @user=current_user
     @user.bid_prefs[Integer(params[:chore_id])]=
-        {value: params[:value],manual: params[:manual]}
+        {value: Integer(params[:value]),manual: params[:manual]}
     unless params[:manual]
       @user.auto_preferences([Chore.find(params[:chore_id])])
     end
@@ -114,7 +114,7 @@ class HomeController < ApplicationController
         format.html { redirect_to('/home/preferences', :notice => 'Preferences edited.') }
         format.json { render :json }
       else
-        format.html { redirect_to('/home/preferences', :notice => 'Could not create chore auction.') }
+        format.html { redirect_to('/home/preferences', :notice => 'Could not edit preference.') }
         format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
       end
     end
