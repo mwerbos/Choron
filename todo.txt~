@@ -1,6 +1,5 @@
 NECESSARY THINGS
 Maia:
-FIX: ChoreScheduler bug
 Disable these functions alone:
   --Destroy chore (OR do something else??)
   --Destroy auction (OR do something else??)
@@ -14,18 +13,12 @@ Make 'Back' buttons not go to stupid places
 Remove stupid pages (chores list, etc.)
 
 Roger:
-IMPORTANT: Don't forget to fix debt coercion:
-  It could use debt-coerced bids to judge your preferences,
-  which would be wrong.
 Add a function to sort bids from least objectionable to most objectionable
-  When you're in debt, it will bid on the least objectionable 
-  at the  amount required to turn it to second least objectionable.
-Needs some scheduling stuff; 
-  maybe 1 day after you go into debt, if you're still in debt, it will force your EV positive?
-  Whenever a bid is placed and there are debtors, 
-  it should re-evaluate their status and make sure to keep their EV positive.
-Add a system for creating bounties
-
+  When you're in debt, it will bid on the least objectionable at the  amount required to turn it to second least objectionable.
+  Needs some scheduling stuff; maybe 1 day after you go into debt, if you're still in debt, it will force your EV positive?
+  Whenever a bid is placed and there are debtors, it should re-evaluate their status and make sure to keep their EV positive.
+  Add a system for creating bounties
+Automatically remove auto-prefs if their chore closes (or maybe just don't display them?)
 SEMI-NECESSARY THINGS
 Add form to change repetition frequency of chores (under edit chore)
 Make chore details page show repetition frequency
@@ -35,7 +28,6 @@ Remove buttons:
   Make auction next to each chore (or fix)
   New chore without an auction
   New auction from existing chore
-Figure out "Make chore and auction at same time" form
 Refactor chore market list into a partial
 Add something that cleans out a user's bid preferences
 Delete stupid pages (chores list etc.)
