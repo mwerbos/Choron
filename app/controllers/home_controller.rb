@@ -49,6 +49,13 @@ class HomeController < ApplicationController
         end
       end
     end
+    if params[:respawn] != 0
+      @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
+      @scheduler.chore = @chore
+      @scheduler.save
+      run_at = Time.now + @scheduler.respawn_time
+      @scheduler.delay(run_at: run_at).schedule_next(run_at)
+    end
   end
   
   def give_chorons_form
@@ -121,10 +128,6 @@ class HomeController < ApplicationController
     #processes request in database
     #if both objects saved, display success
   end
-  
-  def new_chore_auction
-    #has a form that creates both a chore and auction
-    #and associates them
-  end
+
   
 end

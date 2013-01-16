@@ -1,0 +1,16 @@
+<h1>Delete repeating chore?</h1>
+<% puts 'DEBUG: Evaluating the destroy form now!' %>
+<%= form_for @chore, :url => { :action => "destroy_repeating_chore" } do |chore_form| %>
+  <div class="info">
+You just tried to delete the most recent instance of a repeating chore.
+Would you like to stop the chore from repeating forever,
+or just delete this instance of the chore?
+</div>
+
+<div class="actions">
+  <%= submit_tag "Just delete this instance", :name => 'instance_button' %> 
+  <%= submit_tag "Delete this and ALL future repetitions", :name => 'all_button' %> 
+  <%= submit_tag "Nevermind. Don't delete it at all.", :name => 'nevermind_button' %>
+</div>
+
+<% end %>

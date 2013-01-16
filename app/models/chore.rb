@@ -1,8 +1,9 @@
 class Chore < ActiveRecord::Base
-  attr_accessible :due_date, :name, :value, :done, :auction, :bounty
+  attr_accessible :due_date, :name, :value, :done, :auction, :bounty, :auctions_count
   belongs_to :user
   has_one :auction
   has_one :bounty
+  has_one :chore_scheduler #might be nil if it is a one-time chore
   accepts_nested_attributes_for :auction
   def open?
     if self.bounty

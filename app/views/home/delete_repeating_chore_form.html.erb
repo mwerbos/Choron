@@ -1,0 +1,11 @@
+<h1>Delete repeating chore?</h1>
+<%= form_for @chore, :url => { :action => "destroy_repeating_chore" } do |chore_form| %>
+
+You just tried to delete the most recent instance of a repeating chore.
+Would you like to stop the chore from repeating forever,
+or just delete this instance of the chore?
+
+<br/><%= radio_button_tag 'which_to_delete', 'chore', true %> Just delete this instance
+<br/><%= radio_button_tag 'which_to_delete', 'scheduler' %> Stop the chore from repeating forever
+
+<% end %>

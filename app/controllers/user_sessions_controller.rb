@@ -44,4 +44,34 @@ class UserSessionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def make_admin
+    flash[:notice]=session[:current_admin_status]
+    verification_options = 
+      ['I solemnly swear that I am not about to be a dick.',
+       'I will handle the nuclear codes responsibly.',
+       'Twilight, I\'ll be good! I pinky-promise!',
+       'I will be true. You have my word of honor. And my axe.']
+    choice = Random.rand(verification_options.length)
+    @verification_text = verification_options[choice]
+    respond_to do |format|
+      format.html
+      format.json { render :json => @user_session }
+    end
+  end
+
+  def confirm_admin
+    if params[:user_verification]==params[:verification_text]
+      puts "**********************CORRECT!!!"
+      puts "*****CURRENT ADMIN STATUS (IN CONFIRM_ADMIN): ", session[:current_admin_status]
+      set_admin_true
+      redirect_back
+      #redirect_to(controller: 'home', action: 'chore_market')
+      return
+    end
+    redirect_back
+    #redirect_to(controller: 'home', action: 'my_chores')
+    #TODO: make it redirect to desired page
+  end
+
 end
