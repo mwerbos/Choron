@@ -43,7 +43,9 @@ class User < ActiveRecord::Base
     total_fees=0#This will be for everyone, not just this user.
     total_income=0
     auctions.each do |auction|
-      if auction.bids.min {|a,b| bid_sorter(a,b)}.user==self
+      if not auction.bids.min {|a,b| bid_sorter(a,b)}
+        0#Do nothing?
+      elsif auction.bids.min {|a,b| bid_sorter(a,b)}.user==self
         total_income+=auction.lowest
       else
         total_fees+=auction.lowest
@@ -52,6 +54,13 @@ class User < ActiveRecord::Base
     chores=Chore.where("done = ? AND auctions_count=1",false)
     chores.each do |chore|
       if chore.auction.expiration_date.past? #This examines all assigned but incomplete chores
+        if chore.value.nil?
+          #This should't really happen; it would indicate a failure of the
+          #auction to execute close() when its expiration passes.
+          unless chore.auction.close()
+            break
+          end
+        end
         if chore.user==self
           total_income+=chore.value
         else
@@ -85,4 +94,34 @@ class User < ActiveRecord::Base
     end
     self.save
   end
+  def coerce(target_EP=0)
+    #places bids, taking preferences into account, to raise expected profit
+    #to the target level.
+    #It's not obvious how to deal with bounties; I'm going to ignore them
+    #for now.
+    auto_preferences
+    extra_needed=target_EP-self.expected_profit
+    options=self.bid_prefs.collect do |chore_id,prefs|
+      chore=Chore.find(chore_id)
+      if chore.auction
+        puts "LOOP!"
+        {preference_ratio: Float(chore.auction.lowest-1)/prefs[:value],
+          value: Float(chore.auction.lowest-1), chore: chore}
+      end
+    end
+    options.sort!{|a,b| a[:preference_ratio]<=>b[:preference_ratio]}
+    chosen_chores=options.take_while do |option|
+      puts option
+      continue=extra_needed>0
+      extra_needed-=option[:value]
+      continue#Returns false the iteration after the last one needed
+    end
+    worst_ratio=chosen_chores.last[preference_ratio]
+    #chosen_chores.each do |pref|
+    #  bid=Bid.new(amount:worst_ratio*pref[:value],auction_id
+
+
+    return chosen_chores
+  end
+
 end

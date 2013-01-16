@@ -47,16 +47,18 @@ class BidsController < ApplicationController
     @bid = Bid.new(params[:bid])
     @bid.auction_id = @auction_id if @auction_id
     @bid.user_id = @user_id if @user_id
-
+    @bid.user.auto_preferences([@bid.auction.chore])
     respond_to do |format|
-      if @bid.save
-        format.html { redirect_to @bid, :notice => "Bid was successfully created."}
-        format.json { render :json => @bid, :status => :created, :location => @bid }
-      else
-        format.html { redirect_to :back}
-        #format.html { redirect_to :back,flash: {error: "ERROR" }}
-        #format.html { render :action => "edit"}
-        format.json { render :json => @bid.errors, :status => :unprocessable_entity }
+      Bid.transaction do
+        if @bid.save and @bid.user.save
+          format.html { redirect_to @bid, :notice => "Bid was successfully created."}
+          format.json { render :json => @bid, :status => :created, :location => @bid }
+        else
+          format.html { redirect_to :back}
+          #format.html { redirect_to :back,flash: {error: "ERROR" }}
+          #format.html { render :action => "edit"}
+          format.json { render :json => @bid.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
