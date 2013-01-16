@@ -31,4 +31,5 @@ class Auction < ActiveRecord::Base
   end
   def open?()
     return self.expiration_date.future?
+  end
 end
