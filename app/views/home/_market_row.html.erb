@@ -20,7 +20,8 @@
   <%else%>
     <td><%= link_to 'Edit bounty', edit_bounty_path(chore.bounty) %></td>
   <%end%>
-  <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  <td><%= link_to 'Destroy chore and auction', "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you sure?' } %></td>
+  
   <td><%= link_to 'Take', "chores/take/"+chore.id.to_s %></td>
 </tr>
 

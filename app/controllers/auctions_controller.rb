@@ -1,5 +1,7 @@
 class AuctionsController < ApplicationController
   before_filter :require_user
+  before_filter :require_admin, only: [:new, :edit]
+  before_filter :clear_admin, only: [:create, :update]
   # GET /auctions
   # GET /auctions.json
   def index

@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   before_filter :require_user
+  before_filter :require_admin, only: [:make_chore_auction_form]
+  before_filter :clear_admin, only: [:make_chore_auction]
   
   def my_chores
     #grabs user data to display chores in the template
@@ -49,10 +51,12 @@ class HomeController < ApplicationController
         end
       end
     end
-    if params[:respawn] != 0
-      @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
-      @scheduler.chore = @chore
-      @scheduler.save
+    puts "***********RESPAWN TIME: ", params[:respawn].inspect
+    puts "***********IS RESPAWN TIME == 0?", params[:respawn].to_i==0
+    @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
+    @scheduler.chore = @chore
+    @scheduler.save
+    if params[:respawn].to_i != 0
       run_at = Time.now + @scheduler.respawn_time
       @scheduler.delay(run_at: run_at).schedule_next(run_at)
     end
