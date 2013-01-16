@@ -116,7 +116,11 @@ class User < ActiveRecord::Base
       extra_needed-=option[:value]
       continue#Returns false the iteration after the last one needed
     end
-    worst_ratio=chosen_chores.last[preference_ratio]
+    chosen_chores.each do |pref|
+      self.bid_prefs[pref[:chore][:id]][:manual]=true
+    end
+    self.save
+    worst_ratio=chosen_chores.last[:preference_ratio]
     #chosen_chores.each do |pref|
     #  bid=Bid.new(amount:worst_ratio*pref[:value],auction_id
 
