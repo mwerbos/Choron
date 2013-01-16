@@ -29,4 +29,6 @@ class Auction < ActiveRecord::Base
   def user_best(user)
     self.bids.find_all{|bid| bid.user==user}.min {|a,b| bid_sorter(a,b)}
   end
+  def open?()
+    return self.expiration_date.future?
 end
