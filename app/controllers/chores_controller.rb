@@ -1,5 +1,7 @@
 class ChoresController < ApplicationController
   before_filter :require_user
+  before_filter :require_admin, :only => [:edit, :destroy]
+  after_filter :clear_admin, only: [:update]
   # GET /chores
   # GET /chores.json
   def index
@@ -120,7 +122,6 @@ class ChoresController < ApplicationController
   # PUT /chores/1.json
   def update
     @chore = Chore.find(params[:id])
-
     respond_to do |format|
       if @chore.update_attributes(params[:chore])
         format.html { redirect_to @chore, :notice => 'Chore was successfully updated.' }

@@ -1,8 +1,20 @@
 NECESSARY THINGS
 Make bounties work
-Make 'admin access' or require user to type 'I solemnly swear I am not about to be a dick' 
-  before doing certain tasks
+Make 'admin access':
+  --Create chore auction
+  --Edit chore - DONE
+  --Destroy chore auction
+  --Edit auction
+Disable these functions alone:
+  --Destroy chore
+  --Destroy auction
+  --Make an auction without a chore
+  --Make a chore without auction? OR, Make "all chores" page accessible
+Make these only doable by the owner:
+  --Edit bounty
+  --Destroy bounty
 Make 'Back' buttons not go to stupid places
+Remove stupid pages (chores list, etc.)
 Add a function to sort bids from least objectionable to most objectionable
   When you're in debt, it will bid on the least objectionable 
   at the  amount required to turn it to second least objectionable.

@@ -1,0 +1,13 @@
+<h1>Become an admin</h1>
+
+Please retype the following in order to continue with an administrative action:
+
+<%= form_tag(controller: 'user_sessions', action: 'confirm_admin') %>
+  <p> <%= @verification_text %> </p>
+  <%= text_field_tag "user_verification" %>
+  <%= hidden_field_tag 'verification_text', @verification_text %>
+<%= submit_tag "confirm" %>
+
+<%= params[:verification] %>
+
+<%= link_to 'Back', user_sessions_path %>

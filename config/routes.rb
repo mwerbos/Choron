@@ -12,6 +12,8 @@ Choron::Application.routes.draw do
   resources :users, :user_sessions
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
+  match 'admin' => 'user_sessions#make_admin', :as => :admin
+  match 'user_sessions/confirm_admin' => 'user_sessions#confirm_admin'
 
   match '/chores/take/:id' => 'chores#take_chore'
   put   '/chores/complete/:id' => 'chores#complete'
