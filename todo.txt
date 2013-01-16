@@ -14,7 +14,6 @@ Make these only doable by the owner:
   --Edit bounty
   --Destroy bounty
 Make 'Back' buttons not go to stupid places
-Remove stupid pages (chores list, etc.)
 Add a function to sort bids from least objectionable to most objectionable
   When you're in debt, it will bid on the least objectionable 
   at the  amount required to turn it to second least objectionable.
@@ -33,7 +32,6 @@ Remove buttons:
   Make auction next to each chore (or fix)
   New chore without an auction
   New auction from existing chore
-Figure out "Make chore and auction at same time" form
 Refactor chore market list into a partial
 Add something that cleans out a user's bid preferences
 Delete stupid pages (chores list etc.)
