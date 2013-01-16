@@ -1,5 +1,7 @@
 class AuctionsController < ApplicationController
   before_filter :require_user
+  before_filter :require_admin, only: [:new]
+  before_filter :clear_admin, only: [:create]
   # GET /auctions
   # GET /auctions.json
   def index
@@ -47,7 +49,8 @@ class AuctionsController < ApplicationController
     @auction.chore_id = params[:chore_id] if params[:chore_id]
 
     respond_to do |format|
-      if @auctioclass CreateChores < ActiveRecord::Migrationn.save
+      if @auction.save
+        @auction.delay(:run_at => @auction.expiration_date).close
         format.html { redirect_to @auction, :notice => 'Auction was successfully created.' }
         format.json { render :json => @auction, :status => :created, :location => @auction }
       else

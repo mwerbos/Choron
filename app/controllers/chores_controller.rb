@@ -1,7 +1,8 @@
 class ChoresController < ApplicationController
   before_filter :require_user
-  before_filter :require_admin, :only => [:edit, :destroy]
-  after_filter :clear_admin, only: [:update]
+  before_filter :require_admin, :only => [:edit, :new, :destroy, :destroy_with_auction]
+  before_filter :clear_admin, only: [:update, :create]
+  
   # GET /chores
   # GET /chores.json
   def index
@@ -155,6 +156,28 @@ class ChoresController < ApplicationController
     end
   end
   
+  def destroy_with_auction
+    @chore = Chore.find(params[:id])
+    @auction = @chore.auction
+    #Check if the chore has a scheduler with a nonzero respawn time
+    #If it does, take the user to the recurring chore deletion page
+    if(@chore.chore_scheduler != nil and @chore.chore_scheduler.respawn_time != 0)
+      puts "DEBUG: This is a recurring chore!"
+      respond_to do |format|
+        format.html { render 'chores/destroy' }
+        format.json { render :json => @chore }
+      end
+    #If not, just destroy it, and take it to the chores url
+    else
+      @chore.destroy
+      @auction.destroy if @auction != nil
+      respond_to do |format|
+        format.html { redirect_to controller: 'home', action: 'chore_market' }
+        format.json { head :no_content }
+      end
+    end
+  end
+  
   def destroy_repeating_chore
     if params[:nevermind_button]
       respond_to do |format|
@@ -167,6 +190,7 @@ class ChoresController < ApplicationController
         puts "DEBUG: Delete it all!!11one1!"
         @chore.chore_scheduler.delete
         @chore.delete
+        @auction.destroy if @auction != nil
         respond_to do |format|
          format.html { redirect_to controller: 'home', action: 'chore_market' }
           format.json { head :no_content }
@@ -176,6 +200,7 @@ class ChoresController < ApplicationController
           puts "DEBUG: Just delete this instance, please."
           @chore.chore_scheduler.schedule_next(Time.now)
           @chore.delete
+          @auction.destroy if @auction != nil
           respond_to do |format|
             format.html { redirect_to controller: 'home', action: 'chore_market' }
             format.json { head :no_content }
