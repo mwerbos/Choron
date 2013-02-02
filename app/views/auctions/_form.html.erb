@@ -13,7 +13,7 @@
   
   <%if !@chore_id %>
     <%= f.label :chore_id %>
-    <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => true %>
+    <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => false %>
   <% end %>
 
   <div class="field">

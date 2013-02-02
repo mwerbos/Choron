@@ -1,14 +1,24 @@
 NECESSARY THINGS
 Maia:
-Disable these functions alone:
-  --Destroy chore (OR do something else??)
-  --Destroy auction (OR do something else??)
-  --Make an auction without a chore
-  --Make a chore without auction? OR, Make "all chores" page accessible
+Make 'create bounties' page - DONE
+Make 'create chore bounty' page
+Make 'edit bounty' page work to edit value
+Make admin only:
+  --Delete chore (without auction)
+BUG:
+--Create new chore without auction.
+--Click 'Destroy.'
+--User is prompted to enter admin password.
+--Enter password.
+--Redirects to chore description page.
+--Go back to chores list.
+--Click 'Destroy.'
+--Chore is destroyed.
+
 Make these only doable by the owner:
   --Edit bounty
   --Destroy bounty
-Make 'create bounties' page
+  --Destroy chore that has bounty
 Make 'Back' buttons not go to stupid places
 Remove stupid pages (chores list, etc.)
 
@@ -33,8 +43,8 @@ Add something that cleans out a user's bid preferences
 Delete stupid pages (chores list etc.)
 
 NICE THINGS
+Refactor bounties so that value is attached to the bounty, not the chore
 Change chore scheduler to update run time when chore is modified (e.g. due date) (?) (might not be necessary)
-Remove 'new chore' button from My Chores
 Set up helper script to run app and DelayedJob worker with one command
 Fix all the gross Back buttons
 Write validator for auctions to make sure there is an expiration job
@@ -54,3 +64,7 @@ Make 'admin access':
   --Edit chore - DONE
   --Destroy chore auction - DONE
   --Edit auction - DONE
+  --Destroy chore (without auction) - DONE
+Disable these functions alone:
+  --Destroy auction - DONE
+  --Make an auction without a chore - DONE

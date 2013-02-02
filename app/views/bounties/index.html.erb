@@ -1,0 +1,27 @@
+<h1>Listing bounties</h1>
+<p id="notice"><%= notice %></p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+    <th>Issuer</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bounties.each do |bounty| %>
+  <tr>
+    <td><%= bounty.chore.name %></td>
+    <td><%= bounty.chore.value %></td>
+    <td><%= bounty.user.username %></td>
+    <td><%= link_to 'View', bounty %></td>
+    <% if current_user == bounty.user %>
+    <td>You own this bounty.</td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bounty', new_bounty_path %>

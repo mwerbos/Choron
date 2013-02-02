@@ -1,0 +1,30 @@
+<%= form_for(@bounty) do |f| %>
+  <% if @bounty.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bounty.errors.count, "error") %> prohibited this bounty from being saved:</h2>
+
+      <ul>
+      <% @bounty.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%if !@chore_id %>
+    <%= f.label :chore_id %>
+    <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => false %>
+  <% else %>
+    <%= @chore = Chore.find(@chore_id) %>
+    <%= f.fields_for @chore do |chore_fields| %>
+      <div class="field">
+        <%= chore_fields.label :value %><br />
+        <%= chore_fields.number_field :value %>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
