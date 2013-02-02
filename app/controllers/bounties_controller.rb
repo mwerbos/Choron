@@ -9,9 +9,23 @@ class BountiesController < ApplicationController
     end
   end
     before_filter :require_user
-  before_filter :require_admin, :only => [:edit, :new, :destroy, :destroy_with_auction]
-  after_filter :clear_admin, only: [:update, :create, :destroy]
   
+ def require_owner
+     @bounty = Bounty.find(params[:id])
+     owner = @bounty.user
+     unless current_user == owner
+        #DEBUG
+        puts '********************NOT BOUNTY OWNER'
+        #store_location
+        flash[:notice] = 'I\'m sorry I can\'t let you do that, Dave.'
+        redirect_to(controller: 'home', action: 'chore_market')
+        return false
+     end
+     puts '**********BOUNTY OWNER'
+    end
+
+  before_filter :require_owner, only: ['edit','destroy']
+    
   # GET /bounties
   # GET /bounties.json
   def index
