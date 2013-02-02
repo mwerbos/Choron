@@ -7,13 +7,14 @@
     <th>Manually set</th>
   </tr>
 
-<% @prefs.each do |chore_id,pref| %>
-  <% chore=Chore.find(Integer(chore_id))%>
+<% @prefs.each do |scheduler_id,pref| %>
+  <% scheduler=ChoreScheduler.find(Integer(scheduler_id))%>
+  <% chore=scheduler.chore%>
   <tr>
-    <%= form_tag("preferences/#{chore_id}" ,method: "put") do %>
-    <td><%= link_to chore.name, "/chores/#{chore_id}" %></td>
+    <%= form_tag("preferences/#{scheduler_id}" ,method: "put") do %>
+    <td><%= link_to chore.name, "/chores/#{chore.id}" %></td>
     <td>
-       <%initial_value=current_user.bid_prefs[Integer(chore_id)][:value]%>
+       <%initial_value=current_user.bid_prefs[Integer(scheduler_id)][:value]%>
        <%=text_field_tag(:value, initial_value)%>
    
     </td>

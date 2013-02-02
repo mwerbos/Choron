@@ -13,6 +13,15 @@ class Auction < ActiveRecord::Base
       MAXBID
     end
   end
+  def toBeat() #Bid required to win the auction
+    sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
+    if sorted_bids.length>0
+      sorted_bids[0].amount-1
+    else
+      MAXBID
+    end
+  end
+
   def close()
     unless self.bids.empty?
       winner=self.bids.min {|a,b| bid_sorter(a,b)}.user

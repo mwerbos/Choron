@@ -31,7 +31,7 @@ Remove buttons:
 Refactor chore market list into a partial
 Add something that cleans out a user's bid preferences
 Delete stupid pages (chores list etc.)
-
+Currently the chore assignment algorithm is greedy and occasionally does worse than optimal.
 NICE THINGS
 Change chore scheduler to update run time when chore is modified (e.g. due date) (?) (might not be necessary)
 Remove 'new chore' button from My Chores

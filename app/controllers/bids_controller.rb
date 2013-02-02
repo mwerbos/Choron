@@ -47,7 +47,6 @@ class BidsController < ApplicationController
     @bid = Bid.new(params[:bid])
     @bid.auction_id = @auction_id if @auction_id
     @bid.user_id = @user_id if @user_id
-    @bid.user.auto_preferences([@bid.auction.chore])
     respond_to do |format|
       Bid.transaction do
         if @bid.save and @bid.user.save
@@ -61,6 +60,7 @@ class BidsController < ApplicationController
         end
       end
     end
+    @bid.user.auto_preferences([@bid.auction.chore.chore_scheduler])
   end
 
   # PUT /bids/1
