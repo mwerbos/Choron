@@ -61,6 +61,7 @@ class UserSessionsController < ApplicationController
   end
 
   def confirm_admin
+    user_verification = params[:user_verification].lstrip.rstrip
     if params[:user_verification]==params[:verification_text]
       puts "**********************CORRECT!!!"
       puts "*****CURRENT ADMIN STATUS (IN CONFIRM_ADMIN): ", session[:current_admin_status]
