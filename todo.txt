@@ -26,6 +26,7 @@ Roger:
 Cause coersion to actually happen
 
 SEMI-NECESSARY THINGS
+Make it so you can't multiassign a chore bounties
 Add form to change repetition frequency of chores (under edit chore)
 Make chore details page show repetition frequency
 Descriptions of chores

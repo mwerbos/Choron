@@ -43,16 +43,21 @@ class BountiesController < ApplicationController
   # POST /bounties.json
   def create
     @bounty = Bounty.new(params[:bounty])
-    @chore_id = @bounty.chore_id
+    @chore = Chore.find(@bounty.chore_id)
+    if @chore.nil?
+      puts "OH GOD WHY JESUS USE VALIDATORS COME ON NOW SERRIOUSLY GUYS"
+    end
+    @chore.value=params[:value][:val].to_i
+    @chore.save
     #TODO: Make the bounty get a user's information
     #and update the user parameter accordingly.
     @bounty.user = current_user
     respond_to do |format|
-      if @bounty.save && @chore_id != nil
+      if not @chore.nil? and @bounty.save!
         format.html { redirect_to :bounties, :notice => 'bounty was successfully created.' }
         format.json { render :json => @bounty, :status => :created, :location => @bounty }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "new", notice: 'errors creating bounty.' }
         format.json { render :json => @bounty.errors, :status => :unprocessable_entity }
       end
     end
@@ -63,7 +68,11 @@ class BountiesController < ApplicationController
   def update
     @bounty = Bounty.find(params[:id])
     @chore = Chore.find(@bounty.chore_id)
-    @chore.save if @chore != nil
+    if @chore.nil?
+      puts "OH GOD WHY JESUS USE VALIDATORS COME ON NOW SERRIOUSLY GUYS"
+    end
+    @chore.value=params[:value][:val].to_i
+    @chore.save
     respond_to do |format|
       if @bounty.save
         format.html { redirect_to @bounty, :notice => 'bounty was successfully updated.' }

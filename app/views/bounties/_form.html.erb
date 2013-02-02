@@ -11,18 +11,12 @@
     </div>
   <% end %>
 
-  <%if !@chore_id %>
-    <%= f.label :chore_id %>
-    <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => false %>
-  <% else %>
-    <% @chore = Chore.find(@chore_id) %>
-    <%= f.fields_for @chore do |chore_fields| %>
-      <div class="field">
-        <%= chore_fields.label :value %><br />
-        <%= chore_fields.number_field :value %>
-      </div>
-    <% end %>
-  <% end %>
+  <%= f.label :chore_id %>
+  <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => false %>
+  <div class="field">
+    Value:<br />
+    <%= number_field :value, :val %>
+  </div>
   
   <div class="actions">
     <%= f.submit %>
