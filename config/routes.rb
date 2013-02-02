@@ -5,7 +5,11 @@ Choron::Application.routes.draw do
 
   resources :bounties
 
-  resources :bids
+  post 'bids' => 'bids#create'
+  
+  get 'bids' => 'home#chore_market'
+
+  #resources :bids
 
   resources :chores
 

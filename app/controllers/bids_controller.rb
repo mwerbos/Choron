@@ -50,9 +50,11 @@ class BidsController < ApplicationController
     respond_to do |format|
       Bid.transaction do
         if @bid.save and @bid.user.save
-          format.html { redirect_to @bid, :notice => "Bid was successfully created."}
+          format.html { redirect_to @bid.auction, :notice => "Bid was successfully created."}
           format.json { render :json => @bid, :status => :created, :location => @bid }
         else
+          puts "Error saving bid:"
+          puts @bid.inspect
           format.html { redirect_to :back}
           #format.html { redirect_to :back,flash: {error: "ERROR" }}
           #format.html { render :action => "edit"}

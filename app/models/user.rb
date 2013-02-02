@@ -32,6 +32,9 @@ class User < ActiveRecord::Base
         payer.chorons+=tax
         payer.save
       end
+      payers.each do |payer|
+        payer.check_coersion
+      end
     end
   end
   def prioratized_chores()
@@ -98,6 +101,14 @@ class User < ActiveRecord::Base
     end
     self.save
   end
+  def check_coersion()
+    #This is not the desired behevior. Desired behevior is:
+    #If this shows you're in debt, it sets a job for 2 days
+    #from now, notifies you, and coerces you in 2 days.
+    if self.chorons<0
+      self.coerce
+    end
+  end
   def coerce(target_EP=0)
     #places bids, taking preferences into account, to raise expected profit
     #to the target level.
@@ -118,15 +129,6 @@ class User < ActiveRecord::Base
       end
     end
     options.compact! #Clears out nils left by collect if the chore is not attached to an unexpired auction.
-#     options.sort!{|a,b| a[:preference_ratio]<=>b[:preference_ratio]}
-#     chosen_chores=options.take_while do |option|
-#       puts option
-#       continue=extra_needed>0
-#       extra_needed-=option[:value]
-#       continue#Returns false the iteration after the last one needed
-#     end
-    puts "Extra needed:"
-    puts extra_needed
     min_sadness=nil
     chosen_chores=[]
     for num in 1..options.length
@@ -137,34 +139,22 @@ class User < ActiveRecord::Base
           sadness+=option[:sadness]
           value+=option[:value]
         end
-        puts "____________"
-        puts option_set.inspect
-        puts value
-        puts sadness
         if value>=extra_needed and (min_sadness.nil? or sadness<min_sadness)
           chosen_chores=option_set
           min_sadness=sadness
-          puts "CHOSEN!"
-          puts defined? chosen_chores
         end
-        puts "------------"
       end
     end
     chosen_chores.each do |pref|
       self.bid_prefs[pref[:scheduler][:id]][:manual]=true
     end
     self.save
-    worst_ratio=chosen_chores.last[:preference_ratio]
     chosen_chores.each do |pref|
       auction=pref[:scheduler].chore.auction
       bid=Bid.new(amount:auction.toBeat)
       bid.auction=auction
       bid.user=self
-      if bid.save!
-        puts "yay"
-      else
-        puts "sad"
-      end
+      bid.save!
     end
     return chosen_chores
   end
