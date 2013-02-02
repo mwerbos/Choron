@@ -105,21 +105,50 @@ class User < ActiveRecord::Base
     #for now.
     auto_preferences
     extra_needed=target_EP-self.expected_profit
+    if extra_needed<=0
+      return
+    end
     options=self.bid_prefs.collect do |scheduler_id,prefs|
       scheduler=ChoreScheduler.find(scheduler_id)
       chore=scheduler.chore
-      if chore.auction and chore.auction.open?
-        {preference_ratio: Float(chore.auction.toBeat)/prefs[:value],
-          value: Float(chore.auction.toBeat), scheduler: scheduler}
+      #All open chores you won't win:
+      if chore.auction and chore.auction.open? and chore.auction.bids.min {|a,b| bid_sorter(a,b)}.user!=self
+        {sadness: prefs[:value]-Float(chore.auction.toBeat),
+          value: Float(chore.auction.toBeat)+Float(chore.auction.lowest)/(User.count-1), scheduler: scheduler}
       end
     end
     options.compact! #Clears out nils left by collect if the chore is not attached to an unexpired auction.
-    options.sort!{|a,b| a[:preference_ratio]<=>b[:preference_ratio]}
-    chosen_chores=options.take_while do |option|
-      puts option
-      continue=extra_needed>0
-      extra_needed-=option[:value]
-      continue#Returns false the iteration after the last one needed
+#     options.sort!{|a,b| a[:preference_ratio]<=>b[:preference_ratio]}
+#     chosen_chores=options.take_while do |option|
+#       puts option
+#       continue=extra_needed>0
+#       extra_needed-=option[:value]
+#       continue#Returns false the iteration after the last one needed
+#     end
+    puts "Extra needed:"
+    puts extra_needed
+    min_sadness=nil
+    chosen_chores=[]
+    for num in 1..options.length
+      options.combination(num).each do |option_set|
+        value=0
+        sadness=0
+        option_set.each do |option|
+          sadness+=option[:sadness]
+          value+=option[:value]
+        end
+        puts "____________"
+        puts option_set.inspect
+        puts value
+        puts sadness
+        if value>=extra_needed and (min_sadness.nil? or sadness<min_sadness)
+          chosen_chores=option_set
+          min_sadness=sadness
+          puts "CHOSEN!"
+          puts defined? chosen_chores
+        end
+        puts "------------"
+      end
     end
     chosen_chores.each do |pref|
       self.bid_prefs[pref[:scheduler][:id]][:manual]=true
@@ -128,7 +157,7 @@ class User < ActiveRecord::Base
     worst_ratio=chosen_chores.last[:preference_ratio]
     chosen_chores.each do |pref|
       auction=pref[:scheduler].chore.auction
-      bid=Bid.new(amount:Integer(worst_ratio*pref[:value]))
+      bid=Bid.new(amount:auction.toBeat)
       bid.auction=auction
       bid.user=self
       if bid.save!
