@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include ApplicationHelper
   acts_as_authentic
   attr_accessible :email, :username, :password, :password_confirmation, :chorons, :bid_prefs
   has_many :chores
@@ -30,6 +31,9 @@ class User < ActiveRecord::Base
       payers.each do |payer|
         payer.chorons+=tax
         payer.save
+      end
+      payers.each do |payer|
+        payer.check_coersion
       end
     end
   end
@@ -64,35 +68,46 @@ class User < ActiveRecord::Base
         if chore.user==self
           total_income+=chore.value
         else
+          puts "MARK"
+          puts chore.value.inspect
           total_fees+=chore.value
         end
       end
     end
     return total_income+(Setting.collective-total_fees)/(User.all.length-1)
   end
-  def auto_preferences(chores=Chore.all)
+  def auto_preferences(schedulers=ChoreScheduler.all)
     #This method will attempt to automatically determine the preferences of
     #a user. Preferences are saved as a hash, mapping the ids of open chores
     #to the amount this user would do them for uncoerced. For auctions the
     #user has bid on, their lowest bid will be used. For auctions the user
     #has not bid on, and for bounties, MAXBID is assumed. The user can edit
     #these values; once edited by the user, they won't automaticaly update.
-    chores.find_all{|chore| chore.open?}.each do |chore|
-      if self.bid_prefs[chore.id].nil? or
-          not self.bid_prefs[chore.id][:manual]
+    schedulers.find_all{|scheduler| scheduler.chore.open?}.each do |scheduler|
+      chore=scheduler.chore
+      if self.bid_prefs[scheduler.id].nil? or
+          not self.bid_prefs[scheduler.id][:manual]
         if chore.auction
           my_best_bid=chore.auction.user_best(self)
           if my_best_bid
-            self.bid_prefs[chore.id]={value:my_best_bid.amount,manual:false}
+            self.bid_prefs[scheduler.id]={value:my_best_bid.amount,manual:false}
           else
-            self.bid_prefs[chore.id]={value:MAXBID,manual:false}
+            self.bid_prefs[scheduler.id]={value:MAXBID,manual:false}
           end
-        elsif chore.bounty
-          self.bid_prefs[chore.id]={value:MAXBID,manual:false}
+        #elsif chore.bounty
+        #  self.bid_prefs[chore.id]={value:MAXBID,manual:false}
         end
       end
     end
     self.save
+  end
+  def check_coersion()
+    #This is not the desired behevior. Desired behevior is:
+    #If this shows you're in debt, it sets a job for 2 days
+    #from now, notifies you, and coerces you in 2 days.
+    if self.chorons<0
+      self.coerce
+    end
   end
   def coerce(target_EP=0)
     #places bids, taking preferences into account, to raise expected profit
@@ -101,26 +116,46 @@ class User < ActiveRecord::Base
     #for now.
     auto_preferences
     extra_needed=target_EP-self.expected_profit
-    options=self.bid_prefs.collect do |chore_id,prefs|
-      chore=Chore.find(chore_id)
-      if chore.auction
-        puts "LOOP!"
-        {preference_ratio: Float(chore.auction.lowest-1)/prefs[:value],
-          value: Float(chore.auction.lowest-1), chore: chore}
+    if extra_needed<=0
+      return
+    end
+    options=self.bid_prefs.collect do |scheduler_id,prefs|
+      scheduler=ChoreScheduler.find(scheduler_id)
+      chore=scheduler.chore
+      #All open chores you won't win:
+      if chore.auction and chore.auction.open? and chore.auction.bids.min {|a,b| bid_sorter(a,b)}.user!=self
+        {sadness: prefs[:value]-Float(chore.auction.toBeat),
+          value: Float(chore.auction.toBeat)+Float(chore.auction.lowest)/(User.count-1), scheduler: scheduler}
       end
     end
-    options.sort!{|a,b| a[:preference_ratio]<=>b[:preference_ratio]}
-    chosen_chores=options.take_while do |option|
-      puts option
-      continue=extra_needed>0
-      extra_needed-=option[:value]
-      continue#Returns false the iteration after the last one needed
+    options.compact! #Clears out nils left by collect if the chore is not attached to an unexpired auction.
+    min_sadness=nil
+    chosen_chores=[]
+    for num in 1..options.length
+      options.combination(num).each do |option_set|
+        value=0
+        sadness=0
+        option_set.each do |option|
+          sadness+=option[:sadness]
+          value+=option[:value]
+        end
+        if value>=extra_needed and (min_sadness.nil? or sadness<min_sadness)
+          chosen_chores=option_set
+          min_sadness=sadness
+        end
+      end
     end
-    worst_ratio=chosen_chores.last[preference_ratio]
-    #chosen_chores.each do |pref|
-    #  bid=Bid.new(amount:worst_ratio*pref[:value],auction_id
-
-
+    chosen_chores.each do |pref|
+      self.bid_prefs[pref[:scheduler][:id]][:manual]=true
+    end
+    self.save
+    chosen_chores.each do |pref|
+      auction=pref[:scheduler].chore.auction
+      bid=Bid.new(amount:auction.toBeat)
+      bid.auction=auction
+      bid.user=self
+      bid.save!
+    end
     return chosen_chores
   end
 

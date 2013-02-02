@@ -104,10 +104,10 @@ class HomeController < ApplicationController
   end
   def edit_preference
     @user=current_user
-    @user.bid_prefs[Integer(params[:chore_id])]=
+    @user.bid_prefs[Integer(params[:scheduler_id])]=
         {value: Integer(params[:value]),manual: params[:manual]}
     unless params[:manual]
-      @user.auto_preferences([Chore.find(params[:chore_id])])
+      @user.auto_preferences([ChoreScheduler.find(params[:scheduler_id])])
     end
     respond_to do |format|
       if @user.save
