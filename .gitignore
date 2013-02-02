@@ -11,6 +11,7 @@
 /db/*.sqlite3
 
 # Ignore all logfiles and tempfiles.
+<<<<<<< HEAD
 /log/*.log
 /tmp
 
@@ -18,4 +19,3 @@
 
 *.swp
 *.swo
-

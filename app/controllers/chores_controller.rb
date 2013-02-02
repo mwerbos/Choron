@@ -1,7 +1,7 @@
 class ChoresController < ApplicationController
   before_filter :require_user
   before_filter :require_admin, :only => [:edit, :new, :destroy, :destroy_with_auction]
-  before_filter :clear_admin, only: [:update, :create]
+  after_filter :clear_admin, only: [:update, :create, :destroy]
   
   # GET /chores
   # GET /chores.json

@@ -5,7 +5,6 @@
     <th>Expiration date</th>
     <th>Chore name</th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @auctions.each do |auction| %>
@@ -16,9 +15,8 @@
     <%= Chore.find(auction.chore_id).name %>
     <% end %>
     </td>
-    <td><%= link_to 'Show', auction %></td>
+    <td><%= link_to 'View', auction %></td>
     <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
-    <td><%= link_to 'Destroy', auction, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

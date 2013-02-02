@@ -1,4 +1,7 @@
 class AuctionsController < ApplicationController
+  #This controller has no destroy method.
+  #Auctions should only be destroyed along with
+  #their chore or bounty.
   before_filter :require_user
   before_filter :require_admin, only: [:new, :edit]
   before_filter :clear_admin, only: [:create, :update]
@@ -28,7 +31,7 @@ class AuctionsController < ApplicationController
   # GET /auctions/new.json
   def new
     @auction = Auction.new
-    @chore_id = params[:chore_id] if params[:chore_id]
+    @chore_id = params[:chore_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,15 +48,22 @@ class AuctionsController < ApplicationController
   # POST /auctions.json
   def create
     @auction = Auction.new(params[:auction])
-    @auction.chore_id = @chore_id if @chore_id
-    @auction.chore_id = params[:chore_id] if params[:chore_id]
-
-    respond_to do |format|
-      if @auction.save
-        @auction.delay(:run_at => @auction.expiration_date).close
-        format.html { redirect_to @auction, :notice => 'Auction was successfully created.' }
-        format.json { render :json => @auction, :status => :created, :location => @auction }
-      else
+    if params[:chore_id] != nil
+      @auction.chore_id = @chore_id
+      @auction.chore_id = params[:chore_id]
+      respond_to do |format|
+        if @auction.save
+          @auction.delay(:run_at => @auction.expiration_date).close
+          format.html { redirect_to @auction, :notice => 'Auction was successfully created.' }
+          format.json { render :json => @auction, :status => :created, :location => @auction }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @auction.errors, :status => :unprocessable_entity }
+        end
+      end
+    else
+      flash[:notice] = 'Cannot create auction without chore.'
+      respond_to do |format|
         format.html { render :action => "new" }
         format.json { render :json => @auction.errors, :status => :unprocessable_entity }
       end
@@ -76,15 +86,5 @@ class AuctionsController < ApplicationController
     end
   end
 
-  # DELETE /auctions/1
-  # DELETE /auctions/1.json
-  def destroy
-    @auction = Auction.find(params[:id])
-    @auction.destroy
-
-    respond_to do |format|
-      format.html { redirect_to auctions_url }
-      format.json { head :no_content }
-    end
-  end
+  #No destroy method on its own
 end
