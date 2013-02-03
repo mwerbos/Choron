@@ -2,7 +2,7 @@
   <td><%= chore.name %></td>
   <%if chore.auction %>
     <td><%= chore.auction.lowest %></td>
-    <td><%= chore.auction.expiration_date %></td>
+    <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <%if top_bid %>
       <td><%=top_bid.user.username%></td>
@@ -11,10 +11,10 @@
     <%end%>
   <%else%>
     <td><%= chore.value %></td>
-    <td><%= chore.due_date %></td>
+    <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
     <td></td>
   <%end%>
-  <td><%= chore.due_date %></td>
+  <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
   <%if chore.auction %>
     <td><%= link_to 'Show auction', chore.auction %></td>
   <%else%>
