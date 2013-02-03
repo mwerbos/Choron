@@ -3,9 +3,16 @@
   <%if chore.auction %>
     <td><%= chore.auction.lowest %></td>
     <td><%= chore.auction.expiration_date %></td>
+    <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
+    <%if top_bid %>
+      <td><%=top_bid.user.username%></td>
+    <%else%>
+      <td></td>
+    <%end%>
   <%else%>
     <td><%= chore.value %></td>
     <td><%= chore.due_date %></td>
+    <td></td>
   <%end%>
   <td><%= chore.due_date %></td>
   <%if chore.auction %>
