@@ -60,6 +60,7 @@ table {
   float: right;
   clear: after;
   color: #fff;
+  text-align: right;
 }
 
 #nav {
