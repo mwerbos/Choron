@@ -43,6 +43,7 @@ class HomeController < ApplicationController
     Auction.transaction do
       respond_to do |format|
         if @auction.save and @chore.save
+          @auction.delay(:run_at => @auction.expiration_date).close
           format.html { redirect_to('/home/chore_market', :notice => 'Chore auction created.') }
           format.json { render :json }
         else
