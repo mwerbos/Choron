@@ -19,7 +19,12 @@ class HomeController < ApplicationController
     @view = params[:view] ? params[:view] : 'open'
     #@chores = Chore.where(:auctions_count => 1)
     @chores = Chore.where("bounties_count=1 OR auctions_count=1")
-    #displays them with templatehere
+    #sorts chores, puts open on top
+    #sorts open by which expires soonest,
+    #and closed by which expired most recently
+    sorted_open=@chores.find_all{|chore| chore.open? }.sort{|a,b| a.auction.expiration_date <=> b.auction.expiration_date}
+    sorted_closed=@chores.find_all{|chore| not chore.open? }.sort{|b,a| a.auction.expiration_date <=> b.auction.expiration_date}
+    @chores = sorted_open+sorted_closed
   end
   
   def make_chore_auction_form
