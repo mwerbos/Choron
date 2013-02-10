@@ -14,4 +14,13 @@ class Chore < ActiveRecord::Base
       return true
     end
   end
+  def end_date
+    if self.bounty
+      return self.due_date
+    elsif self.auction
+      return self.auction.expiration_date
+    else
+      return nil
+    end
+  end
 end
