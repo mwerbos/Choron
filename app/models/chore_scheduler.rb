@@ -15,6 +15,7 @@ class ChoreScheduler < ActiveRecord::Base
       #make a new auction that expires (respawn_time) after the old one
       new_auction = Auction.new
       new_auction.expiration_date = old_chore.auction.expiration_date + self.respawn_time
+      new_auction.delay(:run_at => new_auction.expiration_date).close
       new_chore.auction = new_auction
       #hacky solution to make it connect the chore to the auction (bad)
       new_chore.auctions_count = 1

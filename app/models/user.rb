@@ -57,14 +57,8 @@ class User < ActiveRecord::Base
     end
     chores=Chore.where("done = ? AND auctions_count=1",false)
     chores.each do |chore|
-      if chore.auction.expiration_date.past? #This examines all assigned but incomplete chores
-        if chore.value.nil?
-          #This should't really happen; it would indicate a failure of the
-          #auction to execute close() when its expiration passes.
-          unless chore.auction.close()
-            break
-          end
-        end
+     #This examines all assigned but incomplete chores
+      if chore.auction.expiration_date.past? and not chore.value.nil?
         if chore.user==self
           total_income+=chore.value
         else
