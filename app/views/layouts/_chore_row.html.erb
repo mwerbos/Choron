@@ -1,7 +1,7 @@
 <tr>
   <% overdue = ((not chore.done) and chore.due_date.past?)  %>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.name %></td>
-  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.due_date %></td>
+  <td class=<%= overdue ? 'overdue' : '' %>><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.value %></td>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.done %></td>
   <%if current_user==chore.user%>
