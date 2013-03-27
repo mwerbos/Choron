@@ -6,6 +6,7 @@ class ChoreScheduler < ActiveRecord::Base
   def schedule_next(run_at_time)
     old_chore = self.chore
     new_chore = nil
+    new_auction = nil
     Chore.transaction do
       #make a new chore that expires (respawn_time) after the current one
       new_chore = Chore.new
@@ -15,7 +16,6 @@ class ChoreScheduler < ActiveRecord::Base
       #make a new auction that expires (respawn_time) after the old one
       new_auction = Auction.new
       new_auction.expiration_date = old_chore.auction.expiration_date + self.respawn_time
-      new_auction.delay(:run_at => new_auction.expiration_date).close
       new_chore.auction = new_auction
       #hacky solution to make it connect the chore to the auction (bad)
       new_chore.auctions_count = 1
@@ -25,6 +25,8 @@ class ChoreScheduler < ActiveRecord::Base
     end
     #schedule calling this function again in respawn_time
     self.delay( run_at: run_at_time + self.respawn_time).schedule_next(run_at_time + self.respawn_time)
+    #also close the auction when it is supposed to be closed
+    new_auction.delay(:run_at => new_auction.expiration_date).close
     #set to track the new chore, forget about the old one  
     self.chore = new_chore
     self.save
