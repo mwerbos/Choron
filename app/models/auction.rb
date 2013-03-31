@@ -3,6 +3,7 @@ class Auction < ActiveRecord::Base
   attr_accessible :expiration_date, :chore_id #explicit use is a bit hacky, oh well
   belongs_to :chore, :counter_cache => true
   has_many :bids
+  has_paper_trail
   def lowest()
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     if sorted_bids.length>1

@@ -1,6 +1,7 @@
 class ChoreScheduler < ActiveRecord::Base
   belongs_to :chore #the last chore it scheduled
   attr_accessible :default_bids, :respawn_time
+  has_paper_trail
   serialize :default_bids, Hash
 
   def schedule_next(run_at_time)
