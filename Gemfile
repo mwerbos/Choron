@@ -29,6 +29,7 @@ end
 
 gem 'jquery-rails'
 gem 'authlogic'
+gem 'paper_trail'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

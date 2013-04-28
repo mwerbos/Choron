@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :username, :password, :password_confirmation, :chorons, :bid_prefs
   has_many :chores
   has_many :bids
+  has_paper_trail
   
   serialize :bid_prefs, Hash
   def give_chorons(recipient, chorons)

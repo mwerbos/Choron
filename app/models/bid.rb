@@ -1,4 +1,5 @@
 class Bid < ActiveRecord::Base
+    has_paper_trail
     attr_accessible :amount, :auction_id, :user_id, :expiration_date
     belongs_to :auction
     belongs_to :user
