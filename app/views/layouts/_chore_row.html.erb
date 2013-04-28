@@ -12,6 +12,7 @@
           <%= link_to 'I did it!', "/chores/complete/#{chore.id}", method: :put %>
       <%end%>
     </td>
+    <td><%= link_to 'We did it!', "/chores/coop/#{chore.id}" %></td>
     <td><%= link_to 'Show', chore %></td>
     <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
     <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>

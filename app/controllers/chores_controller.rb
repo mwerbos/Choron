@@ -41,51 +41,19 @@ class ChoresController < ApplicationController
   end
 
   def complete
-    current_chore =Chore.find(params[:id])
-    if not current_chore.done
-      if current_chore.auction
-        if current_chore.user==current_user
-          current_chore.user.take_tax(current_chore.value)
-          current_chore.done=true
-          Chore.transaction{current_chore.save and current_chore.user.save}
-        end
-      elsif current_chore.bounty and current_chore.due_date.future?
-       current_chore.user=current_user
-       current_chore.done=true
-       current_user.chorons+=current_chore.value
-       current_chore.bounty.user.chorons-=current_chore.value
-       Chore.transaction do
-         current_user.save
-         current_chore.save
-         current_chore.bounty.user.save
-       end
-      end
-    end
+    Chore.find(params[:id]).complete(current_user)
     redirect_to(:back)
   end
   def undo
-    current_chore =Chore.find(params[:id])
-    if current_chore.user==current_user and current_chore.done
-      if current_chore.auction
-        current_chore.user.take_tax(-current_chore.value)
-        current_chore.done=false
-        Chore.transaction do
-          current_chore.save
-          current_chore.user.save
-        end
-      elsif current_chore.bounty
-       current_chore.user=nil
-       current_chore.done=false
-       current_user.chorons-=current_chore.value
-       current_chore.bounty.user.chorons+=current_chore.value
-       Chore.transaction do
-         current_user.save
-         current_chore.save
-         current_chore.bounty.user.save
-       end
-      end
-    end
+    Chore.find(params[:id]).undo(current_user)
     redirect_to(:back)
+  end
+  def coop
+    @chore =Chore.find(params[:id])
+    unless (not @chore.done) and @chore.auction and @chore.user==current_user
+      #If the above conditions aren't met, this should not work.
+      redirect_to(:back)
+    end
   end
   # GET /chores/new
   # GET /chores/new.json
