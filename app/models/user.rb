@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     #This doesn't behave quite like it should; chorons are conserved, but
     #the collective sometimes gets negative amounts.
     User.transaction do
-      payers=User.where('id not in(?)',[self.id])
+      payers=User.where('id not in(?) AND is_frozen=?',[self.id],false)
       numPayers=payers.length
       File.open("#{Rails.root}/testlog.txt", 'w') {|f| f.write(Setting.collective) }
       #This is negative; it will be added to everyone's chorons.
@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
         end
       end
     end
-    return total_income+(Setting.collective-total_fees)/(User.all.length-1)
+    return total_income+(Setting.collective-total_fees)/(User.where(is_frozen: false).length-1)
   end
   def auto_preferences(schedulers=ChoreScheduler.all)
     #This method will attempt to automatically determine the preferences of
