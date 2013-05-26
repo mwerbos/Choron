@@ -20,7 +20,7 @@ Choron::Application.routes.draw do
   match 'user_sessions/confirm_admin' => 'user_sessions#confirm_admin'
 
 #  match '/chores/take/:id' => 'chores#take_chore'
-  put   '/chores/complete/:id' => 'chores#complete'
+  match   '/chores/complete/:id' => 'chores#complete'
   match '/chores/undo/:id' => 'chores#undo'
   match '/chores/delete_all/:id' => 'chores#destroy_with_auction'
   match 'chores/destroy_repeating_chore/:id' => 'chores#destroy_repeating_chore'

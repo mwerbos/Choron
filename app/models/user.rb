@@ -33,9 +33,9 @@ class User < ActiveRecord::Base
         payer.chorons+=tax
         payer.save
       end
-      payers.each do |payer|
-        payer.check_coersion
-      end
+      # payers.each do |payer|
+        # payer.check_coersion
+      # end
     end
   end
   def prioratized_chores()
