@@ -44,6 +44,9 @@ class User < ActiveRecord::Base
     sorted_undone+sorted_done
   end
   def expected_profit()
+    if (User.count<2)
+      return 0
+    end
     auctions=Auction.where("expiration_date > ?", Time.now)
     total_fees=0#This will be for everyone, not just this user.
     total_income=0
