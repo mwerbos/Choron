@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
     sorted_undone+sorted_done
   end
   def expected_profit()
+    if (User.count<2)
+      return 0
+    end
     auctions=Auction.where("expiration_date > ?", Time.now)
     total_fees=0#This will be for everyone, not just this user.
     total_income=0
@@ -48,7 +51,7 @@ class User < ActiveRecord::Base
         end
       end
     end
-    return total_income+(Setting.collective-total_fees)/(User.all.length-1)
+    return total_income+(Setting.collective-total_fees)/(User.where(is_frozen: false).length-1)
   end
   def auto_preferences(schedulers=ChoreScheduler.all)
     #This method will attempt to automatically determine the preferences of
