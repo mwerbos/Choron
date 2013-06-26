@@ -1,0 +1,9 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Time</th>
+  </tr>
+  <% contribs.each do |contrib| %>
+  <%= render "layouts/contribution_row", contrib: contrib %>
+  <% end %>
+</table>

@@ -1,0 +1,2 @@
+class SharedChoresController < ChoresController
+end

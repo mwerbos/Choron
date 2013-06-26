@@ -18,4 +18,6 @@
 
 *.swp
 *.swo
+Gemfile
+.gitignore
 testlog.txt
