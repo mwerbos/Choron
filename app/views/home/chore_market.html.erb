@@ -8,7 +8,22 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
   <%= link_to 'Closed', :controller => "home", :action => "chore_market", :view => 'closed' %> |
   <%= link_to 'All', :controller => "home", :action => "chore_market", :view => 'all' %>
 </div>
+<table>
+  <tr>
+    <th>Chore name</th>
+    <th>Value</th>
+    <th>Times done</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Overseer</th>
+  </tr>
 
+<% @shared_chores.each do |chore| %>
+  <% if chore.active? %>
+    <%= render 'shared_market_row',chore: chore %>
+  <% end %>
+<% end %>
+</table>
 <table>
   <tr>
     <th>Chore name</th>

@@ -18,6 +18,7 @@ class HomeController < ApplicationController
     #(open, all, or closed)
     @view = params[:view] ? params[:view] : 'open'
     #@chores = Chore.where(:auctions_count => 1)
+    @shared_chores=SharedChore.all
     @chores = Chore.where("auctions_count=1 OR bounties_count=1")
     #sorts chores, puts open on top
     #sorts open by which expires soonest,
