@@ -26,6 +26,13 @@ class Chore < ActiveRecord::Base
       return nil
     end
   end
+  def expected_value(testUser)
+    if self.done
+      return 0
+    else
+      return take_tax(self.user,self.value,testUser)
+    end
+  end
   def complete(current_user)
     if not self.done
       if self.auction

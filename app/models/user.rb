@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  require File.join(Rails.root,"lib/taxation.rb")
+  include Taxation
   include ApplicationHelper
   acts_as_authentic
   attr_accessible :email, :username, :password, :password_confirmation, :chorons, :bid_prefs
@@ -27,31 +29,24 @@ class User < ActiveRecord::Base
       return 0
     end
     auctions=Auction.where("expiration_date > ?", Time.now)
-    total_fees=0#This will be for everyone, not just this user.
     total_income=0
     auctions.each do |auction|
       if not auction.bids.min {|a,b| bid_sorter(a,b)}
-        0#Do nothing?
-      elsif auction.bids.min {|a,b| bid_sorter(a,b)}.user==self
-        total_income+=auction.lowest
-      else
-        total_fees+=auction.lowest
+        #Do nothing?
+      else 
+        current_winner=auction.bids.min {|a,b| bid_sorter(a,b)}.user
+        total_income+=take_tax(current_winner,auction.lowest,self)
       end
     end
     chores=Chore.where("done = ? AND auctions_count=1",false)
     chores.each do |chore|
-     #This examines all assigned but incomplete chores
+      #This examines all assigned but incomplete chores
       if chore.auction.expiration_date.past? and not chore.value.nil?
-        if chore.user==self
-          total_income+=chore.value
-        else
-          puts "MARK"
-          puts chore.value.inspect
-          total_fees+=chore.value
-        end
+        puts "Chore id:%i"%chore.id
+        total_income+=chore.expected_value(self)
       end
     end
-    return total_income+(Setting.collective-total_fees)/(User.where(is_frozen: false).length-1)
+    return total_income
   end
   def auto_preferences(schedulers=ChoreScheduler.all)
     #This method will attempt to automatically determine the preferences of

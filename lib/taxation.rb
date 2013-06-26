@@ -1,30 +1,17 @@
 module Taxation
-  def take_tax(recipient,amount)
-    #I believe that I've fixed the choron leak and the negative collective.
-    #There remains a problem. The collective is billed, meaning that the recipient
-    #may pay very slightly (<=1/(N-1)) for their auction. This should be fixed in
-    #the generalized version.
-    User.transaction do
-      payers=User.where('id not in(?) AND is_frozen=?',[self.id],false) 
-      numPayers=payers.length
-      File.open("#{Rails.root}/testlog.txt", 'w') {|f| f.write(Setting.collective) }
-      #This is negative; it will be added to everyone's chorons.
-      #It's the number required to produce the smallest positive collective possible.
-      tax=(-amount+Setting.collective)/numPayers
-      Setting.collective+=-(amount+tax*numPayers)
-      recipient.chorons+=amount
-      recipient.save
-      payers.each do |payer|
-        payer.chorons+=tax
-        payer.save
-      end
-      payers.each do |payer|
-        payer.check_coersion
-      end
-    end
+  def take_tax(recipient,amount,testUser=nil)
+    #Now just a convenient wrapper to tax for one person.
+    multitax({recipient => 1},amount,testUser)
   end
-  def multitax(recipients,amount)
+  def multitax(recipients,amount,testUser=nil)
+    puts "----------------"
+    puts recipients
+    puts amount
+    puts testUser
+    puts "---------------"
     #recipients should be a map from users to floats.
+    #If passed testuser, won't do anything, but will return the change in
+    #chorons that user will experience.
     #Here are the properties we want,in order of priority.
     #They may not all be possible:
     #  *Chorons are conserved.
@@ -44,6 +31,13 @@ module Taxation
     #  exactly the correct amount of chorons from everyone in the taxing stage.
     #  However, it's as close as possible. Then I think you just distribute
     #  them according to the best rounding algorithm you have.
+    if recipients.length==0
+      return 0
+    end
+    totalWeight=recipients.values.sum
+    if totalWeight==0
+      return 0
+    end
     User.transaction do
       payers=User.where('is_frozen=?',false) 
       numPayers=payers.length
@@ -53,19 +47,26 @@ module Taxation
       #It's the number required to produce the smallest positive collective possible.
       tax=(-adjAmount+Setting.collective)/numPayers
       Setting.collective+=-(adjAmount+tax*numPayers)
-      totalWeight=recipients.values.sum
       #The merge thing is a hack to map from hashes to hashes
       payments=sum_preserving_round(recipients.merge(recipients){|k,v|Float(adjAmount)*v/totalWeight})
-      User.all.each do |user|
-        user.chorons+=payments[user].to_i#to_i converts nil to 0
-        if payers.include? user 
-          user.chorons+=tax
+      if testUser
+        if payers.include? testUser
+          return tax+payments[testUser].to_i
+        else
+          return payments[testUser].to_i
         end
-        user.save
-        user.check_coersion
+      else
+        User.all.each do |user|
+          user.chorons+=payments[user].to_i#to_i converts nil to 0
+          if payers.include? user 
+            user.chorons+=tax
+          end
+          user.save
+          user.check_coersion
+        end
+        puts "Adjusted Payment: %i"%adjAmount
+        puts "Tax: %i"%tax
       end
-      puts "Adjusted Payment: %i"%adjAmount
-      puts "Tax: %i"%tax
     end
   end
   def sum_preserving_round(input)

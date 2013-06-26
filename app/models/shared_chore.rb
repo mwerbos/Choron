@@ -3,11 +3,20 @@ class SharedChore < Chore
   attr_accessible :contributions
   #Contributions is a hash from users to lists of datetimes when they did it.
   serialize :contributions, Hash
+  def expected_value(testUser)
+    if self.done
+      return 0
+    else
+      return multitax(self.contributions.merge(self.contributions){|k,v|v.length},self.value,testUser)
+    end
+  end
   def complete()
     #This should be called from the delayed jobs table.
+    unless self.done
       multitax(self.contributions.merge(self.contributions){|k,v|v.length},self.value)
       self.done=true
       Chore.transaction{self.save and self.user.save}
+    end
   end
   def active?()
     #Maybe add bounties for shared chores? idk...
