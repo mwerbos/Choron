@@ -11,6 +11,8 @@ Choron::Application.routes.draw do
 
   #resources :bids
 
+  resources :shared_chores, concerns: :chores
+
   resources :chores
 
   resources :users, :user_sessions
