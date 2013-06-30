@@ -39,7 +39,7 @@ gem 'paper_trail'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-gem 'unicorn-rails'
+#gem 'unicorn-rails'
 
 # Deploy with Capistrano
 # gem 'capistrano'
