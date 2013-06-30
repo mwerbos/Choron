@@ -21,6 +21,7 @@ Choron::Application.routes.draw do
 
 #  match '/chores/take/:id' => 'chores#take_chore'
   put   '/chores/complete/:id' => 'chores#complete'
+  get   '/chores/coop/:id' => 'chores#coop'
   match '/chores/undo/:id' => 'chores#undo'
   match '/chores/delete_all/:id' => 'chores#destroy_with_auction'
   match 'chores/destroy_repeating_chore/:id' => 'chores#destroy_repeating_chore'

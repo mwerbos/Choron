@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130526023641) do
+ActiveRecord::Schema.define(:version => 20130626123542) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20130526023641) do
     t.integer  "value"
     t.boolean  "done",           :default => false
     t.integer  "bounties_count", :default => 0,     :null => false
+    t.string   "type"
+    t.datetime "start_date"
+    t.text     "contributions"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -66,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20130526023641) do
     t.string   "locked_by"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.string   "queue"
   end
 
   create_table "settings", :force => true do |t|

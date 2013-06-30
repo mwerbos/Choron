@@ -1,0 +1,19 @@
+<h1>Divvy up the credit</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Work done</th>
+    <th>Profit</th>
+  </tr>
+  <%#= form_tag("SUBMITURL" ,method: "put") do %>
+  <% User.all().each do |user| %>
+    <tr>
+      <td><%= link_to user.username, "/users/#{user.id}" %></td>
+      <td> <%=text_field_tag("value:#{user.id}", 0)%> </td>
+      <td> <%=@chore.value%> </td>
+    </tr>
+  <% end %>
+  <%#=submit_tag("Complete Chore")%> 
+</table>
+

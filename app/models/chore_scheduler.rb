@@ -10,10 +10,13 @@ class ChoreScheduler < ActiveRecord::Base
     new_auction = nil
     Chore.transaction do
       #make a new chore that expires (respawn_time) after the current one
-      new_chore = Chore.new
+      new_chore = old_chore.class.new
       #update the new chore's attributes
       new_chore.name = old_chore.name
       new_chore.due_date = old_chore.due_date + self.respawn_time
+      if new_chore.start_date
+        old_chore.start_date=old_chore.start_date + self.respawn_time
+      end
       #make a new auction that expires (respawn_time) after the old one
       new_auction = Auction.new
       new_auction.expiration_date = old_chore.auction.expiration_date + self.respawn_time

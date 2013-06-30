@@ -11,7 +11,6 @@
 /db/*.sqlite3
 
 # Ignore all logfiles and tempfiles.
-<<<<<<< HEAD
 /log/*.log
 /tmp
 
@@ -21,3 +20,4 @@
 *.swo
 Gemfile
 .gitignore
+testlog.txt

@@ -11,20 +11,6 @@
   <% scheduler=ChoreScheduler.find(Integer(scheduler_id))%>
   <% chore=scheduler.chore%>
   <tr>
-    <%= form_tag("preferences/#{scheduler_id}" ,method: "put") do %>
-    <td><%= link_to chore.name, "/chores/#{chore.id}" %></td>
-    <td>
-       <%initial_value=current_user.bid_prefs[Integer(scheduler_id)][:value]%>
-       <%=text_field_tag(:value, initial_value)%>
-   
-    </td>
-    <td>
-      <%= check_box_tag(:manual,1,pref[:manual]) %>
-    </td>
-    <td>
-       <%=submit_tag("Update Preference")%> 
-     <% end %>
-    </td>
   </tr>
 <% end %>
 </table>

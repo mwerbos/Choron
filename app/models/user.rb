@@ -17,27 +17,6 @@ class User < ActiveRecord::Base
       return false
     end
   end
-  def take_tax(amount)
-    #This doesn't behave quite like it should; chorons are conserved, but
-    #the collective sometimes gets negative amounts.
-    User.transaction do
-      payers=User.where('id not in(?) AND is_frozen=?',[self.id],false)
-      numPayers=payers.length
-      File.open("#{Rails.root}/testlog.txt", 'w') {|f| f.write(Setting.collective) }
-      #This is negative; it will be added to everyone's chorons.
-      tax=(-amount+Setting.collective)/numPayers
-      Setting.collective=-(amount+tax*numPayers)
-      self.chorons+=amount
-      self.save
-      payers.each do |payer|
-        payer.chorons+=tax
-        payer.save
-      end
-      payers.each do |payer|
-        payer.check_coersion
-      end
-    end
-  end
   def prioratized_chores()
     sorted_undone=self.chores.find_all{|chore| not chore.done}.sort{|a,b| a.due_date <=> b.due_date}
     sorted_done=self.chores.find_all{|chore| chore.done}.sort{|b,a| a.due_date <=> b.due_date}
