@@ -10,6 +10,16 @@
   <%= @chore.due_date %>
 </p>
 
+<% if @chore.is_a?(SharedChore) %>
+<p>
+  <b>Contributions:</b><br />
+  <% @chore.contributions.each do |user, contrib| %>
+  
+  <% end %>
+  <% contribs = [{"user" => "Nobody", "date" => "Now"}] %>
+  <%= render "layouts/contribution_table", contribs: contribs %>
+</p>
+<% end %>
 
 <%= link_to 'Edit', edit_chore_path(@chore) %> |
 <%= link_to 'Back', chores_path %>
