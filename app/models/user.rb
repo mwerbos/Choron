@@ -38,10 +38,10 @@ class User < ActiveRecord::Base
         total_income+=take_tax(current_winner,auction.lowest,self)
       end
     end
-    chores=Chore.where("done = ? AND auctions_count=1",false)
+    chores=Chore.where("done = ? AND bounties_count=0",false)
     chores.each do |chore|
       #This examines all assigned but incomplete chores
-      if chore.auction.expiration_date.past? and not chore.value.nil?
+      if chore.user and chore.value
         puts "Chore id:%i"%chore.id
         total_income+=chore.expected_value(self)
       end
