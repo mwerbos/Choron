@@ -18,6 +18,5 @@
 
 *.swp
 *.swo
-Gemfile
-.gitignore
+Gemfile.lock
 testlog.txt
