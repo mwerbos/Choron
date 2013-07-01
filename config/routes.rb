@@ -11,6 +11,8 @@ Choron::Application.routes.draw do
 
   #resources :bids
 
+  match '/shared_chores/uncontribute/:id' => 'shared_chores#uncontribute'
+
   resources :shared_chores, concerns: :chores
 
   resources :chores
