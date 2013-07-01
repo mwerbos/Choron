@@ -4,11 +4,6 @@ module Taxation
     multitax({recipient => 1},amount,testUser)
   end
   def multitax(recipients,amount,testUser=nil)
-    puts "----------------"
-    puts recipients
-    puts amount
-    puts testUser
-    puts "---------------"
     #recipients should be a map from users to floats.
     #If passed testuser, won't do anything, but will return the change in
     #chorons that user will experience.
