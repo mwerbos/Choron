@@ -15,8 +15,8 @@
   <b>Contributions:</b><br />
   <% contribs = [] %>
   <% @chore.contributions.each do |user, dates| %>
-  <% dates.each do |date| %>
-  <% contribs.push ({:user => user.username, :date => date}) %>
+  <% dates.each_index do |i| %>
+  <% contribs.push ({:user => user.username, :date => dates[i], :index => i}) %>
   <% end %>
   <% end %>
   <% contribs.sort_by! { |c| c[:date] } %>
