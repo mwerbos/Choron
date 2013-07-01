@@ -10,6 +10,20 @@
   <%= @chore.due_date %>
 </p>
 
+<% if @chore.is_a?(SharedChore) %>
+<p>
+  <b>Contributions:</b><br />
+  <% contribs = [] %>
+  <% @chore.contributions.each do |user, dates| %>
+  <% dates.each_index do |i| %>
+  <% contribs.push ({:user => user.username, :date => dates[i], :index => i}) %>
+  <% end %>
+  <% end %>
+  <% contribs.sort_by! { |c| c[:date] } %>
+  <% contribs.reverse! %>
+  <%= render "layouts/contribution_table", contribs: contribs %>
+</p>
+<% end %>
 
 <%= link_to 'Edit', edit_chore_path(@chore) %> |
 <%= link_to 'Back', chores_path %>
