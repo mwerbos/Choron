@@ -19,6 +19,8 @@
   <% contribs.push ({:user => user.username, :date => date}) %>
   <% end %>
   <% end %>
+  <% contribs.sort_by! { |c| c[:date] } %>
+  <% contribs.reverse! %>
   <%= render "layouts/contribution_table", contribs: contribs %>
 </p>
 <% end %>
