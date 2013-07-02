@@ -3,19 +3,28 @@
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.name %></td>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.value %></td>
+  <% if chore.is_a?(SharedChore) %>
+  <td><%= "%i/%i"%[chore.num_contributions(current_user),chore.num_contributions] %></td>
+  <% else %>
   <td class=<%= overdue ? 'overdue' : '' %>><%= chore.done %></td>
+  <% end %>
   <%if current_user==chore.user%>
-    <td>
-      <%if chore.done%>
-        <%= link_to 'I didn\'t do it :(', "/chores/undo/#{chore.id}", method: :put %>
-      <%else%>
-          <%= link_to 'I did it!', "/chores/complete/#{chore.id}", method: :put %>
-      <%end%>
-    </td>
-    <td><%= link_to 'We did it!', "/chores/coop/#{chore.id}" %></td>
-    <td><%= link_to 'Show', chore %></td>
-    <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
-    <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-    <td><%= link_to 'Give away', 'nosuchpage' %></td>
+  <td>
+    <% if chore.is_a?(SharedChore) %>
+    <%= link_to 'I helped!', "/shared_chores/contribute/#{chore.id}?user=#{current_user.username}" %>
+    <% else %>
+    <%if chore.done%>
+    <%= link_to 'I didn\'t do it :(', "/chores/undo/#{chore.id}", method: :put %>
+    <%else%>
+    <%= link_to 'I did it!', "/chores/complete/#{chore.id}", method: :put %>
+    <%end%>
+    
+  </td>
+  <td><%= link_to 'We did it!', "/chores/coop/#{chore.id}" %></td>
+  <% end %>
+  <td><%= link_to 'Show', chore %></td>
+  <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
+  <td><%= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  <td><%= link_to 'Give away', 'nosuchpage' %></td>
   <%end%>
 </tr>
