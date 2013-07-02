@@ -17,5 +17,8 @@
       <%= chore.user.username %>
     <% end %>
   </td>
+  <td>
+    <%= link_to 'I helped!', "/shared_chores/contribute/#{chore.id}?user=#{current_user.username}" %>
+  </td>
 </tr>
 

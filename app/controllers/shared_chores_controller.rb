@@ -1,4 +1,8 @@
 class SharedChoresController < ChoresController
+  def contribute
+    redirect_to(:back)
+  end
+
   def uncontribute
     chore = Chore.find(params[:id])
     user = params[:user]
