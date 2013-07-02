@@ -1,17 +1,19 @@
 class SharedChoresController < ChoresController
   def contribute
     chore = Chore.find(params[:id])
-    user = params[:user]
-    chore.contributions[User.where(:username => user)[0]].push Time.now
+    if chore.contributions[current_user]
+      chore.contributions[current_user].push Time.now
+    else
+      chore.contributions[current_user]=[Time.now]
+    end
     chore.save
     redirect_to(:back)
   end
 
   def uncontribute
     chore = Chore.find(params[:id])
-    user = params[:user]
     num = params[:num]
-    chore.contributions[User.where(:username => user)[0]].slice! num.to_i
+    chore.contributions[current_user].slice! num.to_i
     chore.save
     redirect_to(:back)
   end

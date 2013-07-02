@@ -3,7 +3,7 @@
   <td><%= contrib[:date] %></td>
   <td>
   <% if contrib[:user] == current_user.username %>
-  <%= link_to 'I didn\'t do it!', "/shared_chores/uncontribute/#{@chore.id}?user=#{contrib[:user]}&num=#{contrib[:index]}" %>
+  <%= link_to 'I didn\'t do it!', "/shared_chores/uncontribute/#{@chore.id}?num=#{contrib[:index]}" %>
   <% end %>
   </td>
 </tr>
