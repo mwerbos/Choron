@@ -12,6 +12,9 @@
 
 <% if @chore.is_a?(SharedChore) %>
 <p>
+      <%= link_to 'I helped!', "/shared_chores/contribute/#{@chore.id}?user=#{current_user.username}" %>
+</p>
+<p>
   <b>Contributions:</b><br />
   <% contribs = [] %>
   <% @chore.contributions.each do |user, dates| %>
