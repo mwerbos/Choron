@@ -21,6 +21,11 @@
       <%= select_tag(:respawn, options_for_select([['every 5 min',300], ['Weekly',604800], ['Never',0], ['Monthly', 2419200] ])) %>
   </div>
 
+  <div class="field">
+    <label for="shared">Shared?</label><br />
+    <input id="shared" name="shared" type="checkbox" />
+  </div>
+
   <div class="actions">
     <%= chore_form.submit "Make Chore Auction" %>
   </div>

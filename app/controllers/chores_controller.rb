@@ -74,7 +74,7 @@ class ChoresController < ApplicationController
   # POST /chores
   # POST /chores.json
   def create
-    @chore = Chore.new(params[:chore])
+    @chore = params[:shared].to_b ? SharedChore.new(params[:chore]) : Chore.new(params[:chore])
 
     respond_to do |format|
       if @chore.save

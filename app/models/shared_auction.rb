@@ -1,0 +1,2 @@
+class SharedAuction < Auction
+end

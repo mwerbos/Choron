@@ -5,7 +5,9 @@
   <%= @auction.expiration_date.localtime %>
 </p>
 
-<p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s %>
+<p><%= link_to 'Bid on this auction', ("new_shared_bid/" 
+                                       if @auction.is_a SharedAuction
+                                       else "new_bid/") +@auction.id.to_s %>
 
 <p>
 <%sorted_bids=@auction.bids.sort {|a,b| bid_sorter(a,b)}%>
@@ -14,11 +16,17 @@
   <b>Top bid:</b><br/>
   <%= top.user.username %> bid at most
   <%= @auction.lowest %> at
-  <%= top.created_at.localtime %><br>
+  <%= top.created_at.localtime %>
+  <% if bid.is_a? SharedBid %>
+    with a cut of <%= bid.cut %>
+  <% end %><br>
   <b>Past bids:</b><br/>
     <%sorted_bids[1,sorted_bids.length].each do |bid| %>
         <%= bid.user.username %> bid <%= bid.amount %> at
-        <%= bid.created_at.localtime %> <br/>
+        <%= bid.created_at.localtime %>
+        <% if bid.is_a? SharedBid %>
+          with a cut of <%= bid.cut %>
+        <% end %><br/>
     <% end %>
   </p>
 <%else%>
