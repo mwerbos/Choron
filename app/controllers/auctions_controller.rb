@@ -47,10 +47,13 @@ class AuctionsController < ApplicationController
   # POST /auctions
   # POST /auctions.json
   def create
-    @auction = params[:shared].to_b ? SharedAuction.new(params[:auction]) : Auction.new(params[:auction])
-    if params[:chore_id] != nil
+    shared = params[:auction][:chore_id] ? Chore.find(params[:auction][:chore_id]).is_a?(SharedChore) : false
+
+    @auction = shared ? SharedAuction.new(params[:auction]) : Auction.new(params[:auction])
+
+    if params[:auction][:chore_id] != nil
       @auction.chore_id = @chore_id
-      @auction.chore_id = params[:chore_id]
+      @auction.chore_id = params[:auction][:chore_id]
       respond_to do |format|
         if @auction.save
           @auction.delay(:run_at => @auction.expiration_date).close

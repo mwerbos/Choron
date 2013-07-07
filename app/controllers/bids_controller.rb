@@ -44,7 +44,10 @@ class BidsController < ApplicationController
   # POST /bids
   # POST /bids.json
   def create
-    @bid = params[:shared].to_b ? SharedBid.new(params[:bid]) : Bid.new(params[:bid])
+    shared = params[:bid][:auction_id] ? Auction.find(params[:bid][:auction_id]).is_a?(SharedAuction) : false
+
+    @bid = shared ? SharedBid.new(params[:auction]) : Bid.new(params[:auction])
+
     @bid.auction_id = @auction_id if @auction_id
     @bid.user_id = @user_id if @user_id
     respond_to do |format|

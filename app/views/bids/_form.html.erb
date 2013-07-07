@@ -14,14 +14,12 @@
   <div class="field">
     <%= f.label :amount %><br />
     <%= f.number_field :amount %>
-    <% if @bid.is_a SharedBid %>
+    <% if @bid.is_a? SharedBid %>
       <%= f.label :cut %>
       <%= f.number_field :cut %>
     <% end %>
     <%= f.hidden_field :auction_id, value: @auction_id %>
     <%= f.hidden_field :user_id,    value: @user_id %>
-    <input id="shared" name="shared" type="checkbox"
-    value=<%= @bid.auction.is_a(SharedAuction).to_s %>/>
   </div>
   <div class="actions">
     <%= f.submit %>
