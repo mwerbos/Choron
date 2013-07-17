@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  require File.join(Rails.root,"lib/taxation.rb")
-  include Taxation
+  require File.join(Rails.root,"lib/delay_utils.rb")
+  include DelayUtils
   include ApplicationHelper
   acts_as_authentic
   attr_accessible :email, :username, :password, :password_confirmation, :chorons, :bid_prefs

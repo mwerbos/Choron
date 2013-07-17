@@ -1,4 +1,6 @@
 class Auction < ActiveRecord::Base
+  require File.join(Rails.root,"lib/delay_utils.rb")
+  include DelayUtils
   include ApplicationHelper
   attr_accessible :expiration_date, :chore_id #explicit use is a bit hacky, oh well
   belongs_to :chore, :counter_cache => true
@@ -42,4 +44,11 @@ class Auction < ActiveRecord::Base
   def open?()
     return self.expiration_date.future?
   end
+  def update_attributes(update)
+    super
+    find_jobs(self,nil,:close).map{|job| job.delete}
+    self.delay(:run_at => self.expiration_date).close
+
+  end
+
 end
