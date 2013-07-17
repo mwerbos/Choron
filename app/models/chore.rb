@@ -1,7 +1,7 @@
 class Chore < ActiveRecord::Base
   require File.join(Rails.root,"lib/taxation.rb")
   include Taxation
-  attr_accessible :due_date, :name, :value, :done, :auction, :bounty, :auctions_count
+  attr_accessible :due_date, :name, :value, :done, :auction, :bounty, :auctions_count, :start_date
   belongs_to :user
   has_one :auction
   has_one :bounty

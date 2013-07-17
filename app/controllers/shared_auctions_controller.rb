@@ -1,0 +1,2 @@
+class SharedAuctionsController < AuctionsController
+end

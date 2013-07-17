@@ -1,5 +1,4 @@
 class SharedChore < Chore
-  attr_accessible :start_date
   attr_accessible :contributions
   #Contributions is a hash from users to lists of datetimes when they did it.
   serialize :contributions, Hash
