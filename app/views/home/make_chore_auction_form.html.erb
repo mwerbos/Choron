@@ -21,6 +21,22 @@
       <%= select_tag(:respawn, options_for_select([['every 5 min',300], ['Weekly',604800], ['Never',0], ['Monthly', 2419200] ])) %>
   </div>
 
+  <div class="field">
+    Type of chore:<br />
+    <%= radio_button_tag(:chore_type, "Chore") %>
+    <%= label_tag(:chore_type_chore, "Chore") %>
+    <%= radio_button_tag(:chore_type, "SharedChore") %>
+    <%= label_tag(:chore_type_shared_chore, "Shared Chore") %>
+    <% #select_tag(:chore_type, options_for_select([['Chore','Chore'],['SharedChore','SharedChore']]) ) %>
+  </div>
+
+  <% #TODO: Add start date dialog box only if it is sharedchore %>
+
+  <div class="field">
+    Start date (if shared chore): <br />
+    <%= chore_form.datetime_select :start_date %>
+  </div>
+
   <div class="actions">
     <%= chore_form.submit "Make Chore Auction" %>
   </div>
