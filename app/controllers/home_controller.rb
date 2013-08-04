@@ -31,6 +31,8 @@ class HomeController < ApplicationController
   def make_chore_auction_form
     #makes new chore object for form structure
     @chore = Chore.new
+    #also makes a sharedchore to deal with forms_for
+    @shared_chore = SharedChore.new
     #makes auction object and attaches it
     @auction = Auction.new
     @auction.chore = @chore
@@ -43,8 +45,14 @@ class HomeController < ApplicationController
   def make_chore_auction
     @auction = Auction.new(params[:chore][:auction])
     chore_params=params[:chore]
+    chore_type = params[:chore_type]
     chore_params[:auction]=@auction
-    @chore = Chore.new(chore_params)
+    if(chore_type == 'Chore')
+      @chore = Chore.new(chore_params)
+    else 
+      @chore = SharedChore.new
+      @chore.update_attributes(chore_params)
+    end
     @auction.chore = @chore
     Auction.transaction do
       respond_to do |format|
@@ -58,8 +66,6 @@ class HomeController < ApplicationController
         end
       end
     end
-    puts "***********RESPAWN TIME: ", params[:respawn].inspect
-    puts "***********IS RESPAWN TIME == 0?", params[:respawn].to_i==0
     @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
     @scheduler.chore = @chore
     @scheduler.save
