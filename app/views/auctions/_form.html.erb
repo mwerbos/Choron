@@ -14,6 +14,8 @@
   <%if !@chore_id %>
     <%= f.label :chore_id %>
     <%= f.collection_select :chore_id, Chore.all, :id, :name, :include_blank => false %>
+  <% else %>
+    <%= f.hidden_field :chore_id, value: @chore_id %>
   <% end %>
 
   <div class="field">

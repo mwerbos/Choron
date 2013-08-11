@@ -47,9 +47,7 @@ class AuctionsController < ApplicationController
   # POST /auctions
   # POST /auctions.json
   def create
-    shared = params[:auction][:chore_id] ? Chore.find(params[:auction][:chore_id]).is_a?(SharedChore) : false
-
-    @auction = shared ? SharedAuction.new(params[:auction]) : Auction.new(params[:auction])
+    @auction =  Auction.new(params[:auction])
 
     if params[:auction][:chore_id] != nil
       @auction.chore_id = @chore_id

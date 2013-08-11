@@ -1,2 +1,0 @@
-class SharedAuction < Auction
-end

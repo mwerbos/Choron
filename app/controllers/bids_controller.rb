@@ -26,9 +26,10 @@ class BidsController < ApplicationController
   # GET /bids/new.json
   def new
     if not defined? @bid
-        @bid = Bid.new
-        @auction_id = params[:auction_id] if params[:auction_id]
-        @user_id = current_user.id
+      shared = Chore.find(Auction.find(params[:auction_id])).is_a?(SharedChore)
+      @bid = shared ? SharedBid.new : Bid.new
+      @auction_id = params[:auction_id] if params[:auction_id]
+      @user_id = current_user.id
     end
     respond_to do |format|
       format.html # new.html.erb
@@ -44,9 +45,7 @@ class BidsController < ApplicationController
   # POST /bids
   # POST /bids.json
   def create
-    shared = params[:bid][:auction_id] ? Auction.find(params[:bid][:auction_id]).is_a?(SharedAuction) : false
-
-    @bid = shared ? SharedBid.new(params[:auction]) : Bid.new(params[:auction])
+    @bid = @bid.is_a?(SharedBid) ? SharedBid.new(params[:shared_bid].merge!({:cut => params[:cut]})) : Bid.new(params[:bid])
 
     @bid.auction_id = @auction_id if @auction_id
     @bid.user_id = @user_id if @user_id
@@ -66,7 +65,7 @@ class BidsController < ApplicationController
       end
     end
     #puts @bid.user.username
-    @bid.user.auto_preferences([@bid.auction.chore.chore_scheduler])
+    #@bid.user.auto_preferences(@bid.auction.chore.chore_scheduler)
   end
 
   # PUT /bids/1

@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     end
     return total_income
   end
-  def auto_preferences(schedulers=ChoreScheduler.all)
+  def auto_preferences(schedulers=ChoreScheduler)
     #This method will attempt to automatically determine the preferences of
     #a user. Preferences are saved as a hash, mapping the ids of open chores
     #to the amount this user would do them for uncoerced. For auctions the

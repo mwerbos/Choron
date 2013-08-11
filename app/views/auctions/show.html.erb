@@ -5,9 +5,7 @@
   <%= @auction.expiration_date.localtime %>
 </p>
 
-<p><%= link_to 'Bid on this auction', (@auction.is_a?(SharedAuction) ?
-                                       "new_shared_bid/" :
-                                       "new_bid/") +@auction.id.to_s %>
+<p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s %>
 
 <p>
 <%sorted_bids=@auction.bids.sort {|a,b| bid_sorter(a,b)}%>

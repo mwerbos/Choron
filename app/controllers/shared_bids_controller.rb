@@ -1,0 +1,2 @@
+class SharedBidsController < BidsController
+end
