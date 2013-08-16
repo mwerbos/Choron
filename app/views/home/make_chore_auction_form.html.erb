@@ -26,6 +26,13 @@
     <input id="shared" name="shared" type="checkbox" />
   </div>
 
+  <% #TODO: Add start date dialog box only if it is sharedchore %>
+
+  <div class="field">
+    Start date (if shared chore): <br />
+    <%= chore_form.datetime_select :start_date %>
+  </div>
+
   <div class="actions">
     <%= chore_form.submit "Make Chore Auction" %>
   </div>
