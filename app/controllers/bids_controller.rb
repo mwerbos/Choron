@@ -65,8 +65,9 @@ class BidsController < ApplicationController
         end
       end
     end
-    #puts @bid.user.username
-    #@bid.user.auto_preferences(@bid.auction.chore.chore_scheduler)
+    if @bid.auction.chore.chore_scheduler
+        @bid.user.auto_preferences([@bid.auction.chore.chore_scheduler])
+    end
   end
 
   # PUT /bids/1
