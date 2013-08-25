@@ -14,11 +14,17 @@
   <b>Top bid:</b><br/>
   <%= top.user.username %> bid at most
   <%= @auction.lowest %> at
-  <%= top.created_at.localtime %><br>
+  <%= top.created_at.localtime %>
+  <% if top.is_a? SharedBid %>
+    with a cut of <%= top.cut %>
+  <% end %><br>
   <b>Past bids:</b><br/>
     <%sorted_bids[1,sorted_bids.length].each do |bid| %>
         <%= bid.user.username %> bid <%= bid.amount %> at
-        <%= bid.created_at.localtime %> <br/>
+        <%= bid.created_at.localtime %>
+        <% if bid.is_a? SharedBid %>
+          with a cut of <%= bid.cut %>
+        <% end %><br/>
     <% end %>
   </p>
 <%else%>

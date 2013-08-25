@@ -1,2 +1,2 @@
 rake jobs:work &
-unicorn_rails
+rails s

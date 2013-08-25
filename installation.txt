@@ -1,0 +1,20 @@
+Problems I ran into while installing this on the netbook
+(which is probably indicative of the install process):
+--Need to install rvm, ruby1.9.3, rubygems, and rails.
+--Bullshit with "RVM is not a function" happening over and over - HAPPENS WHEN YOU ARE IN A SCREEN. Script to fix it involves adding some RVM junk to your path - maybe check the RVM website for this. (The startup script should handle it though)
+--RVM problems switching to ruby 1.9.3. Make sure to use rvm with rails option.
+Make sure to install ruby 1.9.3. Make sure to install with openssl support
+(may need to reinstall ruby1.9.3 with rvm if you get this error).
+--Need for an execjs - need node.js or something else installed.
+--Make sure to run bundle install before trying to run the server.
+--Need to have the database setup and all the information from it.
+--If you get "initialization_dup" bullshit errors, the server is running on ruby 2.0.0. Quit, switch to ruby 1.9.3 with rvm, and restart.
+--(Was a problem on my laptop, not the server netbook) If you get horrible errors about "rake aborted: couldn't find table 'settings,'" you need to go to config/initializers/params.rb and comment out all of the code in that file. (It is trying to use stuff from the Settings table before that table exists)
+
+NOTE FOR BACKUP SYSTEM:
+--Dropbox daemon needs to be started in a screen of its own
+
+Other problems:
+unknown attribute: queue
+--Run rails generate delayed_job:upgrade
+--Then run rake db:migrate

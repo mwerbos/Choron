@@ -14,6 +14,12 @@
   <div class="field">
     <%= f.label :amount %><br />
     <%= f.number_field :amount %>
+    <% if @bid.is_a? SharedBid %>
+      <div class="field">
+        <label for="cut">Cut</label><br />
+        <input id="cut" name="cut" type="textfield" />
+      </div>
+    <% end %>
     <%= f.hidden_field :auction_id, value: @auction_id %>
     <%= f.hidden_field :user_id,    value: @user_id %>
   </div>

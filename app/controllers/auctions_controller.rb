@@ -47,10 +47,11 @@ class AuctionsController < ApplicationController
   # POST /auctions
   # POST /auctions.json
   def create
-    @auction = Auction.new(params[:auction])
-    if params[:chore_id] != nil
+    @auction =  Auction.new(params[:auction])
+
+    if params[:auction][:chore_id] != nil
       @auction.chore_id = @chore_id
-      @auction.chore_id = params[:chore_id]
+      @auction.chore_id = params[:auction][:chore_id]
       respond_to do |format|
         if @auction.save
           @auction.delay(:run_at => @auction.expiration_date).close

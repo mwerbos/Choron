@@ -22,12 +22,8 @@
   </div>
 
   <div class="field">
-    Type of chore:<br />
-    <%= radio_button_tag(:chore_type, "Chore") %>
-    <%= label_tag(:chore_type_chore, "Chore") %>
-    <%= radio_button_tag(:chore_type, "SharedChore") %>
-    <%= label_tag(:chore_type_shared_chore, "Shared Chore") %>
-    <% #select_tag(:chore_type, options_for_select([['Chore','Chore'],['SharedChore','SharedChore']]) ) %>
+    <label for="shared">Shared?</label><br />
+    <input id="shared" name="shared" type="checkbox" />
   </div>
 
   <% #TODO: Add start date dialog box only if it is sharedchore %>

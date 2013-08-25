@@ -44,7 +44,9 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
 </table>
 Create a new: <ul>
 <li><%= link_to 'Chore and auction', '/home/new_chore_auction' %></li>
-<li><%= link_to 'Standalone chore (without auction or bounty)', new_chore_path %></li>
-<li><%= link_to 'Auction (from existing standalone chore)', new_auction_path %></li>
+<li><%= link_to 'Standalone chore (without auction or bounty)',
+        new_chore_path %></li>
+<li><%= link_to 'Auction (from existing standalone chore)',
+        new_auction_path %></li>
 <li><%= link_to 'Bounty (from existing standalone chore)', new_bounty_path %></li>
 </ul>

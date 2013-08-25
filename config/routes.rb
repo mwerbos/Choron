@@ -6,8 +6,10 @@ Choron::Application.routes.draw do
   resources :bounties
 
   post 'bids' => 'bids#create'
+  post 'shared_bids' => 'bids#create'
   
   get 'bids' => 'home#chore_market'
+  get 'shared_bids' => 'home#chore_market'
 
   #resources :bids
 
@@ -15,6 +17,7 @@ Choron::Application.routes.draw do
   match '/shared_chores/contribute/:id' => 'shared_chores#contribute'
 
   resources :shared_chores, concerns: :chores
+  resources :shared_bids, concerns: :bids
 
   resources :chores
 
@@ -27,6 +30,7 @@ Choron::Application.routes.draw do
 #  match '/chores/take/:id' => 'chores#take_chore'
   put   '/chores/complete/:id' => 'chores#complete'
   get   '/chores/coop/:id' => 'chores#coop'
+
   match '/chores/undo/:id' => 'chores#undo'
   match '/chores/delete_all/:id' => 'chores#destroy_with_auction'
   match 'chores/destroy_repeating_chore/:id' => 'chores#destroy_repeating_chore'

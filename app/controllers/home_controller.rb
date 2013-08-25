@@ -43,16 +43,11 @@ class HomeController < ApplicationController
   end
   
   def make_chore_auction
-    @auction = Auction.new(params[:chore][:auction])
+    @auction = params[:shared].to_b ? SharedAuction.new(params[:chore][:auction]) : Auction.new(params[:chore][:auction])
     chore_params=params[:chore]
     chore_type = params[:chore_type]
     chore_params[:auction]=@auction
-    if(chore_type == 'Chore')
-      @chore = Chore.new(chore_params)
-    else 
-      @chore = SharedChore.new
-      @chore.update_attributes(chore_params)
-    end
+    @chore = params[:shared].to_b ? SharedChore.new(chore_params) : Chore.new(chore_params)
     @auction.chore = @chore
     Auction.transaction do
       respond_to do |format|

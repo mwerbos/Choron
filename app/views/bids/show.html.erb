@@ -12,6 +12,12 @@
   <%= @bid.amount %>
 </p>
 
+<% if @bid.is_a? SharedBid %>
+  <p>
+    <b>Overseer's cut:</b>
+    <%= @bid.cut %>
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_bid_path(@bid) %> |
 <%= link_to 'Back', bids_path %>
