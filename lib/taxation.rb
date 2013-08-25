@@ -57,7 +57,7 @@ module Taxation
             user.chorons+=tax
           end
           user.save
-          user.check_coersion
+          #user.check_coersion
         end
         puts "Adjusted Payment: %i"%adjAmount
         puts "Tax: %i"%tax

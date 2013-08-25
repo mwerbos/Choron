@@ -47,7 +47,9 @@ class BidsController < ApplicationController
   def create
     shared = params[:shared_bid] ? true : false
     @bid = shared ? SharedBid.new(params[:shared_bid].merge({:cut => params[:cut]})) : Bid.new(params[:bid])
-
+    puts "**************************************"
+    puts @bid.class.name
+    puts "**************************************"
     @bid.auction_id = @auction_id if @auction_id
     @bid.user_id = @user_id if @user_id
     respond_to do |format|

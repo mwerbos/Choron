@@ -1,6 +1,8 @@
 class Auction < ActiveRecord::Base
   require File.join(Rails.root,"lib/delay_utils.rb")
+  require File.join(Rails.root,"lib/taxation.rb")
   include DelayUtils
+  include Taxation
   include ApplicationHelper
   attr_accessible :expiration_date, :chore_id #explicit use is a bit hacky, oh well
   belongs_to :chore, :counter_cache => true
@@ -9,7 +11,7 @@ class Auction < ActiveRecord::Base
   def lowest()
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     if sorted_bids.length>1
-      [sorted_bids[0].amount,sorted_bids[1].amount-1].max
+      [sorted_bids[0].total,sorted_bids[1].total-1].max
     elsif sorted_bids.length==1
       MAXBID-1
     else
@@ -27,9 +29,14 @@ class Auction < ActiveRecord::Base
 
   def close()
     unless self.bids.empty?
-      winner=self.bids.min {|a,b| bid_sorter(a,b)}.user
-      value=self.lowest()
-      self.chore.user=winner
+      winner=self.bids.min {|a,b| bid_sorter(a,b)}
+      if winner.is_a? SharedBid
+        value=winner.amount#This is the fixed pot
+        take_tax(winner.user,self.lowest-winner.amount)#This is the cut
+      else
+        value=self.lowest()
+      end
+      self.chore.user=winner.user
       self.chore.value=value
       self.chore.save
       return true
