@@ -48,7 +48,6 @@ class Auction < ActiveRecord::Base
     super
     find_jobs(self,nil,:close).map{|job| job.delete}
     self.delay(:run_at => self.expiration_date).close
-
   end
 
 end

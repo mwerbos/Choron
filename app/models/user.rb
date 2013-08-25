@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  require File.join(Rails.root,"lib/taxation.rb")
+  include Taxation
   require File.join(Rails.root,"lib/delay_utils.rb")
   include DelayUtils
   include ApplicationHelper
