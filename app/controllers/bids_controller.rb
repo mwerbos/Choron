@@ -26,7 +26,7 @@ class BidsController < ApplicationController
   # GET /bids/new.json
   def new
     if not defined? @bid
-      shared = Chore.find(Auction.find(params[:auction_id])).is_a?(SharedChore)
+      shared = Auction.find(params[:auction_id]).chore.is_a?(SharedChore)
       @bid = shared ? SharedBid.new : Bid.new
       @auction_id = params[:auction_id] if params[:auction_id]
       @user_id = current_user.id
