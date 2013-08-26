@@ -1,5 +1,5 @@
 class SharedChore < Chore
-  attr_accessible :contributions
+  attr_accessible :contributions, :cut
   #Contributions is a hash from users to lists of datetimes when they did it.
   serialize :contributions, Hash
   def expected_value(testUser)
@@ -19,7 +19,7 @@ class SharedChore < Chore
   end
   def active?()
     #Maybe add bounties for shared chores? idk...
-    !self.done && self.start_date.past? && (self.auction.nil? || self.auction.expiration_date.past?)
+    !self.done && (self.start_date.nil? || self.start_date.past?) && (self.auction.nil? || self.auction.expiration_date.past?)
   end
   def num_contributions(user=nil)
     if user.nil?

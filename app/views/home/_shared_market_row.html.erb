@@ -1,24 +1,36 @@
 <tr>
   <td><%= chore.name %></td>
-  <td><%= chore.value %></td>
-  <td><%= "%i/%i"%[chore.num_contributions(current_user),chore.num_contributions] %></td>
-  <td>
-    <% if chore.start_date %>
-      <%= chore.start_date.strftime('%a %b %d,%l:%M %p') %>
+  <%if chore.auction %>
+    <td><%= chore.auction.lowest %></td>
+    <td><%= chore.auction.low_cut %></td>
+    <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
+    <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
+    <% if top_bid %>
+      <td><%=top_bid.user.username%></td>
+    <% else %>
+      <td></td>
     <% end %>
-  </td>
-  <td>
-    <% if chore.due_date%>
-      <%= chore.due_date.strftime('%a %b %d,%l:%M %p') %>
-    <% end %>
-  </td>
-  <td>
-    <% if chore.user%>
-      <%= chore.user.username %>
-    <% end %>
-  </td>
-  <td>
-    <%= link_to 'I helped!', "/shared_chores/contribute/#{chore.id}" %>
-  </td>
+  <% else %>
+    <td><%= chore.value %></td>
+    <td><%= TBI %></td>
+    <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
+    <td></td>
+  <% end %>
+  <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
+  <%if chore.auction %>
+    <td><%= link_to 'Show auction', chore.auction %></td>
+  <%else%>
+    <td><%= link_to 'Show bounty', chore.bounty%></td>
+  <%end%>
+  <td><%= link_to 'Chore details', chore %></td>
+  <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
+  <%if chore.auction %>
+    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
+  <%else%>
+    <td><%= link_to 'Edit bounty', edit_bounty_path(chore.bounty) %></td>
+  <%end%>
+  <td><%= link_to 'Destroy chore and auction', "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you sure?' } %></td>
+  
+  <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
 </tr>
 

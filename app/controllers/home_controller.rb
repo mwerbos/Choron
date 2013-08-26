@@ -19,6 +19,7 @@ class HomeController < ApplicationController
     @view = params[:view] ? params[:view] : 'open'
     #@chores = Chore.where(:auctions_count => 1)
     @shared_chores=SharedChore.all
+    @shared_chores.keep_if { |sc| sc.active? }
     @chores = Chore.where("auctions_count=1 OR bounties_count=1")
     #sorts chores, puts open on top
     #sorts open by which expires soonest,
@@ -26,6 +27,8 @@ class HomeController < ApplicationController
     sorted_open=@chores.find_all{|chore| chore.open?}.sort{|a,b| a.end_date <=> b.end_date}
     sorted_closed=@chores.find_all{ |chore| not chore.open? }.sort{ |b,a| a.end_date <=> b.end_date}
     @chores = sorted_open+sorted_closed
+    @open_shared = @chores.select { |c| c.is_a? SharedChore and not c.active? }
+    @chores.keep_if { |c| not c.is_a? SharedChore }
   end
   
   def make_chore_auction_form
@@ -47,7 +50,7 @@ class HomeController < ApplicationController
     chore_params=params[:chore]
     chore_type = params[:chore_type]
     chore_params[:auction]=@auction
-    @chore = params[:shared] ? SharedChore.new(chore_params) : Chore.new(chore_params)
+    @chore = (params[:shared] and params[:shared].to_b) ? SharedChore.new(chore_params) : Chore.new(chore_params)
     @auction.chore = @chore
     Auction.transaction do
       respond_to do |format|
