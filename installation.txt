@@ -18,3 +18,22 @@ Other problems:
 unknown attribute: queue
 --Run rails generate delayed_job:upgrade
 --Then run rake db:migrate
+
+Error, <thing> isn't precompiled:
+This error occurs in a production-style environment
+when assets haven't been precompiled.
+You can set it to compile assets on the fly,
+by changing the environment settings to include
+"config.assets.compile = true", OR BETTER:
+run "bundle exec rake assets:precompile" before starting the server.
+TODO: add this to run_chore_market.sh.
+
+No route matches GET for "assets/blahblahblah",
+and the page shown is bare-bones with no CSS/JS:
+This error occurs in a production-style environment,
+when the environment settings of "config.serve_static_assets = false"
+AND when there is no server such as nginx/apache running
+to serve the static assets for you.
+To fix this, attach the server to nginx (AND make sure nginx's "root"
+for static pages points to Choron/public/),
+OR change the environment setting to "true".

@@ -23,3 +23,15 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
+
+castle_hauser:
+  adapter: sqlite3
+  database: db/castle_hauser.sqlite3
+  pool: 5
+  timeout: 5000
+
+tilde_slash:
+  adapter: sqlite3
+  database: db/tilde_slash.sqlite3
+  pool: 5
+  timeout: 5000
