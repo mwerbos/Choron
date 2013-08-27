@@ -6,15 +6,21 @@
 echo "Starting nginx..."
 sudo nginx -c "${PWD}/nginx/nginx.conf"
 
-# Runs the ~/ chore market
+## Runs the ~/ chore market
+
+# Precompile assets: Only necessary if CSS/layouts have changed recently.
+# echo "Precompiling assets..."
+# bundle exec rake assets:precompile -e tilde_slash
+
 echo "Starting unicorn server..."
 unicorn_rails -c config/unicorn.rb -E tilde_slash -D
+
 echo "Starting rake jobs:work..."
 echo "Nevermind, rake jobs:work is disabled for devl reasons."
 # rake jobs:work RAILS_ENV=tilde_slash &
 
 # TODO get both to run at once
-# Runs the castle hauser chore market
+## Runs the castle hauser chore market
 # unicorn_rails -c config/unicorn.rb -E castle_hauser -D
 # rake jobs:work RAILS_ENV=castle_hauser &
 
