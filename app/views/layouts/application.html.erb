@@ -12,6 +12,12 @@
     <div id="chorons">You have <%= current_user.chorons %> chorons. <br/>
       Expected profit (Assuming no further bids): <%=current_user.expected_profit%>
     </div>
+    <% if current_user.is_frozen %>
+      <div id="frozen">
+        <h1>YOUR USER ACCOUNT IS FROZEN.</h1>
+        No taxes will be taken from this user until you are unfrozen.
+      </div>
+    <% end %>
   <%end%>
 <div id="nav">
   <% if current_user %>

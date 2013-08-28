@@ -1,0 +1,24 @@
+<tr>
+  <td><%= chore.name %></td>
+  <td><%= chore.value %></td>
+  <td><%= "%i/%i"%[chore.num_contributions(current_user),chore.num_contributions] %></td>
+  <td>
+    <% if chore.start_date %>
+      <%= chore.start_date.strftime('%a %b %d,%l:%M %p') %>
+    <% end %>
+  </td>
+  <td>
+    <% if chore.due_date%>
+      <%= chore.due_date.strftime('%a %b %d,%l:%M %p') %>
+    <% end %>
+  </td>
+  <td>
+    <% if chore.user%>
+      <%= chore.user.username %>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to 'I helped!', "/shared_chores/contribute/#{chore.id}" %>
+  </td>
+</tr>
+

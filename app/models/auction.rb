@@ -18,6 +18,16 @@ class Auction < ActiveRecord::Base
       MAXBID
     end
   end
+
+  def low_cut()
+    sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
+    if sorted_bids.empty?
+      nil
+    else
+      sorted_bids[0].cut
+    end
+  end
+
   def toBeat() #Bid required to win the auction
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     if sorted_bids.length>0
