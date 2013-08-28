@@ -20,6 +20,8 @@ class Auction < ActiveRecord::Base
   end
 
   def low_cut()
+    #AFAICT, we don't need this: the second price feature is on the total
+    #bid, not on the pot or cut.
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     if sorted_bids.empty?
       nil
@@ -38,11 +40,15 @@ class Auction < ActiveRecord::Base
   end
 
   def close()
+    File.open("sharedlog.txt", 'a') {|f| f.write("Closing auction #{self.id}") }
     unless self.bids.empty?
       winner=self.bids.min {|a,b| bid_sorter(a,b)}
       if winner.is_a? SharedBid
+        File.open("sharedlog.txt", 'a') {|f| f.write("  Auction is shared") }
         value=winner.amount#This is the fixed pot
         take_tax(winner.user,self.lowest-winner.amount)#This is the cut
+        self.chore.delay(run_at: self.chore.due_date).complete
+        File.open("sharedlog.txt", 'a') {|f| f.write("  Scheduling chore for: #{self.chore.due_date}") }
       else
         value=self.lowest()
       end

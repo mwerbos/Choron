@@ -1,8 +1,13 @@
 <tr>
   <td><%= chore.name %></td>
   <%if chore.auction %>
+    <%top=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <td><%= chore.auction.lowest %></td>
-    <td><%= chore.auction.low_cut %></td>
+    <td>
+      <%if top%>
+        <%= top.amount %>
+      <%end%>
+    </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <% if top_bid %>
