@@ -3,6 +3,7 @@
 <head>
   <title>Choron. Brought to you by Mein Haus (TM).</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= yield(:header) if @content_for_header %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>

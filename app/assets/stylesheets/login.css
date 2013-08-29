@@ -1,0 +1,43 @@
+h1#login {
+  float: left;
+  clear: left;
+}
+
+div.field {
+  display: block;
+  clear: left;
+}
+
+h1#choron {
+  float: right;
+  font-size: 4em;
+  font-weight: bold;
+  font-style: normal;
+  position: relative;
+  top: -0.2em;
+}
+
+#main {
+  overflow: hidden;
+}
+
+#new-and-improved {
+  float: right;
+  font-style: italic;
+  font-size: 0.9em;
+  clear: right;
+  position: relative;
+  top: -7em;
+  right: -3em;
+  -webkit-transform: rotate(15deg);
+  -moz-transform: rotate(15deg);
+  font-weight: bold;
+  color: red;
+  background-color: yellow;
+  padding-left: 9em;
+  padding-right: 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  font-family: helvetica, arial, verdana;
+  box-shadow: 0px 3px 5px #444444;
+}

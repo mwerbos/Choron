@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Username</th>
+    <th>Chorons</th>
     <th>Email</th>
     <th></th>
     <th></th>
@@ -12,6 +13,7 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.username %></td>
+    <td><%= user.chorons %></td>
     <td><%= user.email %></td>
     <td><%= user.is_frozen ? "(frozen)" : "" %></td>
     <td><%= link_to 'View', user %></td>
