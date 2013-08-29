@@ -26,7 +26,10 @@ module Taxation
     #  exactly the correct amount of chorons from everyone in the taxing stage.
     #  However, it's as close as possible. Then I think you just distribute
     #  them according to the best rounding algorithm you have.
-    if recipients.length==0 or recipients.values.any?{|v| v<0}
+    if recipients.length==0 and testUser==:not_a_test
+      raise "Invalid recipients list"
+    end
+    if recipients.values.any?{|v| v<0}
       raise "Invalid recipients list"
     end
     totalWeight=recipients.values.sum

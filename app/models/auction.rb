@@ -11,9 +11,7 @@ class Auction < ActiveRecord::Base
   def lowest()
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     if sorted_bids.length>1
-      [sorted_bids[0].total,sorted_bids[1].total-1].max
-    elsif sorted_bids.length==1
-      MAXBID-1
+      sorted_bids[0].total
     else
       MAXBID
     end
