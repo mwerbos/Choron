@@ -56,11 +56,95 @@ table {
   color: #fff;
 }
 
-#chorons {
+div.chorons {
   float: right;
   clear: after;
   color: #fff;
   text-align: right;
+  font-style: italic;
+}
+
+span.chorons {
+  margin-left: 1.1em;
+  font-size: 1.7em;
+  font-style: normal;
+  line-height: 0.5em;
+  font-weight: bold;
+}
+
+#expected-profit-total {
+  font-size: 1.3em;
+  font-weight: bold;
+  font-style: normal;
+  float: right;
+}
+
+div.expected-profit {
+  position: relative;
+}
+
+span.expected-profit {
+  font-style: italic;
+  line-height: 1em;
+  margin-right: 0.5em;
+  float: left;
+}
+
+#expected-profit-breakdown {
+  color: #c9c9c9;
+  text-decoration: underline;
+  font-style: normal;
+  margin-top: 0.1em;
+  line-height: 0.9em;
+  font-size: 0.9em;
+  float: right;
+  clear: right;
+  max-width: 5em;
+  text-align: right;
+}
+
+#expected-profit-breakdown:hover {
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  font-style: italic;
+}
+
+table.expected-profit {
+  float: left;
+  margin-left: 5px;
+  margin-right: 0.7em;
+  display: none;
+}
+
+table.expected-profit td {
+  font-style: normal;
+  padding-top: 0px;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  margin-top: 0px;
+  text-align: center;
+  border: none;
+}
+
+table.expected-profit tr.numbers {
+  font-size: 1.2em;
+}
+
+table.expected-profit td.numbers {
+  font-weight: bold;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font-style: normal;
+}
+
+table.expected-profit td.labels {
+  font-size: 0.8em;
+  padding-top: 0em;
+  margin-top: 0em;
+  line-height: 0.8em;
+  font-style: italic;
+  max-width: 4em;
 }
 
 #nav {
