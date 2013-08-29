@@ -30,6 +30,7 @@ Choron::Application.routes.draw do
 #  match '/chores/take/:id' => 'chores#take_chore'
   put   '/chores/complete/:id' => 'chores#complete'
   get   '/chores/coop/:id' => 'chores#coop'
+  post   '/chores/coop/:id' => 'chores#complete_coop'
 
   match '/chores/undo/:id' => 'chores#undo'
   match '/chores/delete_all/:id' => 'chores#destroy_with_auction'

@@ -26,36 +26,36 @@ module Taxation
     #  exactly the correct amount of chorons from everyone in the taxing stage.
     #  However, it's as close as possible. Then I think you just distribute
     #  them according to the best rounding algorithm you have.
-    if recipients.length==0
-      return 0
+    if recipients.length==0 or recipients.values.any?{|v| v<0}
+      raise "Invalid recipients list"
     end
     totalWeight=recipients.values.sum
     if totalWeight==0
       return 0
     end
-    User.transaction do
-      payers=User.where('is_frozen=?',false) 
-      numPayers=payers.length
-      #This is the amount that the recipients will split.
-      adjAmount=(Float(numPayers)/(numPayers-1)*amount).ceil
-      #This is negative; it will be added to everyone's chorons.
-      #It's the number required to produce the smallest positive collective possible.
-      tax=(-adjAmount+Setting.collective)/numPayers
-      #The merge thing is a hack to map from hashes to hashes
-      payments=sum_preserving_round(recipients.merge(recipients){|k,v|Float(adjAmount)*v/totalWeight})
-      puts "Adjusted Payment: %i"%adjAmount
-      puts "Tax: %i"%tax
-      if testUser==:not_a_test
-        Setting.collective+=-(adjAmount+tax*numPayers)
-        User.all.each do |user|
-          user.chorons+=payments[user].to_i#to_i converts nil to 0
-          if payers.include? user 
-            user.chorons+=tax
-          end
-          user.save
-          #user.check_coersion
+    payers=User.where('is_frozen=?',false) 
+    numPayers=payers.length
+    #This is the amount that the recipients will split.
+    adjAmount=(Float(numPayers)/(numPayers-1)*amount).ceil
+    #This is negative; it will be added to everyone's chorons.
+    #It's the number required to produce the smallest positive collective possible.
+    tax=(-adjAmount+Setting.collective)/numPayers
+    #The merge thing is a hack to map from hashes to hashes
+    payments=sum_preserving_round(recipients.merge(recipients){|k,v|Float(adjAmount)*v/totalWeight})
+    puts "Adjusted Payment: %i"%adjAmount
+    puts "Tax: %i"%tax
+    if testUser==:not_a_test
+      Setting.collective+=-(adjAmount+tax*numPayers)
+      User.all.each do |user|
+        user.chorons+=payments[user].to_i#to_i converts nil to 0
+        if payers.include? user 
+          user.chorons+=tax
         end
-      else
+        user.save
+        #user.check_coersion
+      end
+    else
+      User.transaction do
         if payers.include? testUser
           return tax+payments[testUser].to_i
         else
