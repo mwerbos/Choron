@@ -36,8 +36,14 @@ class User < ActiveRecord::Base
       if not auction.bids.min {|a,b| bid_sorter(a,b)}
         #Do nothing?
       else 
-        current_winner=auction.bids.min {|a,b| bid_sorter(a,b)}.user
-        total_income+=take_tax(current_winner,auction.lowest,self)
+        current_bid=auction.bids.min {|a,b| bid_sorter(a,b)}
+        unless current_bid.is_a?(SharedBid)
+          total_income+=take_tax(current_bid.user,auction.lowest,self)
+        else
+          #This gets you the cut
+          total_income+=take_tax(current_bid.user,auction.lowest-current_bid.amount,self)
+        end
+
       end
     end
     chores=Chore.where("done = ? AND bounties_count=0",false)
