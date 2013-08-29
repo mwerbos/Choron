@@ -44,6 +44,13 @@ class ChoresController < ApplicationController
     Chore.find(params[:id]).complete(current_user)
     redirect_to(:back)
   end
+  def complete_coop
+    recipients=User.all.each_with_object({}) do |user,hash|
+      hash[user]=params["Work#{user.id}"].to_f
+    end
+    Chore.find(params[:id]).complete_coop(recipients,current_user)
+    redirect_to("/home")
+  end
   def undo
     Chore.find(params[:id]).undo(current_user)
     redirect_to(:back)

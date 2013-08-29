@@ -1,19 +1,42 @@
+<%numPayers=User.where('is_frozen=?',false).length%>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+<script>
+  var choreValue=<%=@chore.value*numPayers.to_f/(numPayers-1)%>;
+  var taxFrac=1.0/<%=numPayers%>;
+  var totalWork;
+  function update()
+  {
+    totalWork=
+    <% User.all()[0..-2].each do |user| %>
+      parseFloat($("#Work<%=user.id%>").val())+
+    <% end %>
+      parseFloat($("#Work<%=User.last.id%>").val());
+    <% User.all().each do |user| %>
+      $("#Share<%=user.id%>").text(((parseFloat($("#Work<%=user.id%>").val())/totalWork<%=user.is_frozen ? "":"-taxFrac"%>)*choreValue).toFixed(1));
+    <% end %>
+  }
+  $(document).ready(function(){
+    update()
+    $("input").change(function(){update() });
+  });
+</script>
 <h1>Divvy up the credit</h1>
-
+Splitting the work on <%=@chore.name%> for <%=@chore.value%> chorons (post-tax):
+<%= form_tag(@chore.id.to_s,method: "post") do %>
 <table>
   <tr>
     <th>User</th>
     <th>Work done</th>
     <th>Profit</th>
   </tr>
-  <%#= form_tag("SUBMITURL" ,method: "put") do %>
   <% User.all().each do |user| %>
     <tr>
       <td><%= link_to user.username, "/users/#{user.id}" %></td>
-      <td> <%=text_field_tag("value:#{user.id}", 0)%> </td>
-      <td> <%=@chore.value%> </td>
+      <td> <%=text_field_tag("Work#{user.id}", (user==current_user ? 1:0))%> </td>
+      <td> <span id="Share<%=user.id%>">How is your internet this slow?</a> </td>
+      <td> <%= user.is_frozen ? "(User is tax exempt)" :""%> </td>
     </tr>
   <% end %>
-  <%#=submit_tag("Complete Chore")%> 
 </table>
-
+<%=submit_tag("Complete Chore")%> 
+<%end%>

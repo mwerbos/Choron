@@ -54,6 +54,15 @@ class Chore < ActiveRecord::Base
       end
     end
   end
+  def complete_coop(recipients,current_user)
+    if not self.done and self.auction and self.user==current_user
+      Chore.transaction do
+        multitax(recipients,self.value)
+        self.done=true
+        self.save
+      end
+    end
+  end
   def undo(current_user)
     if self.user==current_user and self.done
       if self.auction
