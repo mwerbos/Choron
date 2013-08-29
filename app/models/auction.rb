@@ -10,13 +10,18 @@ class Auction < ActiveRecord::Base
   has_paper_trail
   def lowest()
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
-    if sorted_bids.length>1
-      sorted_bids[0].total
+    #sorted_bids_deduped=sorted_bids.group_by{|b| b.user}
+    winner=sorted_bids[0].user
+    other_bids=sorted_bids.select {|b| b.user!=winner}
+    if other_bids.length>0
+      other_bids[0].total
     else
       MAXBID
     end
   end
-
+  def dupe_bid?(bid)
+    self.bids.select{|b| b.user==bid.user}.sort {|a,b| bid_sorter(a,b)}[0]!=bid
+  end
   def low_cut()
     #AFAICT, we don't need this: the second price feature is on the total
     #bid, not on the pot or cut.

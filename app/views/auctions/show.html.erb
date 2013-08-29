@@ -19,13 +19,18 @@
   <% end %> at
   <%= top.created_at.localtime %><br>
   <b>Past bids:</b><br/>
-    <%sorted_bids[1,sorted_bids.length].each do |bid| %>
-        <%= bid.user.username %> bid <%= bid.total %> at
-        <%= bid.created_at.localtime %>
-        <% if @auction.chore.is_a? SharedChore %>
-          with a pot of <%= bid.amount%>
-        <% end %><br/>
-    <% end %>
+  <%sorted_bids[1..-1].each do |bid| %>
+    <%is_dupe=@auction.dupe_bid?(bid)%>
+    <%if is_dupe%> <del> <%end%>
+    <%= bid.user.username %> bid
+      <%=(is_dupe and bid.total<=@auction.lowest) ? "at most #{@auction.lowest}" : bid.total%> at
+      <%= bid.created_at.localtime %>
+      <% if @auction.chore.is_a? SharedChore %>
+        with a pot of <%= bid.amount%>
+      <% end %>
+    <%if is_dupe%> </del> <%end%>
+    <br/>
+  <% end %>
   </p>
 <%else%>
   No bids yet <br/>
