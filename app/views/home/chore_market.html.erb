@@ -51,8 +51,8 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
   <table>
     <tr>
       <th>Chore name</th>
-      <th>Current Value</th>
-      <th>Overseer's Cut</th>
+      <th>Current Total</th>
+      <th>Current Pot</th>
       <th>Auction expires</th>
       <th>Current leader</th>
       <th>Chore due</th>
@@ -68,6 +68,7 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
     <% end %>
   </table>
 <% end %>
+<hr />
 Create a new: <ul>
 <li><%= link_to 'Chore and auction', '/home/new_chore_auction' %></li>
 <li><%= link_to 'Standalone chore (without auction or bounty)',

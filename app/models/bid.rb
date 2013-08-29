@@ -9,10 +9,13 @@ class Bid < ActiveRecord::Base
     validate :lowest
     validate :isOpen
 
+    def total
+      self.amount
+    end
     def lowest
         if auction
             lowest_bid=self.auction.lowest
-            if lowest_bid and self.amount>=lowest_bid
+            if lowest_bid and self.total>=lowest_bid
                 errors[:base] << "The bid must be less than #{lowest_bid}"
             end
         end

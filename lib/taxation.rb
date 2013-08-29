@@ -1,9 +1,9 @@
 module Taxation
-  def take_tax(recipient,amount,testUser=nil)
+  def take_tax(recipient,amount,testUser=:not_a_test)
     #Now just a convenient wrapper to tax for one person.
     multitax({recipient => 1},amount,testUser)
   end
-  def multitax(recipients,amount,testUser=nil)
+  def multitax(recipients,amount,testUser=:not_a_test)
     #recipients should be a map from users to floats.
     #If passed testuser, won't do anything, but will return the change in
     #chorons that user will experience.
@@ -41,26 +41,26 @@ module Taxation
       #This is negative; it will be added to everyone's chorons.
       #It's the number required to produce the smallest positive collective possible.
       tax=(-adjAmount+Setting.collective)/numPayers
-      Setting.collective+=-(adjAmount+tax*numPayers)
       #The merge thing is a hack to map from hashes to hashes
       payments=sum_preserving_round(recipients.merge(recipients){|k,v|Float(adjAmount)*v/totalWeight})
-      if testUser
-        if payers.include? testUser
-          return tax+payments[testUser].to_i
-        else
-          return payments[testUser].to_i
-        end
-      else
+      puts "Adjusted Payment: %i"%adjAmount
+      puts "Tax: %i"%tax
+      if testUser==:not_a_test
+        Setting.collective+=-(adjAmount+tax*numPayers)
         User.all.each do |user|
           user.chorons+=payments[user].to_i#to_i converts nil to 0
           if payers.include? user 
             user.chorons+=tax
           end
           user.save
-          user.check_coersion
+          #user.check_coersion
         end
-        puts "Adjusted Payment: %i"%adjAmount
-        puts "Tax: %i"%tax
+      else
+        if payers.include? testUser
+          return tax+payments[testUser].to_i
+        else
+          return payments[testUser].to_i
+        end
       end
     end
   end

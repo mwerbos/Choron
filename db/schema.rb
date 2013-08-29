@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20130826174817) do
     t.integer  "user_id"
     t.integer  "auction_id"
     t.integer  "cut"
+    t.string   "type"
   end
 
   create_table "bounties", :force => true do |t|

@@ -6,7 +6,7 @@ module DelayUtils
     else
       jobs=DelayedJob.all
     end
-    jobs.select! do |job|
+    jobs.select do |job|
       begin
         handler=YAML.load(job.handler)
         puts "******************"

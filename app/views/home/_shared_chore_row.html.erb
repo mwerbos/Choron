@@ -1,5 +1,5 @@
 <tr>
-  <td><%= chore.name %></td>
+  <td><%= link_to chore.name, chore_path(chore) %></td>
   <td><%= chore.value %></td>
   <td><%= "%i/%i"%[chore.num_contributions(current_user),chore.num_contributions] %></td>
   <td>
