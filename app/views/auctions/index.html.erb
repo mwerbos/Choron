@@ -11,12 +11,13 @@
   <tr>
     <td><%= auction.expiration_date %></td>
     <td>
-    <% if auction.chore_id != nil %>
-    <%= Chore.find(auction.chore_id).name %>
+    <% if auction.chore %>
+      <%= auction.chore.name %>
     <% end %>
     </td>
     <td><%= link_to 'View', auction %></td>
     <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
+    <td><%= link_to 'Destroy', auction, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

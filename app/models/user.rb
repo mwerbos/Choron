@@ -26,32 +26,39 @@ class User < ActiveRecord::Base
     sorted_done=self.chores.find_all{|chore| chore.done}.sort{|b,a| a.due_date <=> b.due_date}
     sorted_undone+sorted_done
   end
-  def expected_profit()
+  def expected_profit(mode=:all)
     if (User.count<2)
       return 0
     end
-    auctions=Auction.where("expiration_date > ?", Time.now)
     total_income=0
-    auctions.each do |auction|
-      if not auction.bids.min {|a,b| bid_sorter(a,b)}
-        #Do nothing?
-      else 
-        current_bid=auction.bids.min {|a,b| bid_sorter(a,b)}
-        unless current_bid.is_a?(SharedBid)
-          total_income+=take_tax(current_bid.user,auction.lowest,self)
-        else
-          #This gets you the cut
-          total_income+=take_tax(current_bid.user,auction.lowest-current_bid.amount,self)
-        end
+    if mode==:all or mode==:auction
+      auctions=Auction.where("expiration_date > ?", Time.now)
+      auctions.each do |auction|
+        if not auction.bids.min {|a,b| bid_sorter(a,b)}
+          #Do nothing?
+        else 
+          current_bid=auction.bids.min {|a,b| bid_sorter(a,b)}
+          unless current_bid.is_a?(SharedBid)
+            total_income+=take_tax(current_bid.user,auction.lowest,self)
+          else
+            #This gets you the cut
+            total_income+=take_tax(current_bid.user,auction.lowest-current_bid.amount,self)
+          end
 
+        end
       end
     end
-    chores=Chore.where("done = ? AND bounties_count=0",false)
-    chores.each do |chore|
-      #This examines all assigned but incomplete chores
-      if chore.user and chore.value
-        puts "Chore id:%i"%chore.id
-        total_income+=chore.expected_value(self)
+    if mode==:all or mode==:chore or mode==:shared_chore
+      chores=Chore.where("done = ? AND bounties_count=0",false)
+      chores.each do |chore|
+        #This examines all assigned but incomplete chores
+        if chore.user and chore.value
+          if mode==:all or ((chore.is_a?(SharedChore) and mode==:shared_chore) or
+              (not chore.is_a?(SharedChore) and mode==:chore))
+            puts "Chore id:%i"%chore.id
+            total_income+=chore.expected_value(self)
+          end
+        end
       end
     end
     return total_income
