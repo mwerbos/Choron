@@ -9,6 +9,9 @@ class Auction < ActiveRecord::Base
   has_many :bids
   has_paper_trail
   def lowest()
+    if self.bids.empty?
+      return MAXBID
+    end
     sorted_bids=self.bids.sort {|a,b| bid_sorter(a,b)}
     #sorted_bids_deduped=sorted_bids.group_by{|b| b.user}
     winner=sorted_bids[0].user
