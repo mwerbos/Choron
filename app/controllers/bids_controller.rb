@@ -50,8 +50,6 @@ class BidsController < ApplicationController
     puts "**************************************"
     puts @bid.class.name
     puts "**************************************"
-    @bid.auction_id = @auction_id if @auction_id
-    @bid.user_id = @user_id if @user_id
     respond_to do |format|
       Bid.transaction do
         if @bid.save and @bid.user.save
@@ -60,8 +58,6 @@ class BidsController < ApplicationController
         else
           puts "Error saving bid:"
           puts @bid.inspect
-          #format.html { redirect_to :back}
-          #format.html { redirect_to :back,flash: {error: "ERROR" }}
           #format.html { render :action => "edit"}
           @auction_id = @bid.auction_id
           @user_id = @bid.user_id
