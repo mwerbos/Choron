@@ -1,7 +1,17 @@
 <tr>
   <td><%= chore.name %></td>
   <%if chore.auction %>
-    <td><%= chore.auction.lowest %></td>
+    <td>
+      <%= chore.auction.lowest %>
+      <span class="quickbid">
+        <a id="<%= "quickbidlink" + chore.auction.id.to_s %>"
+           onclick="<%= "toggleQB(" + chore.auction.id.to_s + ")"%>">Bid</a><br />
+        <span class="quickbidform" id="<%= "quickbid" + chore.auction.id.to_s %>">
+          <input id="<%= "bid_amount" + chore.auction.id.to_s %>" type="number" />
+          <input id="<%= "bid" + chore.auction.id.to_s %>" type="submit" value="Bid" />
+        </span>
+      </span>
+    </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <%if top_bid %>

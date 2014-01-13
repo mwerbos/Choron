@@ -9,3 +9,24 @@
 .overdue {
   color: red;
 }
+
+.quickbid {
+  font-size: 10px;
+}
+
+.quickbid a {
+  cursor: pointer;
+}
+
+.quickbidform {
+  display: none;
+}
+
+.quickbid input[type=number] {
+  font-size: 10px;
+  width: 20px;
+}
+
+.quickbid input[type=submit] {
+  font-size: 10px;
+}
