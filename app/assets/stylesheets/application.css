@@ -56,6 +56,10 @@ table {
   color: #fff;
 }
 
+#user a {
+  color: #c9c9c9;
+}
+
 div.chorons {
   float: right;
   clear: after;
