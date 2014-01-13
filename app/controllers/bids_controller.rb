@@ -60,9 +60,12 @@ class BidsController < ApplicationController
         else
           puts "Error saving bid:"
           puts @bid.inspect
-          format.html { redirect_to :back}
+          #format.html { redirect_to :back}
           #format.html { redirect_to :back,flash: {error: "ERROR" }}
           #format.html { render :action => "edit"}
+          @auction_id = @bid.auction_id
+          @user_id = @bid.user_id
+          format.html { render :action => "new"}
           format.json { render :json => @bid.errors, :status => :unprocessable_entity }
         end
       end
