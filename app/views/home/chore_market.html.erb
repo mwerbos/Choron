@@ -28,24 +28,31 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
 
 <h2>Auctions</h2>
 <h3>Individual</h3>
-<table>
-  <tr>
-    <th>Chore name</th>
-    <th>Current Value</th>
-    <th>Auction expires</th>
-    <th>Current leader</th>
-    <th>Chore due</th>
-    <th></th>
-  </tr>
+<form action="/quickbid" id="new_bids" method="post">
+  <input id="bid_user_id" name="user_id" type="hidden"
+  value="<%= current_user.id %>" />
+  <table>
+    <tr>
+      <th>Chore name</th>
+      <th>Current Value</th>
+      <th>Your Bid</th>
+      <th>Auction expires</th>
+      <th>Current leader</th>
+      <th>Chore due</th>
+      <th></th>
+    </tr>
 
-<% @chores.each do |chore| %>
-  <% if (@view=='open' and chore.open?) or
-        (@view=='closed' and (not chore.open?)) or
-        (@view=='all') %>
-    <%= render 'market_row',chore: chore %>
-  <% end %>
-<% end %>
-</table>
+    <% @chores.each do |chore| %>
+      <% if (@view=='open' and chore.open?) or
+             (@view=='closed' and (not chore.open?)) or
+             (@view=='all') %>
+        <%= render 'market_row',chore: chore %>
+      <% end %>
+    <% end %>
+  </table>
+  <hr />
+  <input name="commit" type="submit" value="Place Bids" />
+</form>
 <% unless @open_shared.empty? %>
   <h3>Shared</h3>
   <table>
@@ -67,8 +74,8 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
       <% end %>
     <% end %>
   </table>
+  <hr />
 <% end %>
-<hr />
 Create a new: <ul>
 <li><%= link_to 'Chore and auction', '/home/new_chore_auction' %></li>
 <li><%= link_to 'Standalone chore (without auction or bounty)',

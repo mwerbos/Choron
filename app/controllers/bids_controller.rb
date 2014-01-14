@@ -71,6 +71,28 @@ class BidsController < ApplicationController
     end
   end
 
+  # POST /quickbid
+  # POST /quickbid.json
+  def quickbid
+    bids = []
+    errors = []
+    params[:amount].each_pair {
+      |auction, amount|
+      bid = Bid.new({:auction_id => auction, :amount => amount, :user_id => params[:user_id]})
+      puts "**************************************"
+      puts bid.class.name
+      puts "**************************************"
+      unless bid.save and bid.user.save
+        puts "Error saving bid:"
+        puts bid.inspect
+      end
+      if bid.auction.chore.chore_scheduler
+        bid.user.auto_preferences([bid.auction.chore.chore_scheduler])
+      end
+    }
+    redirect_to bids_path
+  end
+
   # PUT /bids/1
   # PUT /bids/1.json
   def update

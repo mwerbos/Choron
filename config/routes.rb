@@ -6,6 +6,7 @@ Choron::Application.routes.draw do
   resources :bounties
 
   post 'bids' => 'bids#create'
+  post 'quickbid' => 'bids#quickbid'
   post 'shared_bids' => 'bids#create'
   
   get 'bids' => 'home#chore_market'
