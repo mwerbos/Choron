@@ -6,10 +6,17 @@
       <span class="quickbid">
         <a id="<%= "quickbidlink" + chore.auction.id.to_s %>"
            onclick="<%= "toggleQB(" + chore.auction.id.to_s + ")"%>">Bid</a><br />
-        <span class="quickbidform" id="<%= "quickbid" + chore.auction.id.to_s %>">
-          <input id="<%= "bid_amount" + chore.auction.id.to_s %>" type="number" />
-          <input id="<%= "bid" + chore.auction.id.to_s %>" type="submit" value="Bid" />
-        </span>
+        <form class="quickbidform" id="<%= "quickbid" +
+           chore.auction.id.to_s %>" action="/bids" method="post">
+          <input id="<%= "bid_amount" + chore.auction.id.to_s %>"
+          name="bid[amount]" type="number" />
+          <input id="<%= "bid" + chore.auction.id.to_s %>"
+          type="submit" value="Bid" />
+          <input id="bid_auction_id" name="bid[auction_id]"
+          type="hidden" value="<%= chore.auction.id.to_s %>" />
+          <input id="bid_user_id" name="bid[user_id]"
+          type="hidden" value="<%= current_user.id %>" />
+        </form>
       </span>
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
