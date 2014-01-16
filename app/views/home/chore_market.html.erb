@@ -28,7 +28,7 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
 
 <form action="/quickbid" id="new_bids" method="post">
   <h2>Auctions</h2>
-  <input name="commit" type="submit" value="Place Bids" /><br />
+  <input name="commit" type="submit" value="Place Bids" tabindex="1" /><br />
   <h3>Individual</h3>
   <input id="bid_user_id" name="user_id" type="hidden"
   value="<%= current_user.id %>" />
@@ -77,7 +77,7 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
     </table>
     <hr />
   <% end %>
-  <input name="commit" type="submit" value="Place Bids" />
+  <input name="commit" type="submit" value="Place Bids" tabindex="1" />
 </form>
 
 Create a new: <ul>
