@@ -1,22 +1,20 @@
 <tr>
   <td><%= chore.name %></td>
   <%if chore.auction %>
-    <% a_id = chore.auction.id %>
+    <% a_id = chore.auction.id.to_s %>
     <td><%= chore.auction.lowest %></td>
     <td>
-      <% if @qb_errors and @qb_errors[a_id] and @qb_errors[a_id].any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(errors.count, "error") %> prohibited this bid from being saved:</h2>
-          
-          <ul>
+      <% if flash[:qb_errors] and flash[:qb_errors][a_id] and
+      flash[:qb_errors][a_id].any? %>
+        <% errors = flash[:qb_errors][a_id] %>
+        <span class="qb_error">
             <% errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
+              <%= msg %><br />
             <% end %>
-          </ul>
-        </div>
+        </span>
       <% end %>
       <input class="quickbid"
-             name="amount[<%=a_id.to_s%>]" type="number"
+             name="amount[<%=a_id%>]" type="number"
              tabindex="1" />
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>

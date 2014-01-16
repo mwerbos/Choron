@@ -74,7 +74,7 @@ class BidsController < ApplicationController
   # POST /quickbid
   # POST /quickbid.json
   def quickbid
-    @qb_errors = {}
+    qb_errors = {}
     params[:amount].each_pair {
       |auction, amount|
       if amount and amount != ""
@@ -85,14 +85,14 @@ class BidsController < ApplicationController
         unless bid.save and bid.user.save
           puts "Error saving bid:"
           puts bid.inspect
-          @qb_errors[auction] = bid.errors
+          qb_errors[auction] = bid.errors
         end
         if bid.auction.chore.chore_scheduler
           bid.user.auto_preferences([bid.auction.chore.chore_scheduler])
         end
       end
     }
-    redirect_to bids_path
+    redirect_to bids_path, flash: { qb_errors: qb_errors }
   end
 
   # PUT /bids/1
