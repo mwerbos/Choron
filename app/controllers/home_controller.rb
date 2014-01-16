@@ -52,6 +52,7 @@ class HomeController < ApplicationController
     chore_params[:auction]=@auction
     @chore = (params[:shared] and params[:shared].to_b) ? SharedChore.new(chore_params) : Chore.new(chore_params)
     @auction.chore = @chore
+    @chore.auction = @auction
     Auction.transaction do
       respond_to do |format|
         if @auction.save and @chore.save
