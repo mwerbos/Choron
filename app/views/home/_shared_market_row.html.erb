@@ -1,12 +1,32 @@
 <tr>
   <td><%= chore.name %></td>
   <%if chore.auction %>
+        <% a_id = chore.auction.id.to_s %>
     <%top=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <td><%= chore.auction.lowest %></td>
     <td>
       <%if top%>
         <%= top.amount %>
       <%end%>
+    </td>
+    <td>
+      <% if flash[:qb_errors] and flash[:qb_errors][a_id] and
+      flash[:qb_errors][a_id].any? %>
+        <% errors = flash[:qb_errors][a_id] %>
+        <span class="qb_error">
+            <% errors.full_messages.each do |msg| %>
+              <%= msg %><br />
+            <% end %>
+        </span>
+      <% end %>
+      <input class="quickbid"
+             name="amount[<%=a_id%>]" type="number"
+             tabindex="1" />
+    </td>
+    <td>
+      <input class="quickbid"
+             name="cut[<%=a_id%>]" type="number"
+             tabindex="1" />
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>

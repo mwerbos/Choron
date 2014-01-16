@@ -78,7 +78,11 @@ class BidsController < ApplicationController
     params[:amount].each_pair {
       |auction, amount|
       if amount and amount != ""
-        bid = Bid.new({:auction_id => auction, :amount => amount, :user_id => params[:user_id]})
+        cut = params[:cut][auction]
+        if cut == ""
+          next
+        end
+        bid = (cut ? SharedBid.new({:auction_id => auction, :amount => amount, :cut => cut, :user_id => params[:user_id]}) : Bid.new({:auction_id => auction, :amount => amount, :user_id => params[:user_id]}))
         puts "**************************************"
         puts bid.class.name
         puts "**************************************"
