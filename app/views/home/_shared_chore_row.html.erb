@@ -1,6 +1,9 @@
 <tr>
   <td><%= link_to chore.name, chore_path(chore) %></td>
   <td><%= chore.value %></td>
+  <td><% if chore.user != current_user
+  %><span class="redacted">[redacted]</span><% else %>
+  <%= chore.auction.lowest - chore.value %><% end %></td>
   <td><%= "%i/%i"%[chore.num_contributions(current_user),chore.num_contributions] %></td>
   <td>
     <% if chore.start_date %>
