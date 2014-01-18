@@ -10,8 +10,13 @@
 <% @prefs.each do |scheduler_id,pref| %>
   <% scheduler=ChoreScheduler.find(Integer(scheduler_id))%>
   <% chore=scheduler.chore%>
-  <tr>
-  </tr>
+  <% if chore %>
+    <tr>
+      <td><%= chore.name %></td>
+      <td><%= pref[:value] %></td>
+      <td><%= pref[:manual] %></td>
+    </tr>
+  <% end %>
 <% end %>
 </table>
 
