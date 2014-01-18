@@ -13,9 +13,16 @@
             <% end %>
         </span>
       <% end %>
-      <input class="quickbid"
+      <input class="quickbid" id="qb<%=a_id%>"
              name="amount[<%=a_id%>]" type="number"
              tabindex="1" />
+    </td>
+    <td>
+      <input class="preference" type="button"
+      value="<%= chore.auction.get_pref current_user %>"
+      onclick="document.getElementById('qb<%=a_id%>').value =
+      '<%= chore.auction.get_pref current_user %>';
+      return false;" />
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
