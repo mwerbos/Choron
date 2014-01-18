@@ -5,7 +5,22 @@
   <%= @auction.expiration_date.localtime %>
 </p>
 
-<p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s %>
+<p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s
+       %>
+  <% pref = @auction.get_pref current_user %>
+  <% if pref %>
+    <form action="/bids" class="new_bid" id="new_bid" method="post">
+      <input id="auction_id" name="bid[auction_id]" type="hidden"
+      value="<%= @auction.id %>" />
+      <input id="user_id" name="bid[user_id]" type="hidden"
+      value="<%= current_user.id %>" />
+      <input id="user_id" name="bid[amount]" type="hidden"
+      value="<%= pref %>" />
+      <a href="javascript:{}"
+         onclick="document.getElementById('new_bid').submit(); return
+                  false;">Bid your preference (<%= pref %>) on this auction</a>
+    </form>
+  <% end %>
 
 <p>
 <%sorted_bids=@auction.bids.sort {|a,b| bid_sorter(a,b)}%>

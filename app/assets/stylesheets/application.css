@@ -223,3 +223,8 @@ h1 {
 #frozen h1 {
   color: red;
 }
+
+.redacted {
+  color: black;
+  background-color: black;
+}
