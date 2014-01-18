@@ -78,7 +78,7 @@ class BidsController < ApplicationController
     params[:amount].each_pair {
       |auction, amount|
       if amount and amount != ""
-        cut = params[:cut][auction]
+        cut = params[:cut] ? params[:cut][auction] : nil
         if cut == ""
           next
         end
