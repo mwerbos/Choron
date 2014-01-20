@@ -1,16 +1,16 @@
 <tr>
   <td><%= chore.name %></td>
-  <%if chore.auction %>
+  <% if chore.auction %>
     <% a_id = chore.auction.id.to_s %>
     <td><%= chore.auction.lowest %></td>
     <td>
       <% if flash[:qb_errors] and flash[:qb_errors][a_id] and
-      flash[:qb_errors][a_id].any? %>
+             flash[:qb_errors][a_id].any? %>
         <% errors = flash[:qb_errors][a_id] %>
         <span class="qb_error">
-            <% errors.full_messages.each do |msg| %>
-              <%= msg %><br />
-            <% end %>
+          <% errors.full_messages.each do |msg| %>
+            <%= msg %><br />
+          <% end %>
         </span>
       <% end %>
       <input class="quickbid" id="qb<%=a_id%>"
@@ -19,40 +19,49 @@
     </td>
     <td>
       <input class="preference" type="button"
-      value="<%= chore.auction.get_pref(current_user)[:value] %>"
-      onclick="document.getElementById('qb<%=a_id%>').value =
-      '<%= chore.auction.get_pref(current_user)[:value] %>';
-      return false;" />
+             value="<%= chore.auction.get_pref(current_user)[:value] %>"
+             onclick="document.getElementById('qb<%=a_id%>').value =
+                      '<%= chore.auction.get_pref(current_user)[:value] %>';
+                      return false;" />
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
-    <%if top_bid %>
+    <% if top_bid %>
       <td><%=top_bid.user.username%></td>
-    <%else%>
+    <% else %>
       <td></td>
-    <%end%>
-  <%else%>
-    <td><%= chore.value %></td>
+      <%end%>
+    <% else %>
+      <td><%= chore.value %></td>
+      <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
+      <td></td>
+    <% end %>
     <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
-    <td></td>
-  <%end%>
-  <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
-  <%if chore.auction %>
-    <td><%= link_to 'Show auction', chore.auction %></td>
-  <%else%>
-    <td><%= link_to 'Show bounty', chore.bounty%></td>
-  <%end%>
-  <td><%= link_to 'Chore details', chore %></td>
-  <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
-  <%if chore.auction %>
-    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
-  <%else%>
-    <td><%= link_to 'Edit bounty', edit_bounty_path(chore.bounty) %></td>
-  <%end%>
-  <td><%= link_to 'Destroy chore and auction',
-  "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you
+    <% if chore.auction %>
+      <td>Auction:&nbsp;
+        <span>
+          <%= link_to 'Show', chore.auction %>&nbsp;
+          <%= link_to 'Edit', edit_auction_path(chore.auction)  %>
+        </span>
+      </td>
+    <% else %>
+      <td>Bounty:&nbsp;
+        <span>
+          <%= link_to 'Show', chore.bounty%>&nbsp;
+          <%= link_to 'Edit', edit_bounty_path(chore.bounty) %>
+        </span>
+      </td>
+    <% end %>
+    <td>Chore:&nbsp;
+      <span>
+        <%= link_to 'Show', chore %>&nbsp;
+        <%= link_to 'Edit', edit_chore_path(chore) %>
+      </span>
+    </td>
+    <td><%= link_to 'Destroy chore and auction',
+            "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you
   sure?' } %></td>
-  
-  <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
+    
+    <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
 </tr>
 

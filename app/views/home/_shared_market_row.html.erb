@@ -52,18 +52,27 @@
     <td></td>
   <% end %>
   <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
-  <%if chore.auction %>
-    <td><%= link_to 'Show auction', chore.auction %></td>
-  <%else%>
-    <td><%= link_to 'Show bounty', chore.bounty%></td>
-  <%end%>
-  <td><%= link_to 'Chore details', chore %></td>
-  <td><%= link_to 'Edit chore', edit_chore_path(chore) %></td>
-  <%if chore.auction %>
-    <td><%= link_to 'Edit auction', edit_auction_path(chore.auction) %></td>
-  <%else%>
-    <td><%= link_to 'Edit bounty', edit_bounty_path(chore.bounty) %></td>
-  <%end%>
+  <% if chore.auction %>
+    <td>Auction:&nbsp;
+      <span>
+        <%= link_to 'Show', chore.auction %>&nbsp;
+        <%= link_to 'Edit', edit_auction_path(chore.auction)  %>
+      </span>
+    </td>
+  <% else %>
+    <td>Bounty:&nbsp;
+      <span>
+        <%= link_to 'Show', chore.bounty%>&nbsp;
+        <%= link_to 'Edit', edit_bounty_path(chore.bounty) %>
+      </span>
+    </td>
+  <% end %>
+  <td>Chore:&nbsp;
+    <span>
+      <%= link_to 'Show', chore %>&nbsp;
+      <%= link_to 'Edit', edit_chore_path(chore) %>
+    </span>
+  </td>
   <td><%= link_to 'Destroy chore and auction', "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you sure?' } %></td>
   
   <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
