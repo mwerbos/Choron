@@ -51,30 +51,6 @@
     <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
     <td></td>
   <% end %>
-  <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
-  <% if chore.auction %>
-    <td>Auction:&nbsp;
-      <span>
-        <%= link_to 'Show', chore.auction %>&nbsp;
-        <%= link_to 'Edit', edit_auction_path(chore.auction)  %>
-      </span>
-    </td>
-  <% else %>
-    <td>Bounty:&nbsp;
-      <span>
-        <%= link_to 'Show', chore.bounty%>&nbsp;
-        <%= link_to 'Edit', edit_bounty_path(chore.bounty) %>
-      </span>
-    </td>
-  <% end %>
-  <td>Chore:&nbsp;
-    <span>
-      <%= link_to 'Show', chore %>&nbsp;
-      <%= link_to 'Edit', edit_chore_path(chore) %>
-    </span>
-  </td>
-  <td><%= link_to 'Destroy chore and auction', "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you sure?' } %></td>
-  
-  <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
+  <%= render 'chore_tools', chore: chore %>
 </tr>
 

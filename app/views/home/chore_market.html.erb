@@ -49,7 +49,7 @@ Now viewing <%= @view %> chore auctions and chore bounties. View:
       <% if (@view=='open' and chore.open?) or
              (@view=='closed' and (not chore.open?)) or
              (@view=='all') %>
-        <%= render 'market_row',chore: chore %>
+        <%= render 'market_row', chore: chore %>
       <% end %>
     <% end %>
   </table>
