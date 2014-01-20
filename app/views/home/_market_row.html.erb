@@ -19,9 +19,9 @@
     </td>
     <td>
       <input class="preference" type="button"
-      value="<%= chore.auction.get_pref current_user %>"
+      value="<%= chore.auction.get_pref(current_user)[:value] %>"
       onclick="document.getElementById('qb<%=a_id%>').value =
-      '<%= chore.auction.get_pref current_user %>';
+      '<%= chore.auction.get_pref(current_user)[:value] %>';
       return false;" />
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>

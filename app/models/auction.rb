@@ -87,7 +87,7 @@ class Auction < ActiveRecord::Base
     }
     prefs.delete(nil)
     if prefs.any?
-      return prefs[0][:value]
+      return prefs[0]
     else
       nil
     end

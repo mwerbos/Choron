@@ -7,7 +7,7 @@
 
 <p><%= link_to 'Bid on this auction', "new_bid/"+@auction.id.to_s
        %>
-  <% pref = @auction.get_pref current_user %>
+  <% pref = @auction.get_pref(current_user)[:value] %>
   <% if pref %>
     <form action="/bids" class="new_bid" id="new_bid" method="post">
       <input id="auction_id" name="bid[auction_id]" type="hidden"
