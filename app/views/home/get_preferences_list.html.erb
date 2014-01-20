@@ -5,6 +5,7 @@
     <tr>
       <th>Chore</th>
       <th>Amount</th>
+      <th>Cut</th>
       <th>Manually set</th>
     </tr>
 
@@ -15,8 +16,14 @@
         <tr>
           <td><%= chore.name %></td>
           <td>
-            <input name="prefs[<%= scheduler_id %>]"
+            <input name="amounts[<%= scheduler_id %>]"
                    value="<%= pref[:value] %>" />
+          </td>
+          <td>
+            <% if chore.is_a? SharedChore %>
+              <input name="cuts[<%= scheduler_id %>]"
+                     value="<%= pref[:cut] %>" />
+            <% end %>
           </td>
           <td><%= pref[:manual] %></td>
         </tr>

@@ -78,6 +78,9 @@ class User < ActiveRecord::Base
           my_best_bid=chore.auction.user_best(self)
           if my_best_bid
             self.bid_prefs[scheduler.id]={value:my_best_bid.amount,manual:false}
+            if chore.is_a? SharedChore
+              self.bid_prefs[scheduler.id][:cut] = my_best_bid.cut
+            end
           else
             self.bid_prefs[scheduler.id]={value:MAXBID,manual:false}
           end

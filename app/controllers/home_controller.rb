@@ -134,10 +134,15 @@ class HomeController < ApplicationController
 
   def update_preferences
     @user=current_user
-    params[:prefs].each_pair {
+    params[:amounts].each_pair {
       | sid, pref |
-      unless @user.bid_prefs[Integer(sid)][:value] == Integer(pref)
-        @user.bid_prefs[Integer(sid)] = {value: Integer(pref), manual: true}
+      cut = params[:cuts] ? params[:cuts][sid] : nil
+      cut = (cut == "") ? nil : cut
+      if @user.bid_prefs[Integer(sid)][:value] != Integer(pref) or (cut and @user.bid_prefs[Integer(sid)][:cut] != Integer(cut))
+        @user.bid_prefs[Integer(sid)].update({value: Integer(pref), manual: true})
+        if cut
+          @user.bid_prefs[Integer(sid)][:cut] = Integer(cut)
+        end
       end
     }
     respond_to do |format|
