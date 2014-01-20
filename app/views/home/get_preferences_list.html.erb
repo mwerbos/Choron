@@ -1,22 +1,28 @@
 <h1>My preferences</h1>
 
-<table>
-  <tr>
-    <th>Chore</th>
-    <th>Amount</th>
-    <th>Manually set</th>
-  </tr>
-
-<% @prefs.each do |scheduler_id,pref| %>
-  <% scheduler=ChoreScheduler.find(Integer(scheduler_id))%>
-  <% chore=scheduler.chore%>
-  <% if chore %>
+<form method="post" id="bid_preferences" action="/update_prefs">
+  <table>
     <tr>
-      <td><%= chore.name %></td>
-      <td><%= pref[:value] %></td>
-      <td><%= pref[:manual] %></td>
+      <th>Chore</th>
+      <th>Amount</th>
+      <th>Manually set</th>
     </tr>
-  <% end %>
-<% end %>
-</table>
 
+    <% @prefs.each do |scheduler_id,pref| %>
+      <% scheduler=ChoreScheduler.find(Integer(scheduler_id))%>
+      <% chore=scheduler.chore%>
+      <% if chore %>
+        <tr>
+          <td><%= chore.name %></td>
+          <td>
+            <input name="prefs[<%= scheduler_id %>]"
+                   value="<%= pref[:value] %>" />
+          </td>
+          <td><%= pref[:manual] %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <br />
+  <input name="commit" type="submit" value="Update Preferences" />
+</form>

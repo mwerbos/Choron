@@ -131,6 +131,25 @@ class HomeController < ApplicationController
       end
     end
   end
+
+  def update_preferences
+    @user=current_user
+    params[:prefs].each_pair {
+      | sid, pref |
+      unless @user.bid_prefs[Integer(sid)][:value] == Integer(pref)
+        @user.bid_prefs[Integer(sid)] = {value: Integer(pref), manual: true}
+      end
+    }
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to('/home/preferences', :notice => 'Preferences updated.') }
+        format.json { render :json }
+      else
+        format.html { redirect_to('/home/preferences', :notice => 'Could not update preferences.') }
+        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
      
   
   def give_chore_form

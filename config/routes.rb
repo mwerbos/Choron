@@ -50,6 +50,7 @@ Choron::Application.routes.draw do
   get   'home/preferences' => 'home#get_preferences_list'
   get   'home/preferences/:scheduler_id' => 'home#show_preference'
   put   'home/preferences/:scheduler_id' => 'home#edit_preference'
+  post  'update_prefs' => 'home#update_preferences'
 # put   'home/preferences/:chore_id' => 'home#edit_preference'
   
   root :to => 'user_sessions#new', :as => :login
