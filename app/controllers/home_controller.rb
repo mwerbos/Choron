@@ -155,7 +155,21 @@ class HomeController < ApplicationController
       end
     end
   end
-     
+
+  def clear_preferences
+    @user=current_user
+    @user.bid_prefs.clear
+    @user.auto_preferences
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to('/home/preferences', :notice => 'Preferences cleared.') }
+        format.json { render :json }
+      else
+        format.html { redirect_to('/home/preferences', :notice => 'Could not clear preferences.') }
+        format.json { render :json => @user_session.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
   
   def give_chore_form
     #gets user id from url parameters

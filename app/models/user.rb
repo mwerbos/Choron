@@ -63,14 +63,14 @@ class User < ActiveRecord::Base
     end
     return total_income
   end
-  def auto_preferences(schedulers=ChoreScheduler)
+  def auto_preferences(schedulers=ChoreScheduler.all)
     #This method will attempt to automatically determine the preferences of
     #a user. Preferences are saved as a hash, mapping the ids of open chores
     #to the amount this user would do them for uncoerced. For auctions the
     #user has bid on, their lowest bid will be used. For auctions the user
     #has not bid on, and for bounties, MAXBID is assumed. The user can edit
     #these values; once edited by the user, they won't automaticaly update.
-    schedulers.find_all{|scheduler| scheduler.chore.open?}.each do |scheduler|
+    schedulers.find_all{|scheduler| scheduler.chore and scheduler.chore.open?}.each do |scheduler|
       chore=scheduler.chore
       if self.bid_prefs[scheduler.id].nil? or
           not self.bid_prefs[scheduler.id][:manual]
