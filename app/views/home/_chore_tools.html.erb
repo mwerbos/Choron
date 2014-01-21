@@ -1,26 +1,35 @@
 <td><%= chore.due_date.strftime('%a %b %d,%l:%M %p') %></td>
 <% if chore.auction %>
-  <td>Auction:&nbsp;
-    <span>
+  <td>
+    <div style="float:left">
+      Auction:&nbsp;
+    </div>
+    <div style="float:left">
       <%= link_to 'Show', chore.auction %>&nbsp;
       <%= link_to 'Edit', edit_auction_path(chore.auction)  %>
-    </span>
+    </div>
   </td>
 <% else %>
-  <td>Bounty:&nbsp;
-    <span>
+  <td>
+    <div style="float:left">
+      Bounty:&nbsp;
+    </div>
+    <div style="float:left">
       <%= link_to 'Show', chore.bounty%>&nbsp;
       <%= link_to 'Edit', edit_bounty_path(chore.bounty) %>
-    </span>
+    </div>
   </td>
 <% end %>
-<td>Chore:&nbsp;
-  <span>
+<td>
+  <div style="float:left">
+    Chore:&nbsp;
+  </div>
+  <div style="float:left">
     <%= link_to 'Show', chore %>&nbsp;
     <%= link_to 'Edit', edit_chore_path(chore) %>
-      </span>
+  </div>
 </td>
-<td><%= link_to 'Destroy chore and auction',
+<td><%= link_to 'Destroy chore/auction',
         "/chores/delete_all/"+chore.id.to_s, :data => { :confirm => 'Are you
   sure?' } %></td>
 <td><%# link_to 'Take', "chores/take/"+chore.id.to_s %></td>
