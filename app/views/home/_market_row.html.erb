@@ -3,29 +3,33 @@
   <% if chore.auction %>
     <% a_id = chore.auction.id.to_s %>
     <td><%= chore.auction.lowest %></td>
-    <td>
-      <% if flash[:qb_errors] and flash[:qb_errors][a_id] and
-             flash[:qb_errors][a_id].any? %>
-        <% errors = flash[:qb_errors][a_id] %>
-        <span class="qb_error">
-          <% errors.full_messages.each do |msg| %>
-            <%= msg %><br />
+    <% if @view!="closed" %>
+      <td>
+        <% if chore.open? %>
+          <% if flash[:qb_errors] and flash[:qb_errors][a_id] and
+                 flash[:qb_errors][a_id].any? %>
+            <% errors = flash[:qb_errors][a_id] %>
+            <span class="qb_error">
+              <% errors.full_messages.each do |msg| %>
+                <%= msg %><br />
+              <% end %>
+            </span>
           <% end %>
-        </span>
+          <input class="quickbid" id="qb<%=a_id%>"
+                 name="amount[<%=a_id%>]" type="number"
+                 tabindex="1" />
+        <% end %>
+      </td>
+      <td>
+        <% if chore.open? and chore.auction.get_pref(current_user) %>
+          <input class="preference" type="button"
+                 value="<%= chore.auction.get_pref(current_user)[:value] %>"
+                 onclick="document.getElementById('qb<%=a_id%>').value =
+                          '<%= chore.auction.get_pref(current_user)[:value] %>';
+                          return false;" />
+        <% end %>
+      </td>
       <% end %>
-      <input class="quickbid" id="qb<%=a_id%>"
-             name="amount[<%=a_id%>]" type="number"
-             tabindex="1" />
-    </td>
-    <td>
-      <% if chore.auction.get_pref(current_user) %>
-        <input class="preference" type="button"
-               value="<%= chore.auction.get_pref(current_user)[:value] %>"
-               onclick="document.getElementById('qb<%=a_id%>').value =
-                        '<%= chore.auction.get_pref(current_user)[:value] %>';
-                        return false;" />
-      <% end %>
-    </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
     <% if top_bid %>
