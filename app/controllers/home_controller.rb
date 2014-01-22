@@ -158,8 +158,13 @@ class HomeController < ApplicationController
 
   def clear_preferences
     @user=current_user
+    schedulers = @user.bid_prefs.keys
+    schedulers.map! {
+      |s|
+      ChoreScheduler.find s
+    }
     @user.bid_prefs.clear
-    @user.auto_preferences
+    @user.auto_preferences schedulers
     respond_to do |format|
       if @user.save
         format.html { redirect_to('/home/preferences', :notice => 'Preferences cleared.') }
