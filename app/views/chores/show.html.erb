@@ -10,6 +10,14 @@
   <%= @chore.due_date %>
 </p>
 
+<% cs = ChoreScheduler.where("chore_id = " + @chore.id.to_s) %>
+<% if cs.any? %>
+  <p>
+    <b>Repeats:</b>
+    every <%= distance_of_time_in_words(Time.now, Time.now + cs.last.respawn_time) %>
+  </p>
+<% end %>
+
 <% if @chore.is_a?(SharedChore) %>
   <p>
     <%= link_to 'I helped!', "/shared_chores/contribute/#{@chore.id}?user=#{current_user.username}" %>
