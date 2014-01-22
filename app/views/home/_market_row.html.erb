@@ -18,11 +18,13 @@
              tabindex="1" />
     </td>
     <td>
-      <input class="preference" type="button"
-      value="<%= chore.auction.get_pref(current_user)[:value] %>"
-      onclick="document.getElementById('qb<%=a_id%>').value =
-      '<%= chore.auction.get_pref(current_user)[:value] %>';
-      return false;" />
+      <% if chore.auction.get_pref(current_user) %>
+        <input class="preference" type="button"
+               value="<%= chore.auction.get_pref(current_user)[:value] %>"
+               onclick="document.getElementById('qb<%=a_id%>').value =
+                        '<%= chore.auction.get_pref(current_user)[:value] %>';
+                        return false;" />
+        <% end %>
     </td>
     <td><%= chore.auction.expiration_date.strftime('%a %b %d,%l:%M %p') %></td>
     <%top_bid=chore.auction.bids.sort {|a,b| bid_sorter(a,b)}[0]%>
