@@ -1,4 +1,8 @@
+<% if chore.auction.expiration_date - Time.now < 604800 %>
+<tr class="imminent">
+<% else %>
 <tr>
+<% end %>
   <td><%= chore.name %></td>
   <%if chore.auction %>
         <% a_id = chore.auction.id.to_s %>
