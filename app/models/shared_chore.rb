@@ -12,7 +12,9 @@ class SharedChore < Chore
   def complete()
     #This should be called from the delayed jobs table.
     unless self.done
-      multitax(self.contributions.merge(self.contributions){|k,v|v.length},self.value)
+      unless self.contributions.empty?
+          multitax(self.contributions.merge(self.contributions){|k,v|v.length},self.value)
+      end
       self.done=true
       Chore.transaction{self.save and self.user.save}
     end
