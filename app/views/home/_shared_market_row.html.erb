@@ -38,8 +38,8 @@
         <% end %>
       </td>
       <td>
-        <% if chore.open? and chore.auction.get_pref(current_user) %>
-          <% pref = chore.auction.get_pref(current_user) %>
+        <% pref = chore.get_pref(current_user) %>
+        <% if chore.open? and pref %>
           <input class="preference" type="button"
                  value="<%= pref[:value].to_s + " / " + pref[:cut].to_s %>"
                  onclick="document.getElementById('qb<%=a_id%>').value =

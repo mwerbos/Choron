@@ -78,18 +78,4 @@ class Auction < ActiveRecord::Base
     find_jobs(self,nil,:close).map{|job| job.delete}
     self.delay(:run_at => self.expiration_date).close
   end
-
-  def get_pref(user)
-    prefs = ChoreScheduler.where("chore_id = " + 
-                                 self.chore.id.to_s).map {
-      |cs|
-      user.bid_prefs[cs.id]
-    }
-    prefs.delete(nil)
-    if prefs.any?
-      return prefs.last
-    else
-      nil
-    end
-  end
 end

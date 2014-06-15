@@ -23,6 +23,7 @@ class ChoreScheduler < ActiveRecord::Base
       new_chore.auction = new_auction
       #hacky solution to make it connect the chore to the auction (bad)
       new_chore.auctions_count = 1
+      new_chore.chore_scheduler = self
       #save both items
       new_auction.save
       new_chore.save

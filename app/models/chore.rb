@@ -5,7 +5,7 @@ class Chore < ActiveRecord::Base
   belongs_to :user
   has_one :auction
   has_one :bounty
-  has_one :chore_scheduler #might be nil if it is a one-time chore
+  belongs_to :chore_scheduler #might be nil if it is a one-time chore
   has_paper_trail
   accepts_nested_attributes_for :auction
   def open?
@@ -83,6 +83,14 @@ class Chore < ActiveRecord::Base
          self.bounty.user.save
        end
       end
+    end
+  end
+
+  def get_pref(user)
+    if self.chore_scheduler
+      return user.bid_prefs[self.chore_scheduler.id]
+    else
+      return nil
     end
   end
 end
