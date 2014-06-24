@@ -67,7 +67,9 @@ class HomeController < ApplicationController
     end
     @scheduler = ChoreScheduler.new(:respawn_time => params[:respawn], default_bids: {} )
     @scheduler.chore = @chore
+    @chore.chore_scheduler = @scheduler
     @scheduler.save
+    @chore.save
     if params[:respawn].to_i != 0
       run_at = Time.now + @scheduler.respawn_time
       @scheduler.delay(run_at: run_at).schedule_next(run_at)
