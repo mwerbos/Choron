@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140615012305) do
+ActiveRecord::Schema.define(:version => 20140624163858) do
 
   create_table "auctions", :force => true do |t|
     t.datetime "expiration_date"
@@ -45,8 +45,22 @@ ActiveRecord::Schema.define(:version => 20140615012305) do
     t.integer  "chore_id"
   end
 
-# Could not dump table "chores" because of following StandardError
-#   Unknown type 'belongs_to' for column 'chore_scheduler'
+  create_table "chores", :id => false, :force => true do |t|
+    t.integer  "id",                                    :null => false
+    t.string   "name"
+    t.datetime "due_date"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "user_id"
+    t.integer  "auctions_count"
+    t.integer  "value"
+    t.boolean  "done",               :default => false
+    t.integer  "bounties_count",     :default => 0,     :null => false
+    t.string   "type"
+    t.datetime "start_date"
+    t.text     "contributions"
+    t.integer  "chore_scheduler_id"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
